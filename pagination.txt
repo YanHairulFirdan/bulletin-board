@@ -18,9 +18,72 @@ if records < 50
 
 else if records > 60
 
+for pagination
+max 5 pager
+
+pager = (numberOfPager >= 5)? 5 : numberOfPager
+
+if numberOfPager >= 5
+pager = 5;
+startIndex = isset(page)? page : 1;
+else
+pager = numberOfPager
+startIndex = 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 buttonStart
+
+if number of pagination > 5
+startIndex =  page parameter
+else < 5 
+startIndex = 1
+
 page 1
 1 2 3 4 5
 
@@ -50,3 +113,13 @@ page 9
 
 page 10
 6 7 8 9 10
+
+
+page = 1
+< active
+1 inactive
+page == loop 
+page inactive
+page = number of page
+pageNumber in active
+> hide

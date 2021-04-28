@@ -16,18 +16,20 @@
     require_once('helpers/debug.php');
     session_start();
 
-    list($result, $paginationButtons) = pagination();
+    list($result, $pager) = pagination();
 
-    $startIndex = (isset($_REQUEST['page'])) ? intval($_REQUEST['page']) : 1;
-    $paginationButtons = ($paginationButtons <= 3) ? $paginationButtons : 5;
-    // echo $paginationButtons;
+    $currentPage = 1;
+    if ($pager >= 5) {
+        $pager = 5;
+        $startIndex = (isset($_REQUEST['page'])) ? intval($_REQUEST['page']) : 1;
+    } else {
+        $startIndex = 1;
+    }
 
+    if (isset($_REQUEST['page']) && intval($_REQUEST['page']) <= $pager) {
+        $currentPage = intval($_REQUEST['page']);
+    }
     $startIndex = ($startIndex > 5) ? 6 : 1;
-    $query = "SELECT * FROM bulletins";
-
-    // $result = mysqli_query($msqli, $query);
-
-
     ?>
     <?php if (isset($_SESSION)) : ?>
         <ul>
@@ -78,28 +80,29 @@
     <?php endwhile ?>
     <div class="pagination">
 
-        <?php if (
-            !isset($_REQUEST['page']) ||
-            intval($_REQUEST['page']) != 1
-        ) : ?>
+        <?php if ($currentPage != 1) : ?>
             <span class="btn-page">
-                <a href="index.php?page=<?= intval($_REQUEST['page']) - 1 ?>">&lt;</a>
+                <a href="?page=<?= $currentPage - 1 ?>">&lt;</a>
             </span>
         <?php endif ?>
-        <?php for ($index = 0; $index < $paginationButtons; $index++) : ?>
-            <?php if (intval($_REQUEST['page']) == $index + $startIndex) : ?>
+        <?php for ($index = 0; $index < $pager; $index++) : ?>
+            <?php if ((isset($_REQUEST['page']) && ($currentPage == $index + $startIndex))) : ?>
+                <span class="btn-page">
+                    <span><?= $index + $startIndex ?></span>
+                </span>
+            <?php elseif (!isset($_REQUEST['page']) || ($currentPage == $index + $startIndex)) : ?>
                 <span class="btn-page">
                     <span><?= $index + $startIndex ?></span>
                 </span>
             <?php else : ?>
                 <span class="btn-page">
-                    <a href="index.php?page=<?= intval($_REQUEST['page']) + 1 ?>"><?= $index + $startIndex ?></a>
+                    <a href="?page=<?= $startIndex + $index ?>"><?= $index + $startIndex ?></a>
                 </span>
             <?php endif ?>
         <?php endfor ?>
-        <?php if (!isset($_REQUEST['page']) || intval($_REQUEST['page']) < $paginationButtons) : ?>
+        <?php if (!isset($_REQUEST['page']) || $currentPage < $pager) : ?>
             <span class="btn-page">
-                <a href="index.php?page=<?= intval($_REQUEST['page']) + 1 ?>">&gt;</a>
+                <a href="?page=<?= $currentPage + 1 ?>">&gt;</a>
             </span>
         <?php endif ?>
     </div>
