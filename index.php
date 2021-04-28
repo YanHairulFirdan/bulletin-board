@@ -9,11 +9,17 @@ list($result, $numberOfPager) = pagination();
 $currentPage = 1;
 if ($numberOfPager > 5) {
     $pager = 5;
+    $startIndex = (!isset($_REQUEST['page'])) ? 1 : intval($_REQUEST['page']);
     if ($numberOfPager < 10) {
-        $startIndex = (!isset($_REQUEST['page'])) ? 1 : intval($_REQUEST['page']);
 
         if ($startIndex > (($numberOfPager - $pager) + 1)) {
             $startIndex = ($numberOfPager - $pager) + 1;
+        }
+    } else {
+        if ($startIndex > 5) {
+            $startIndex = 6;
+        } elseif ($startIndex == 5) {
+            $startIndex = 3;
         }
     }
 } else {
@@ -21,9 +27,14 @@ if ($numberOfPager > 5) {
     $pager = $numberOfPager;
 }
 
-if (isset($_REQUEST['page']) && intval($_REQUEST['page']) <= $pager) {
+
+
+
+if (isset($_REQUEST['page']) && intval($_REQUEST['page']) > 1) {
     $currentPage = intval($_REQUEST['page']);
 }
+
+print_debug($currentPage);
 ?>
 
 <!DOCTYPE html>
@@ -117,7 +128,7 @@ if (isset($_REQUEST['page']) && intval($_REQUEST['page']) <= $pager) {
     <?php endwhile ?>
     <div class="pagination" style="margin: 3em auto; width: 80%; display: flex; justify-content: space-between;">
 
-        <?php if ($currentPage != 1) : ?>
+        <?php if ($currentPage > 1) : ?>
             <span class="btn-page">
                 <a href="?page=<?= $currentPage - 1 ?>">&lt;</a>
             </span>
@@ -133,7 +144,7 @@ if (isset($_REQUEST['page']) && intval($_REQUEST['page']) <= $pager) {
                 </span>
             <?php endif ?>
         <?php endfor ?>
-        <?php if (!isset($_REQUEST['page']) || $currentPage < $pager) : ?>
+        <?php if (!isset($_REQUEST['page']) || $currentPage < $numberOfPager) : ?>
             <span class="btn-page">
                 <a href="?page=<?= $currentPage + 1 ?>">&gt;</a>
             </span>

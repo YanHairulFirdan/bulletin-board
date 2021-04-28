@@ -6,7 +6,7 @@ use Faker\Factory;
 
 $faker = Factory::create('id_ID');
 
-for ($index = 0; $index < 45; $index++) {
+for ($index = 0; $index < 36; $index++) {
     $title = $faker->text(32);
     $body =  $faker->text(200);
 
