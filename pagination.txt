@@ -30,6 +30,9 @@ else
 pager = numberOfPager
 startIndex = 1
 
+inactive page == startIndex + index
+page is not set
+
 
 
 
