@@ -1,0 +1,8 @@
+{
+	"autoloads":{
+		"files":["FirstClass.php", "SecondClass.php"]
+	},
+	"require": {
+		"fzaninotto/faker": "^1.9"
+	}
+}
