@@ -9,3 +9,10 @@
     height: 100vh;
     margin: auto;
 }
+
+.input-title{
+    margin: 1em 0;
+    width: inherit;
+
+}
+

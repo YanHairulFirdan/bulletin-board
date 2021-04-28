@@ -1,3 +1,31 @@
+<?php
+require_once('config/database_connection.php');
+require_once('helpers/pagination.php');
+require_once('helpers/debug.php');
+session_start();
+
+list($result, $numberOfPager) = pagination();
+
+$currentPage = 1;
+if ($numberOfPager > 5) {
+    $pager = 5;
+    if ($numberOfPager < 10) {
+        $startIndex = (!isset($_REQUEST['page'])) ? 1 : intval($_REQUEST['page']);
+
+        if ($startIndex > (($numberOfPager - $pager) + 1)) {
+            $startIndex = ($numberOfPager - $pager) + 1;
+        }
+    }
+} else {
+    $startIndex = 1;
+    $pager = $numberOfPager;
+}
+
+if (isset($_REQUEST['page']) && intval($_REQUEST['page']) <= $pager) {
+    $currentPage = intval($_REQUEST['page']);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,69 +35,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="public/assets/css/style.css" type="text/css">
     <title>Dashboard</title>
+    <style>
+        * {
+            text-decoration: none;
+        }
+
+        .btn-page {
+            flex-shrink: 1;
+            display: inline-block;
+            height: inherit;
+            width: inherit;
+            /* padding: 1em; */
+            text-align: center;
+
+        }
+
+        .btn-page a {
+            display: inline-block;
+            height: 100%;
+            width: 100%;
+            background-color: blue;
+            padding: .4em;
+            color: #fff;
+        }
+
+        .btn-page span {
+            text-align: center;
+            /* background-color: gray; */
+            /* color: #fff; */
+            align-items: center;
+
+        }
+    </style>
 </head>
 
-<body>
-    <?php
-    require_once('config/database_connection.php');
-    require_once('helpers/pagination.php');
-    require_once('helpers/debug.php');
-    session_start();
-
-    list($result, $pager) = pagination();
-
-    $currentPage = 1;
-    if ($pager >= 5) {
-        $pager = 5;
-        $startIndex = (isset($_REQUEST['page'])) ? intval($_REQUEST['page']) : 1;
-    } else {
-        $startIndex = 1;
-    }
-
-    if (isset($_REQUEST['page']) && intval($_REQUEST['page']) <= $pager) {
-        $currentPage = intval($_REQUEST['page']);
-    }
-    $startIndex = ($startIndex > 5) ? 6 : 1;
-    ?>
-    <?php if (isset($_SESSION)) : ?>
-        <ul>
-            <?php foreach ($_SESSION as $key => $data) : ?>
-                <li>
-                    <?= $data ?>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-    <?php else :  ?>
-        <?php session_destroy()  ?>
-    <?php endif; ?>
-
+<body style="width: 60%; margin: auto;">
     <div class="container">
-        <form action="save.php" method="POST">
-            <div class="form-input">
-                <div class="input-title">
+        <?php if (isset($_SESSION) && count($_SESSION) > 0) : ?>
+            <ul style="width: inherit; padding: 2em; color: #fff; background-color: red;">
+                <?php foreach ($_SESSION as $key => $data) : ?>
+                    <li>
+                        <?= $data ?>
+                    </li>
+                <?php endforeach;
+                session_destroy(); ?>
+            </ul>
+        <?php endif; ?>
+        <form action="save.php" method="POST" style="padding: 2em;">
+            <div class="form-input" style="width: inherit;">
+                <div class="input-title" style="margin: 2em 0;">
                     <label for="title">
                         Title
                     </label>
                 </div>
                 <div class="input-field">
-                    <input type="text" name="title" id="title">
+                    <input type="text" name="title" style="display: inline-block; width: 100%; height: 2em;" style id="title">
                 </div>
             </div>
-            <div class="form-input">
-                <div class="input-title">
+            <div class="form-input" style="width: inherit;">
+                <div class="input-title" style="margin: 2em 0;">
                     <label for="body">
                         Body
                     </label>
                 </div>
                 <div class="input-field">
-                    <textarea name="body" id="body"></textarea>
+                    <textarea name="body" id="body" style="display: inline-block; width: 100%; height: 4em;" style></textarea>
                 </div>
             </div>
-            <button class="btn" type="submit">Submit</button>
+            <button class="btn" type="submit" style="margin-top: 2em; display: inline-block; width: 100%; height: 3em;">Submit</button>
         </form>
     </div>
     <?php while ($bulletin = mysqli_fetch_assoc($result)) : ?>
-        <div class="board-wrapper">
+        <div class="board-wrapper" style="padding: 1em 2em; display: flex; justify-content: space-between; border-top: 1px solid #000; border-bottom: 1px solid #000;">
             <span class="board-title">
                 <?= $bulletin['title'] ?>
             </span>
@@ -78,7 +115,7 @@
             </span>
         </div>
     <?php endwhile ?>
-    <div class="pagination">
+    <div class="pagination" style="margin: 3em auto; width: 80%; display: flex; justify-content: space-between;">
 
         <?php if ($currentPage != 1) : ?>
             <span class="btn-page">
@@ -86,11 +123,7 @@
             </span>
         <?php endif ?>
         <?php for ($index = 0; $index < $pager; $index++) : ?>
-            <?php if ((isset($_REQUEST['page']) && ($currentPage == $index + $startIndex))) : ?>
-                <span class="btn-page">
-                    <span><?= $index + $startIndex ?></span>
-                </span>
-            <?php elseif (!isset($_REQUEST['page']) || ($currentPage == $index + $startIndex)) : ?>
+            <?php if (($currentPage == $index + $startIndex)) : ?>
                 <span class="btn-page">
                     <span><?= $index + $startIndex ?></span>
                 </span>

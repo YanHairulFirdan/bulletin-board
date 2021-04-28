@@ -25,17 +25,20 @@ function pagination()
     $numberOfButton = create_pagination();
 
 
+
     if (isset($_REQUEST['page']) && intval($_REQUEST['page']) > 1) {
         $page = intval($_REQUEST['page']);
         $offset = ($page - 1) * $limit;
-        $query = "SELECT `title`, `created_at` FROM bulletins LIMIT {$limit}, {$offset}";
+        $query = "SELECT `title`, `created_at` FROM bulletins ORDER BY `created_at` DESC LIMIT {$limit}  OFFSET {$offset} ";
     } elseif (!isset($_REQUEST['page']) || intval($_REQUEST['page']) == 1) {
-        $query = "SELECT `title`, `created_at` FROM bulletins LIMIT {$limit}";
+        $query = "SELECT `title`, `created_at` FROM bulletins ORDER BY `created_at` DESC LIMIT {$limit} ";
     }
 
-
-
     $result = mysqli_query($msqli, $query);
+    // print_debug($query);
+    // print_debug(mysqli_num_rows($result));
+    // die;
+
     return [
         $result,
         $numberOfButton

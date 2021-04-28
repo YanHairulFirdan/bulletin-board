@@ -34,7 +34,10 @@ inactive page == startIndex + index
 page is not set
 
 
-
+            <?php elseif (!isset($_REQUEST['page']) || ($currentPage == $index + $startIndex)) : ?>
+                <span class="btn-page">
+                    <span><?= $index + $startIndex ?></span>
+                </span>
 
 
 
