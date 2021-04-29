@@ -6,35 +6,22 @@ session_start();
 
 list($result, $numberOfPager) = pagination();
 
-$currentPage = 1;
-if ($numberOfPager > 5) {
-    $pager = 5;
-    $startIndex = (!isset($_REQUEST['page'])) ? 1 : intval($_REQUEST['page']);
-    if ($numberOfPager < 10) {
+$currentPage =  (isset($_REQUEST['page'])) ? intval($_REQUEST['page']) : 1;
 
-        if ($startIndex > (($numberOfPager - $pager) + 1)) {
-            $startIndex = ($numberOfPager - $pager) + 1;
-        }
-    } else {
-        if ($startIndex > 5) {
-            $startIndex = 6;
-        } elseif ($startIndex == 5) {
-            $startIndex = 3;
-        }
-    }
-} else {
+if ($numberOfPager <= 5) {
     $startIndex = 1;
     $pager = $numberOfPager;
+} else if ($numberOfPager > 5) {
+    $pager = 5;
+    $difference = $numberOfPager - $pager;
+    $startIndex = ($currentPage < $difference + 1) ? $currentPage : $difference + 1;
+
+    if ($startIndex == 5) {
+        $startIndex = 3;
+    }
 }
 
 
-
-
-if (isset($_REQUEST['page']) && intval($_REQUEST['page']) > 1) {
-    $currentPage = intval($_REQUEST['page']);
-}
-
-print_debug($currentPage);
 ?>
 
 <!DOCTYPE html>
@@ -68,6 +55,10 @@ print_debug($currentPage);
             background-color: blue;
             padding: .4em;
             color: #fff;
+        }
+
+        .btn-page:hover {
+            opacity: .8;
         }
 
         .btn-page span {
@@ -116,6 +107,8 @@ print_debug($currentPage);
             <button class="btn" type="submit" style="margin-top: 2em; display: inline-block; width: 100%; height: 3em;">Submit</button>
         </form>
     </div>
+
+
     <?php while ($bulletin = mysqli_fetch_assoc($result)) : ?>
         <div class="board-wrapper" style="padding: 1em 2em; display: flex; justify-content: space-between; border-top: 1px solid #000; border-bottom: 1px solid #000;">
             <span class="board-title">
@@ -126,13 +119,15 @@ print_debug($currentPage);
             </span>
         </div>
     <?php endwhile ?>
-    <div class="pagination" style="margin: 3em auto; width: 80%; display: flex; justify-content: space-between;">
 
+
+    <div class="pagination" style="margin: 3em auto; width: 80%; display: flex; justify-content: space-between;">
         <?php if ($currentPage > 1) : ?>
             <span class="btn-page">
                 <a href="?page=<?= $currentPage - 1 ?>">&lt;</a>
             </span>
         <?php endif ?>
+
         <?php for ($index = 0; $index < $pager; $index++) : ?>
             <?php if (($currentPage == $index + $startIndex)) : ?>
                 <span class="btn-page">
@@ -144,7 +139,8 @@ print_debug($currentPage);
                 </span>
             <?php endif ?>
         <?php endfor ?>
-        <?php if (!isset($_REQUEST['page']) || $currentPage < $numberOfPager) : ?>
+
+        <?php if ($currentPage < $numberOfPager) : ?>
             <span class="btn-page">
                 <a href="?page=<?= $currentPage + 1 ?>">&gt;</a>
             </span>
