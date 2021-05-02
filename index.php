@@ -1,26 +1,19 @@
 <?php
-require_once('config/database_connection.php');
-require_once('helpers/pagination.php');
+require_once 'vendor/autoload.php';
+
+require_once('Database/Model.php');
 require_once('helpers/debug.php');
-session_start();
 
-list($result, $numberOfPager) = pagination();
+$bulletins      = new Model('bulletins');
+$data           = $bulletins->getData();
 
-$currentPage =  (isset($_REQUEST['page'])) ? intval($_REQUEST['page']) : 1;
-
-if ($numberOfPager <= 5) {
-    $startIndex = 1;
-    $pager = $numberOfPager;
-} else if ($numberOfPager > 5) {
-    $pager = 5;
-    $difference = $numberOfPager - $pager;
-    $startIndex = ($currentPage < $difference + 1) ? $currentPage : $difference + 1;
-
-    if ($startIndex == 5) {
-        $startIndex = 3;
-    }
-}
-
+list(
+    $pagerButton,
+    $startIndex,
+    $currentPage,
+    $previousPage,
+    $nextPage
+)               = $bulletins->pagination();
 
 ?>
 
@@ -109,7 +102,8 @@ if ($numberOfPager <= 5) {
     </div>
 
 
-    <?php while ($bulletin = mysqli_fetch_assoc($result)) : ?>
+    <?php foreach ($data->fetchAll() as $key => $bulletin) : ?>
+
         <div class="board-wrapper" style="padding: 1em 2em; display: flex; justify-content: space-between; border-top: 1px solid #000; border-bottom: 1px solid #000;">
             <span class="board-title">
                 <?= $bulletin['title'] ?>
@@ -118,31 +112,31 @@ if ($numberOfPager <= 5) {
                 <?= $bulletin['created_at'] ?>
             </span>
         </div>
-    <?php endwhile ?>
+    <?php endforeach ?>
 
 
     <div class="pagination" style="margin: 3em auto; width: 80%; display: flex; justify-content: space-between;">
-        <?php if ($currentPage > 1) : ?>
+        <?php if ($previousPage) : ?>
             <span class="btn-page">
-                <a href="?page=<?= $currentPage - 1 ?>">&lt;</a>
+                <a href="?page=<?= $previousPage ?>">&lt;</a>
             </span>
         <?php endif ?>
 
-        <?php for ($index = 0; $index < $pager; $index++) : ?>
-            <?php if (($currentPage == $index + $startIndex)) : ?>
+        <?php for ($page = $startIndex; $page < $pagerButton; $page++) : ?>
+            <?php if (($currentPage == $page)) : ?>
                 <span class="btn-page">
-                    <span><?= $index + $startIndex ?></span>
+                    <span><?= $currentPage ?></span>
                 </span>
             <?php else : ?>
                 <span class="btn-page">
-                    <a href="?page=<?= $startIndex + $index ?>"><?= $index + $startIndex ?></a>
+                    <a href="?page=<?= $page ?>"><?= $page ?></a>
                 </span>
             <?php endif ?>
         <?php endfor ?>
 
-        <?php if ($currentPage < $numberOfPager) : ?>
+        <?php if ($nextPage) : ?>
             <span class="btn-page">
-                <a href="?page=<?= $currentPage + 1 ?>">&gt;</a>
+                <a href="?page=<?= $nextPage ?>">&gt;</a>
             </span>
         <?php endif ?>
     </div>

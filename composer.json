@@ -1,6 +1,10 @@
 {
-	"autoloads":{
-		"files":["FirstClass.php", "SecondClass.php"]
+	"autoloads": {
+		"files": [
+			"Database/DatabaseConnection.php",
+			"Database/Model.php",
+			"SecondClass.php"
+		]
 	},
 	"require": {
 		"fzaninotto/faker": "^1.9"
