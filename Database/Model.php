@@ -33,9 +33,8 @@ class Model
 
     private function numberOfRecord()
     {
-        $query = "SELECT COUNT(*) FROM {$this->tableName}";
-
-        $numberOfRecords = $this->databaseInstance->query($query);
+        $query              = "SELECT COUNT(*) FROM {$this->tableName}";
+        $numberOfRecords    = $this->databaseInstance->query($query);
 
         return $numberOfRecords->fetchColumn();
     }
@@ -50,7 +49,7 @@ class Model
         $currentPage             =  (isset($_REQUEST['page'])) ? intval($_REQUEST['page']) : 1;
         $nextPage                =  ($currentPage != $numberOfPager) ? $currentPage + 1 : 0;
         $previousPage            =  ($currentPage > 1) ? $currentPage -  1 : 0;
-        $pager                  = 5;
+        $pager                   = 5;
 
         if ($numberOfPager <= 5) {
             $startIndex     = 1;
@@ -65,12 +64,30 @@ class Model
             }
         }
 
-        return [
-            $pagerButton,
-            $startIndex,
-            $currentPage,
-            $previousPage,
-            $nextPage
-        ];
+
+        echo '<div class="pagination" style="margin: 3em auto; width: 80%; display: flex; justify-content: space-between;">';
+        if ($previousPage) {
+            echo '<span class="btn-page">';
+            echo "<a href='?page='" . $previousPage . ">&lt;</a>";
+            echo "</span>";
+        }
+        for ($page = $startIndex; $page < $pagerButton; $page++) {
+            if (($currentPage == $page)) {
+                echo '<span class="btn-page">';
+                echo "<span>" . $currentPage . "</span>";
+                echo '</span>';
+            } else {
+                echo '<span class="btn-page">';
+                echo "<a href=" . "?page=" . $page . ">" . $page . '</a>';
+                echo '</span>';
+            }
+        }
+
+        if ($nextPage) {
+            echo '<span class="btn-page">';
+            echo "<a href=" . "?page=" . $nextPage . ">&gt</a>";
+            echo "</span>";
+        }
+        echo '</div>';
     }
 }

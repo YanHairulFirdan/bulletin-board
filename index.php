@@ -4,16 +4,16 @@ require_once 'vendor/autoload.php';
 require_once('Database/Model.php');
 require_once('helpers/debug.php');
 
-$bulletins      = new Model('bulletins');
-$data           = $bulletins->getData();
+$bulletinsModel      = new Model('bulletins');
+$bulletins           = $bulletinsModel->getData();
 
-list(
-    $pagerButton,
-    $startIndex,
-    $currentPage,
-    $previousPage,
-    $nextPage
-)               = $bulletins->pagination();
+// list(
+//     $pagerButton,
+//     $startIndex,
+//     $currentPage,
+//     $previousPage,
+//     $nextPage
+// )               = $bulletins->pagination();
 
 ?>
 
@@ -102,7 +102,7 @@ list(
     </div>
 
 
-    <?php foreach ($data->fetchAll() as $key => $bulletin) : ?>
+    <?php foreach ($bulletins->fetchAll() as $key => $bulletin) : ?>
 
         <div class="board-wrapper" style="padding: 1em 2em; display: flex; justify-content: space-between; border-top: 1px solid #000; border-bottom: 1px solid #000;">
             <span class="board-title">
@@ -114,32 +114,7 @@ list(
         </div>
     <?php endforeach ?>
 
-
-    <div class="pagination" style="margin: 3em auto; width: 80%; display: flex; justify-content: space-between;">
-        <?php if ($previousPage) : ?>
-            <span class="btn-page">
-                <a href="?page=<?= $previousPage ?>">&lt;</a>
-            </span>
-        <?php endif ?>
-
-        <?php for ($page = $startIndex; $page < $pagerButton; $page++) : ?>
-            <?php if (($currentPage == $page)) : ?>
-                <span class="btn-page">
-                    <span><?= $currentPage ?></span>
-                </span>
-            <?php else : ?>
-                <span class="btn-page">
-                    <a href="?page=<?= $page ?>"><?= $page ?></a>
-                </span>
-            <?php endif ?>
-        <?php endfor ?>
-
-        <?php if ($nextPage) : ?>
-            <span class="btn-page">
-                <a href="?page=<?= $nextPage ?>">&gt;</a>
-            </span>
-        <?php endif ?>
-    </div>
+    <?php $bulletinsModel->pagination() ?>
 </body>
 
 </html>
