@@ -10,7 +10,7 @@ class DatabaseCnnection
         global $databaseType, $databaseName, $username, $password;
 
         $dsn = "{$databaseType}:host=localhost;dbname={$databaseName}";
-        echo $dsn;
+        // echo $dsn;
         $this->connection = new PDO($dsn, $username, $password);
         $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }

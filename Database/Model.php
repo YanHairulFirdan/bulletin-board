@@ -8,6 +8,7 @@ class Model
     private $databaseConnection;
     private $databaseInstance;
     private $dataPerPage;
+
     public function __construct($tableName, $dataPerPage = 10)
     {
         $this->tableName            = $tableName;
@@ -31,6 +32,33 @@ class Model
         return $data;
     }
 
+    public function create($data)
+    {
+        // print_debug($data);
+        list($columns, $values) = $this->extractData($data);
+
+
+        $columns =  substr($columns, 0, -1);
+        $values =  substr($values, 0, -1);
+        // print_debug($values);
+        $query = "INSERT INTO $this->tableName ({$columns}) VALUES ({$values})";
+        // echo "{$query} \n";
+        // die;
+
+        $this->databaseInstance->query($query);
+        // $GLOBALS['message'] = ($result) ? ['success' => 'Data successfully inserted'] : ['danger' => 'Fail to insert data'];
+    }
+
+    private function extractData($data)
+    {
+        $columns = $values = "";
+        foreach ($data as $key => $field) {
+            $columns .= '`' . $key . '`' . ',';
+            $values .= "'$field'" . ',';
+        }
+        return [$columns, $values];
+    }
+
     private function numberOfRecord()
     {
         $query              = "SELECT COUNT(*) FROM {$this->tableName}";
@@ -38,7 +66,6 @@ class Model
 
         return $numberOfRecords->fetchColumn();
     }
-
 
     public function pagination()
     {
@@ -60,11 +87,19 @@ class Model
             $pagerButton    = $startIndex + $pager;
 
             if ($startIndex == 5) {
-                $startIndex = 3;
+                $startIndex     = 3;
+                $pagerButton    = 8;
             }
         }
 
-
+        // echo "pager button = {$pagerButton} \n";
+        // echo "start index = {$startIndex} \n";
+        echo "<pre>";
+        // print_r($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+        // print_r(dirname(dirname(__FILE__)));
+        $dirrectoryName = explode('\\', dirname(__FILE__));
+        print_r($dirrectoryName[3]);
+        echo "</pre>";
         echo '<div class="pagination" style="margin: 3em auto; width: 80%; display: flex; justify-content: space-between;">';
         if ($previousPage) {
             echo '<span class="btn-page">';

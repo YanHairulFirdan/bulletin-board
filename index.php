@@ -3,6 +3,20 @@ require_once 'vendor/autoload.php';
 
 require_once('Database/Model.php');
 require_once('helpers/debug.php');
+require_once('utils/Validation.php');
+
+//      dump($messages);
+if (isset(Validation::$errorMessage)) {
+    echo 'ok';
+}
+dump(Validation::$errorMessage);
+
+// die;
+// dump(Validation::$errorMessage);
+if (count($_GET) > 0) {
+    replace_params();
+}
+
 
 $bulletinsModel      = new Model('bulletins');
 $bulletins           = $bulletinsModel->getData();
@@ -66,14 +80,13 @@ $bulletins           = $bulletinsModel->getData();
 
 <body style="width: 60%; margin: auto;">
     <div class="container">
-        <?php if (isset($_SESSION) && count($_SESSION) > 0) : ?>
+        <?php if (count($_GET) > 0) : ?>
             <ul style="width: inherit; padding: 2em; color: #fff; background-color: red;">
-                <?php foreach ($_SESSION as $key => $data) : ?>
+                <?php foreach ($_GET as $key => $data) : ?>
                     <li>
                         <?= $data ?>
                     </li>
-                <?php endforeach;
-                session_destroy(); ?>
+                <?php endforeach; ?>
             </ul>
         <?php endif; ?>
         <form action="save.php" method="POST" style="padding: 2em;">
