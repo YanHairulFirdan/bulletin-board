@@ -3,31 +3,13 @@ require_once 'vendor/autoload.php';
 
 require_once('Database/Model.php');
 require_once('helpers/debug.php');
+require_once('helpers/file_manipulation.php');
 require_once('utils/Validation.php');
 
-//      dump($messages);
-if (isset(Validation::$errorMessage)) {
-    echo 'ok';
-}
-dump(Validation::$errorMessage);
 
-// die;
-// dump(Validation::$errorMessage);
-if (count($_GET) > 0) {
-    $errorMessage = replace_params();
-}
-
-
+$messages            = read_file();
 $bulletinsModel      = new Model('bulletins');
 $bulletins           = $bulletinsModel->getData();
-
-// list(
-//     $pagerButton,
-//     $startIndex,
-//     $currentPage,
-//     $previousPage,
-//     $nextPage
-// )               = $bulletins->pagination();
 
 ?>
 
@@ -50,7 +32,6 @@ $bulletins           = $bulletinsModel->getData();
             display: inline-block;
             height: inherit;
             width: inherit;
-            /* padding: 1em; */
             text-align: center;
 
         }
@@ -70,8 +51,6 @@ $bulletins           = $bulletinsModel->getData();
 
         .btn-page span {
             text-align: center;
-            /* background-color: gray; */
-            /* color: #fff; */
             align-items: center;
 
         }
@@ -80,9 +59,9 @@ $bulletins           = $bulletinsModel->getData();
 
 <body style="width: 60%; margin: auto;">
     <div class="container">
-        <?php if (isset($errorMessage)) : ?>
+        <?php if (!empty($messages)) : ?>
             <ul style="width: inherit; padding: 2em; color: #fff; background-color: red;">
-                <?php foreach ($_GET as $key => $data) : ?>
+                <?php foreach ($messages as $key => $data) : ?>
                     <li>
                         <?= $data ?>
                     </li>

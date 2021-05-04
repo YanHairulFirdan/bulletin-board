@@ -1,6 +1,7 @@
 /vendor
 /config/config.php
 pagination.txt
+# /temp/
 
 # These are some examples of commonly ignored file patterns.
 # You should customize this list as applicable to your project.
@@ -51,4 +52,5 @@ Thumbs.db
 *.flv
 *.mov
 *.wmv
+# *.txt
 

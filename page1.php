@@ -1,5 +1,3 @@
 <?php
-require_once 'utils/Validation.php';
-Validation::$errorMessage = 'error';
-echo Validation::$errorMessage;
-// $_POST['error']
+$messages['errors'] = [1, 2, 3, 4, 5, 6, 7];
+echo array_key_exists('errors', $messages) ? 'exist' : 'no';

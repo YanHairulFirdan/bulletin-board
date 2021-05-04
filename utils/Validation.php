@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once 'helpers/file_manipulation.php';
 class Validation
 {
 
@@ -17,7 +17,6 @@ class Validation
     public function validate($fields)
     {
         $messages = [];
-        // print_r($this->rules);
         foreach ($fields as $key => $field) {
             // echo $key;
             if (strlen($field) == 0) {
@@ -33,11 +32,21 @@ class Validation
         }
 
         if ($messages) {
-            $params             = http_build_query($messages);
-            // print_r($params);
-            // die;
-            header("Location: index.php?" . $params);
+
+            write_file($messages);
+            header("Location: index.php?");
             exit;
         }
+    }
+
+    private function writeFile($messages)
+    {
+        $fileName           = 'temp/notification.txt';
+        $notificationFile   = fopen($fileName, 'w') or die('Unable to open the file!!!');
+
+        foreach ($messages as $key => $message) {
+            fwrite($notificationFile, $message . '\n');
+        }
+        fclose($notificationFile);
     }
 }
