@@ -14,7 +14,7 @@ dump(Validation::$errorMessage);
 // die;
 // dump(Validation::$errorMessage);
 if (count($_GET) > 0) {
-    replace_params();
+    $errorMessage = replace_params();
 }
 
 
@@ -80,7 +80,7 @@ $bulletins           = $bulletinsModel->getData();
 
 <body style="width: 60%; margin: auto;">
     <div class="container">
-        <?php if (count($_GET) > 0) : ?>
+        <?php if (isset($errorMessage)) : ?>
             <ul style="width: inherit; padding: 2em; color: #fff; background-color: red;">
                 <?php foreach ($_GET as $key => $data) : ?>
                     <li>
