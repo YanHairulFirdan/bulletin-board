@@ -35,7 +35,7 @@ class Model
 
     public function create($data)
     {
-        list($columns, $values) = $this->extractData($data);
+        list($columns, $values)     = $this->extractData($data);
         $columns                    =  substr($columns, 0, -1);
         $values                     =  substr($values, 0, -1);
         $query                      = "INSERT INTO $this->tableName ({$columns}) VALUES ({$values})";
@@ -79,9 +79,9 @@ class Model
         $numberOfRecords         = $this->numberOfRecord();
         $numberOfPager           = floor($numberOfRecords / $this->dataPerPage);
         $numberOfPager          += ($numberOfRecords % $this->dataPerPage > 0) ? 1 : 0;
-        $currentPage             =  (isset($_REQUEST['page'])) ? intval($_REQUEST['page']) : 1;
-        $nextPage                =  ($currentPage != $numberOfPager) ? $currentPage + 1 : 0;
-        $previousPage            =  ($currentPage > 1) ? $currentPage -  1 : 0;
+        $currentPage             = (isset($_REQUEST['page'])) ? intval($_REQUEST['page']) : 1;
+        $nextPage                = ($currentPage != $numberOfPager) ? $currentPage + 1 : 0;
+        $previousPage            = ($currentPage > 1) ? $currentPage -  1 : 0;
         $pager                   = 5;
 
         if ($numberOfPager <= 5) {
