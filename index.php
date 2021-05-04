@@ -10,7 +10,26 @@ require_once('utils/Validation.php');
 $messages            = read_file();
 $bulletinsModel      = new Model('bulletins');
 $bulletins           = $bulletinsModel->getData();
-
+if ($_POST) {
+    $rules = [
+        'title' => [
+            'required' => true,
+            'min' => 10,
+            'max' => 32
+        ],
+        'body' => [
+            'required' => true,
+            'min' => 10,
+            'max' => 220
+        ]
+    ];
+    $validation     = new Validation($rules);
+    $errorMessages  = $validation->validate($_POST);
+    if (!$errorMessages) {
+        $bulletinsModel = new Model('bulletins');
+        $bulletinsModel->create($_POST);
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -67,16 +86,16 @@ $bulletins           = $bulletinsModel->getData();
 
 <body style="width: 60%; margin: auto;">
     <div class="container">
-        <?php if (!empty($messages)) : ?>
-            <ul style="width: inherit; padding: 2em; color: #fff;" class="<?= $messages[0] ?>">
-                <?php for ($index = 1; $index < count($messages); $index++) : ?>
+        <?php if (isset($errorMessages)) : ?>
+            <ul style="width: inherit; padding: 2em; color: #fff; background-color: red;">
+                <?php foreach ($errorMessages as $message) : ?>
                     <li>
-                        <?= $messages[$index] ?>
+                        <?= dump($message) ?>
                     </li>
-                <?php endfor; ?>
+                <?php endforeach; ?>
             </ul>
         <?php endif; ?>
-        <form action="save.php" method="POST" style="padding: 2em;">
+        <form action="" method="POST" style="padding: 2em;">
             <div class="form-input" style="width: inherit;">
                 <div class="input-title" style="margin: 2em 0;">
                     <label for="title">

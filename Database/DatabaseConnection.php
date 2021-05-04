@@ -2,28 +2,27 @@
 require_once "config/config.php";
 
 
-class DatabaseCnnection
+class DatabaseConnection
 {
-    private $connection;
-    public function __construct()
-    {
-        global $databaseType, $databaseName, $username, $password;
+    private $databaseType, $host, $databaseName, $username, $password;
 
-        $dsn = "{$databaseType}:host=localhost;dbname={$databaseName}";
-        // echo $dsn;
-        $this->connection = new PDO($dsn, $username, $password);
-        $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    public function __construct($databaseType,  $host, $databaseName, $username, $password)
+    {
+        $this->databaseType        = $databaseType;
+        $this->host                = $host;
+        $this->databaseName        = $databaseName;
+        $this->username            = $username;
+        $this->password            = $password;
     }
 
     public function getConnection()
     {
+        $dsn                = "{$this->databaseType}:host={$this->host};dbname={$this->databaseName}";
+
+        $this->connection   = new PDO($dsn, $this->username, $this->password);
+
+        $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
         return $this->connection;
     }
 }
-
-
-// try {
-//     $msqli = mysqli_connect($host, $username, $password, $databaseName);
-// } catch (\Throwable $th) {
-//     echo 'cannot make connection';
-// }

@@ -19,10 +19,6 @@ class Validation
         $messages = [];
         foreach ($fields as $key => $field) {
             if (strlen($field) == 0) {
-                if (!isset($messages['type'])) {
-                    $messages['type']    = 'error';
-                }
-
                 $messages[$key]          = str_replace(':field', $key, $this->messages['required']);
             } else {
                 if (strlen($field) < $this->rules[$key]['min'] || strlen($field) > $this->rules[$key]['max']) {
@@ -35,10 +31,6 @@ class Validation
             }
         }
 
-        if ($messages) {
-            write_file($messages);
-            header("Location: index.php?");
-            exit;
-        }
+        return (count($messages) > 0) ? $messages : null;
     }
 }

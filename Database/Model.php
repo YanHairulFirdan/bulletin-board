@@ -1,6 +1,7 @@
 <?php
 require_once 'vendor/autoload.php';
 require_once 'helpers/file_manipulation.php';
+require_once 'config/config.php';
 require_once('Database/DatabaseConnection.php');
 
 class Model
@@ -12,15 +13,17 @@ class Model
 
     public function __construct($tableName, $dataPerPage = 10)
     {
+        global $databaseType, $host, $databaseName, $username, $password;
         $this->tableName            = $tableName;
-        $this->databaseConnection   = new DatabaseCnnection();
-        $this->databaseInstance     = $this->databaseConnection->getConnection();
+        $this->databaseConnection   = new DatabaseConnection($databaseType, $host, $databaseName, $username, $password);
         $this->dataPerPage          = $dataPerPage;
     }
 
 
     public function getData()
     {
+        $this->getConnection();
+
         if (isset($_REQUEST['page']) && intval($_REQUEST['page']) > 1) {
             $offset     = (intval($_REQUEST['page']) - 1) * 10;
             $query      = "SELECT * FROM {$this->tableName} ORDER BY created_at DESC LIMIT {$this->dataPerPage}, {$offset}";
@@ -35,21 +38,15 @@ class Model
 
     public function create($data)
     {
+        $this->getConnection();
+
         list($columns, $values)     = $this->extractData($data);
         $columns                    =  substr($columns, 0, -1);
         $values                     =  substr($values, 0, -1);
         $query                      = "INSERT INTO $this->tableName ({$columns}) VALUES ({$values})";
-        $result                     = $this->databaseInstance->query($query);
 
-        if ($result) {
-            $messages['type']       = 'success';
-            $messages['content']    = 'Data successfully inserted';
-        } else {
-            $messages['type']       = 'error';
-            $messages['content']    = 'Fail to insert data';
-        }
-
-        write_file($messages);
+        $this->databaseInstance->query($query);
+        header('location:index.php');
     }
 
     private function extractData($data)
@@ -68,10 +65,19 @@ class Model
 
     private function numberOfRecord()
     {
+        $this->getConnection();
+
         $query              = "SELECT COUNT(*) FROM {$this->tableName}";
         $numberOfRecords    = $this->databaseInstance->query($query);
 
         return $numberOfRecords->fetchColumn();
+    }
+
+    private function getConnection()
+    {
+        if (!$this->databaseInstance) {
+            $this->databaseInstance     = $this->databaseConnection->getConnection();
+        }
     }
 
     public function pagination()
@@ -97,6 +103,7 @@ class Model
                 $pagerButton    = 8;
             }
         }
+
 
         echo '<div class="pagination" style="margin: 3em auto; width: 80%; display: flex; justify-content: space-between;">';
         if ($previousPage) {
