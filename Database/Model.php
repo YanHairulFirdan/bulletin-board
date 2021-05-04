@@ -1,5 +1,6 @@
 <?php
 require_once 'vendor/autoload.php';
+require_once 'helpers/file_manipulation.php';
 require_once('Database/DatabaseConnection.php');
 
 class Model
@@ -34,28 +35,34 @@ class Model
 
     public function create($data)
     {
-        // print_debug($data);
         list($columns, $values) = $this->extractData($data);
+        $columns                    =  substr($columns, 0, -1);
+        $values                     =  substr($values, 0, -1);
+        $query                      = "INSERT INTO $this->tableName ({$columns}) VALUES ({$values})";
+        $result                     = $this->databaseInstance->query($query);
 
+        if ($result) {
+            $messages['type']       = 'success';
+            $messages['content']    = 'Data successfully inserted';
+        } else {
+            $messages['type']       = 'error';
+            $messages['content']    = 'Fail to insert data';
+        }
 
-        $columns =  substr($columns, 0, -1);
-        $values =  substr($values, 0, -1);
-        // print_debug($values);
-        $query = "INSERT INTO $this->tableName ({$columns}) VALUES ({$values})";
-        // echo "{$query} \n";
-        // die;
-
-        $this->databaseInstance->query($query);
-        // $GLOBALS['message'] = ($result) ? ['success' => 'Data successfully inserted'] : ['danger' => 'Fail to insert data'];
+        write_file($messages);
     }
 
     private function extractData($data)
     {
-        $columns = $values = "";
+        $columns        = $values = "";
+
         foreach ($data as $key => $field) {
-            $columns .= '`' . $key . '`' . ',';
-            $values .= "'$field'" . ',';
+            $key        = htmlspecialchars($key);
+            $field      = htmlspecialchars($field);
+            $columns   .= '`' . $key . '`' . ',';
+            $values    .= "'$field'" . ',';
         }
+
         return [$columns, $values];
     }
 
@@ -69,8 +76,7 @@ class Model
 
     public function pagination()
     {
-        $numberOfRecords = $this->numberOfRecord();
-
+        $numberOfRecords         = $this->numberOfRecord();
         $numberOfPager           = floor($numberOfRecords / $this->dataPerPage);
         $numberOfPager          += ($numberOfRecords % $this->dataPerPage > 0) ? 1 : 0;
         $currentPage             =  (isset($_REQUEST['page'])) ? intval($_REQUEST['page']) : 1;
@@ -92,14 +98,6 @@ class Model
             }
         }
 
-        // echo "pager button = {$pagerButton} \n";
-        // echo "start index = {$startIndex} \n";
-        echo "<pre>";
-        // print_r($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-        // print_r(dirname(dirname(__FILE__)));
-        $dirrectoryName = explode('\\', dirname(__FILE__));
-        print_r($dirrectoryName[3]);
-        echo "</pre>";
         echo '<div class="pagination" style="margin: 3em auto; width: 80%; display: flex; justify-content: space-between;">';
         if ($previousPage) {
             echo '<span class="btn-page">';

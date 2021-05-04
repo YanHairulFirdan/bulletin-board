@@ -49,6 +49,14 @@ $bulletins           = $bulletinsModel->getData();
             opacity: .8;
         }
 
+        .error {
+            background-color: red;
+        }
+
+        .success {
+            background-color: green;
+        }
+
         .btn-page span {
             text-align: center;
             align-items: center;
@@ -60,12 +68,12 @@ $bulletins           = $bulletinsModel->getData();
 <body style="width: 60%; margin: auto;">
     <div class="container">
         <?php if (!empty($messages)) : ?>
-            <ul style="width: inherit; padding: 2em; color: #fff; background-color: red;">
-                <?php foreach ($messages as $key => $data) : ?>
+            <ul style="width: inherit; padding: 2em; color: #fff;" class="<?= $messages[0] ?>">
+                <?php for ($index = 1; $index < count($messages); $index++) : ?>
                     <li>
-                        <?= $data ?>
+                        <?= $messages[$index] ?>
                     </li>
-                <?php endforeach; ?>
+                <?php endfor; ?>
             </ul>
         <?php endif; ?>
         <form action="save.php" method="POST" style="padding: 2em;">
@@ -92,7 +100,6 @@ $bulletins           = $bulletinsModel->getData();
             <button class="btn" type="submit" style="margin-top: 2em; display: inline-block; width: 100%; height: 3em;">Submit</button>
         </form>
     </div>
-
 
     <?php foreach ($bulletins->fetchAll() as $key => $bulletin) : ?>
 
