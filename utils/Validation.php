@@ -2,12 +2,10 @@
 require_once 'helpers/file_manipulation.php';
 class Validation
 {
-
     private $messages = [
         'required'  => 'please fill in this :field field',
         'length'    => 'Your :field must be :min to :max characters'
     ];
-    public static $errorMessage;
     private $rules;
     public function __construct($rules)
     {
