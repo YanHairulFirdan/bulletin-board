@@ -2,7 +2,7 @@
 require_once 'vendor/autoload.php';
 require_once('Database/Model.php');
 require_once('helpers/functions.php');
-require_once('helpers/file_manipulation.php');
+// require_once('helpers/file_manipulation.php');
 require_once('utils/Validation.php');
 
 $bulletinsModel      = new Model('bulletins');
