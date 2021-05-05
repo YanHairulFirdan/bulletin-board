@@ -1,30 +1,32 @@
 <?php
 require_once 'vendor/autoload.php';
-
 require_once('Database/Model.php');
 require_once('helpers/functions.php');
 require_once('helpers/file_manipulation.php');
 require_once('utils/Validation.php');
 
-
-$messages            = read_file();
 $bulletinsModel      = new Model('bulletins');
 $bulletins           = $bulletinsModel->getData();
+
+
+
 if ($_POST) {
     $rules = [
-        'title' => [
-            'required' => true,
-            'min' => 10,
-            'max' => 32
+        'title'     => [
+            'required'      => true,
+            'min'           => 10,
+            'max'           => 32
         ],
-        'body' => [
-            'required' => true,
-            'min' => 10,
-            'max' => 220
+        'body'      => [
+            'required'      => true,
+            'min'           => 10,
+            'max'           => 220
         ]
     ];
+
     $validation     = new Validation($rules);
     $errorMessages  = $validation->validate($_POST);
+
     if (!$errorMessages) {
         $bulletinsModel = new Model('bulletins');
         $bulletinsModel->create($_POST);
@@ -90,7 +92,7 @@ if ($_POST) {
             <ul style="width: inherit; padding: 2em; color: #fff; background-color: red;">
                 <?php foreach ($errorMessages as $message) : ?>
                     <li>
-                        <?= dump($message) ?>
+                        <?= $message ?>
                     </li>
                 <?php endforeach; ?>
             </ul>
