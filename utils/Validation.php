@@ -22,11 +22,10 @@ class Validation
                 $messages[$key]          = str_replace(':field', $key, $this->messages['required']);
             } else {
                 if (strlen($field) < $this->rules[$key]['min'] || strlen($field) > $this->rules[$key]['max']) {
+                    $searches            = [':min', ':max', ':field'];
+                    $replaces            = [$this->rules[$key]['min'], $this->rules[$key]['max'], $key];
                     $messages[$key]      = $this->messages['length'];
-                    $messages[$key]      = str_replace(':min', $this->rules[$key]['min'], $messages[$key]);
-                    $messages[$key]      = str_replace(':max', $this->rules[$key]['max'], $messages[$key]);
-                    $messages[$key]      = str_replace(':field', $key, $messages[$key]);
-                    $messages[$key]      = $messages[$key];
+                    $messages[$key]      = str_replace($searches, $replaces, $messages[$key]);
                 }
             }
         }
