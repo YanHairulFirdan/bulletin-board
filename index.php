@@ -15,22 +15,17 @@ list(
     $nextPage,
     $pagerButton
 )                    = $bulletinsModel->pagination();
+
+
 if ($_POST) {
     $rules = [
-        'title'     => [
-            'required'      => true,
-            'min'           => 10,
-            'max'           => 32
-        ],
-        'body'      => [
-            'required'      => true,
-            'min'           => 10,
-            'max'           => 220
-        ]
+        'title'     => 'required|length:10-32',
+        'body'      => 'required|length:10-220',
     ];
 
     $validation     = new Validation($rules);
     $errorMessages  = $validation->validate($_POST);
+
 
     if (!$errorMessages) {
         $bulletinsModel = new Model('bulletins');

@@ -1,10 +1,10 @@
 {
 	"autoloads": {
 		"classmap": [
-			"config/*",
-			"Database/*",
-			"helpers/*",
-			"utils/*"
+			"config/",
+			"Database/",
+			"helpers/",
+			"utils/"
 		]
 	},
 	"require": {
