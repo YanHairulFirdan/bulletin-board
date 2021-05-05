@@ -1,7 +1,4 @@
 <?php
-require_once "config/config.php";
-
-
 class DatabaseConnection
 {
     private $databaseType, $host, $databaseName, $username, $password;
