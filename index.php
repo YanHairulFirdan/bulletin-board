@@ -8,8 +8,13 @@ require_once('utils/Validation.php');
 $bulletinsModel      = new Model('bulletins');
 $bulletins           = $bulletinsModel->getData();
 
-
-
+list(
+    $currentPage,
+    $startIndex,
+    $previousPage,
+    $nextPage,
+    $pagerButton
+)                    = $bulletinsModel->pagination();
 if ($_POST) {
     $rules = [
         'title'     => [
@@ -133,8 +138,32 @@ if ($_POST) {
             </span>
         </div>
     <?php endforeach ?>
+    <div class="pagination" style="margin: 3em auto; width: 80%; display: flex; justify-content: space-between;">
+        <?php if ($previousPage) : ?>
+            <span class="btn-page">
+                <a href="?page=<?= $previousPage ?>">&lt;</a>
+            </span>
+        <?php endif ?>
+        <?php for ($page = $startIndex; $page < $pagerButton; $page++) : ?>
+            <?php if (($currentPage == $page)) : ?>
+                <span class="btn-page">
+                    <span><?= $currentPage ?></span>
+                </span>
+            <?php else : ?>
+                <span class="btn-page">
+                    <a href="?page=<?= $page ?>"><?= $page ?> </a>
+                </span>
+            <?php endif ?>
+        <?php endfor ?>
 
-    <?php $bulletinsModel->pagination() ?>
+
+        <?php if ($nextPage) : ?>
+            <span class="btn-page">
+                <a href="?page=<?= $nextPage ?>">&lt;</a>
+            </span>
+        <?php endif ?>
+
+    </div>
 </body>
 
 </html>

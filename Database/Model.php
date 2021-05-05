@@ -49,19 +49,8 @@ class Model
         header('location:index.php');
     }
 
-    private function extractData($data)
-    {
-        $columns        = $values = "";
 
-        foreach ($data as $key => $field) {
-            $key        = htmlspecialchars($key);
-            $field      = htmlspecialchars($field);
-            $columns   .= '`' . $key . '`' . ',';
-            $values    .= "'$field'" . ',';
-        }
 
-        return [$columns, $values];
-    }
 
     private function numberOfRecord()
     {
@@ -104,30 +93,46 @@ class Model
             }
         }
 
+        return [
+            $currentPage, $startIndex, $previousPage, $nextPage, $pagerButton
+        ];
+        // echo '<div class="pagination" style="margin: 3em auto; width: 80%; display: flex; justify-content: space-between;">';
+        // if ($previousPage) {
+        //     echo '<span class="btn-page">';
+        //     echo "<a href='?page='" . $previousPage . ">&lt;</a>";
+        //     echo "</span>";
+        // }
+        // for ($page = $startIndex; $page < $pagerButton; $page++) {
+        //     if (($currentPage == $page)) {
+        //         echo '<span class="btn-page">';
+        //         echo "<span>" . $currentPage . "</span>";
+        //         echo '</span>';
+        //     } else {
+        //         echo '<span class="btn-page">';
+        //         echo "<a href=" . "?page=" . $page . ">" . $page . '</a>';
+        //         echo '</span>';
+        //     }
+        // }
 
-        echo '<div class="pagination" style="margin: 3em auto; width: 80%; display: flex; justify-content: space-between;">';
-        if ($previousPage) {
-            echo '<span class="btn-page">';
-            echo "<a href='?page='" . $previousPage . ">&lt;</a>";
-            echo "</span>";
-        }
-        for ($page = $startIndex; $page < $pagerButton; $page++) {
-            if (($currentPage == $page)) {
-                echo '<span class="btn-page">';
-                echo "<span>" . $currentPage . "</span>";
-                echo '</span>';
-            } else {
-                echo '<span class="btn-page">';
-                echo "<a href=" . "?page=" . $page . ">" . $page . '</a>';
-                echo '</span>';
-            }
+        // if ($nextPage) {
+        //     echo '<span class="btn-page">';
+        //     echo "<a href=" . "?page=" . $nextPage . ">&gt</a>";
+        //     echo "</span>";
+        // }
+        // echo '</div>';
+    }
+
+    private function extractData($data)
+    {
+        $columns        = $values = "";
+
+        foreach ($data as $key => $field) {
+            $key        = htmlspecialchars($key);
+            $field      = htmlspecialchars($field);
+            $columns   .= '`' . $key . '`' . ',';
+            $values    .= "'$field'" . ',';
         }
 
-        if ($nextPage) {
-            echo '<span class="btn-page">';
-            echo "<a href=" . "?page=" . $nextPage . ">&gt</a>";
-            echo "</span>";
-        }
-        echo '</div>';
+        return [$columns, $values];
     }
 }
