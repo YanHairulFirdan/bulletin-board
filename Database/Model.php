@@ -11,18 +11,17 @@ class Model
     private $databaseInstance;
     private $dataPerPage;
 
-    public function __construct($tableName, $dataPerPage = 10)
+    public function __construct(DatabaseConnection $databaseConnection, $tableName, $dataPerPage = 10)
     {
-        global $databaseType, $host, $databaseName, $username, $password;
         $this->tableName            = $tableName;
-        $this->databaseConnection   = new DatabaseConnection($databaseType, $host, $databaseName, $username, $password);
+        $this->databaseConnection   = $databaseConnection;
         $this->dataPerPage          = $dataPerPage;
     }
 
 
     public function getData()
     {
-        $this->getConnection();
+        $this->setConnection();
 
         if (isset($_REQUEST['page']) && intval($_REQUEST['page']) > 1) {
             $offset     = (intval($_REQUEST['page']) - 1) * 10;
@@ -38,7 +37,7 @@ class Model
 
     public function create($data)
     {
-        $this->getConnection();
+        $this->setConnection();
 
         list($columns, $values)     = $this->extractData($data);
         $columns                    =  substr($columns, 0, -1);
@@ -54,7 +53,7 @@ class Model
 
     private function numberOfRecord()
     {
-        $this->getConnection();
+        $this->setConnection();
 
         $query              = "SELECT COUNT(*) FROM {$this->tableName}";
         $numberOfRecords    = $this->databaseInstance->query($query);
@@ -62,7 +61,7 @@ class Model
         return $numberOfRecords->fetchColumn();
     }
 
-    private function getConnection()
+    private function setConnection()
     {
         if (!$this->databaseInstance) {
             $this->databaseInstance     = $this->databaseConnection->getConnection();

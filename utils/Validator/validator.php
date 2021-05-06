@@ -1,15 +1,16 @@
 <?php
-function required($field, $data)
+function required($field, $values)
 {
-    return empty($data) ? "{$field} Must be fill in!" : null;
+    return empty($values) ? "{$field} Must be fill in!" : null;
 }
 
-function length($field, $value, $data)
+function length($field, $value, $values)
 {
-    $data        = explode('-', $data);
-    $min         = intval($data[0]);
-    $max         = intval($data[1]);
+    $values      = explode('-', $values);
+    $min         = intval($values[0]);
+    $max         = intval($values[1]);
     $message     = '';
+
     if (strlen($value) < $min || strlen($value) > $max) {
         $message = "Your {$field} must be {$min} to {$max} characters long";
     }

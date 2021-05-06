@@ -1,12 +1,14 @@
 <?php
-require_once 'vendor/autoload.php';
+require_once('vendor/autoload.php');
+require_once('Database/DatabaseConnection.php');
 require_once('Database/Model.php');
 require_once('helpers/functions.php');
-// require_once('helpers/file_manipulation.php');
 require_once('utils/Validation.php');
 
-$bulletinsModel      = new Model('bulletins');
-$bulletins           = $bulletinsModel->getData();
+
+$databaseConnection          = DatabaseConnection::getInstance();
+$bulletinsModel              = new Model($databaseConnection, 'bulletins');
+$bulletins                   = $bulletinsModel->getData();
 
 list(
     $currentPage,
@@ -26,9 +28,7 @@ if ($_POST) {
     $validation     = new Validation($rules);
     $errorMessages  = $validation->validate($_POST);
 
-
     if (!$errorMessages) {
-        $bulletinsModel = new Model('bulletins');
         $bulletinsModel->create($_POST);
     }
 }

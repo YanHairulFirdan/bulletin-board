@@ -1,9 +1,17 @@
 <?php
+require_once('config/config.php');
+$GLOBALS['databaseType'] = $databaseType;
+$GLOBALS['host'] = $host;
+$GLOBALS['databaseName'] = $databaseName;
+$GLOBALS['username'] = $username;
+$GLOBALS['password'] = $password;
+
 class DatabaseConnection
 {
-    private $databaseType, $host, $databaseName, $username, $password;
+    private $databaseType, $host, $databaseName, $username, $password, $connection;
+    private static $instance;
 
-    public function __construct($databaseType,  $host, $databaseName, $username, $password)
+    private function __construct($databaseType,  $host, $databaseName, $username, $password)
     {
         $this->databaseType        = $databaseType;
         $this->host                = $host;
@@ -12,13 +20,45 @@ class DatabaseConnection
         $this->password            = $password;
     }
 
+    public static function getInstance($config = [])
+    {
+        if (!self::$instance) {
+            if (count($config) > 0 && count($config) < 5) {
+                $databaseType       = $config['databaseType'];
+                $host               = $config['host'];
+                $databaseName       = $config['databaseName'];
+                $username           = $config['usename'];
+                $password           = $config['password'];
+                self::$instance     = new DatabaseConnection(
+                    $databaseType,
+                    $host,
+                    $databaseName,
+                    $username,
+                    $password
+                );
+            } else {
+                global $databaseType, $host, $databaseName, $username, $password;
+                self::$instance = new DatabaseConnection(
+                    $databaseType,
+                    $host,
+                    $databaseName,
+                    $username,
+                    $password
+                );
+            }
+        }
+        return self::$instance;
+    }
+
     public function getConnection()
     {
-        $dsn                = "{$this->databaseType}:host={$this->host};dbname={$this->databaseName}";
 
-        $this->connection   = new PDO($dsn, $this->username, $this->password);
+        if (!$this->connection) {
+            $dsn                = "{$this->databaseType}:host={$this->host};dbname={$this->databaseName}";
+            $this->connection   = new PDO($dsn, $this->username, $this->password);
 
-        $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        }
 
         return $this->connection;
     }

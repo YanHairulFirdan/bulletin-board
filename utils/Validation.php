@@ -30,7 +30,7 @@ class Validation
                     $messages[$fieldKey]    = $fieldRule($fieldKey, $field);
                 }
 
-                // !empty($messages[$fieldKey])? break:
+
                 if (!empty($messages[$fieldKey])) {
                     break;
                 } else {

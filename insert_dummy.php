@@ -47,6 +47,8 @@ $data = [
     'title' => '',
     'body'  => 'fhfhfhfh',
 ];
+
+
 $validation = new Validation($rules);
 print_r($validation->validate($data));
 
