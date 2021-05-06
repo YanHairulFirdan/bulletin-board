@@ -1,5 +1,6 @@
 insert_dummy.php
 /vendor
+/playground
 /config/config.php
 pagination.txt
 # /temp/
