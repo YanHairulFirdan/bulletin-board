@@ -1,10 +1,5 @@
 <?php
 require_once('config/config.php');
-$GLOBALS['databaseType'] = $databaseType;
-$GLOBALS['host'] = $host;
-$GLOBALS['databaseName'] = $databaseName;
-$GLOBALS['username'] = $username;
-$GLOBALS['password'] = $password;
 
 class DatabaseConnection
 {
@@ -29,6 +24,7 @@ class DatabaseConnection
                 $databaseName       = $config['databaseName'];
                 $username           = $config['usename'];
                 $password           = $config['password'];
+
                 self::$instance     = new DatabaseConnection(
                     $databaseType,
                     $host,
@@ -38,6 +34,7 @@ class DatabaseConnection
                 );
             } else {
                 global $databaseType, $host, $databaseName, $username, $password;
+
                 self::$instance = new DatabaseConnection(
                     $databaseType,
                     $host,

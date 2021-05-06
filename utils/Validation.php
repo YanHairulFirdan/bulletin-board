@@ -13,28 +13,28 @@ class Validation
     {
         $this->rules = $rules;
     }
-    public function validate($fields)
+    public function validate($values)
     {
         $messages   = [];
 
-        foreach ($fields as $fieldKey => $field) {
-            $currentFieldrules = explode('|', $this->rules[$fieldKey]);
+        foreach ($values as $field => $value) {
+            $currentFieldrules = explode('|', $this->rules[$field]);
 
             foreach ($currentFieldrules as $currentKeyRule => $fieldRule) {
                 $findSeparator = strpos($fieldRule, ':');
 
                 if (is_numeric($findSeparator)) {
                     $ruleContainValue       = explode(':', $fieldRule);
-                    $messages[$fieldKey]    = $ruleContainValue[0]($fieldKey, $field, $ruleContainValue[1]);
+                    $messages[$field]    = $ruleContainValue[0]($field, $value, $ruleContainValue[1]);
                 } else {
-                    $messages[$fieldKey]    = $fieldRule($fieldKey, $field);
+                    $messages[$field]    = $fieldRule($field, $value);
                 }
 
 
-                if (!empty($messages[$fieldKey])) {
+                if (!empty($messages[$field])) {
                     break;
                 } else {
-                    unset($messages[$fieldKey]);
+                    unset($messages[$field]);
                 }
             }
         }
