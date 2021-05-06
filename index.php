@@ -4,10 +4,12 @@ require_once('Database/DatabaseConnection.php');
 require_once('Database/Model.php');
 require_once('helpers/functions.php');
 require_once('utils/Validation.php');
+require_once('utils/Pagination.php');
 
 
 $databaseConnection          = DatabaseConnection::getInstance();
 $bulletinsModel              = new Model($databaseConnection, 'bulletins');
+$pagination                  = new Pagination($bulletinsModel);
 $bulletins                   = $bulletinsModel->getData();
 
 list(
@@ -16,7 +18,7 @@ list(
     $previousPage,
     $nextPage,
     $pagerButton
-)                    = $bulletinsModel->pagination();
+)                           = $pagination->paginator();
 
 
 if ($_POST) {
@@ -154,7 +156,7 @@ if ($_POST) {
 
         <?php if ($nextPage) : ?>
             <span class="btn-page">
-                <a href="?page=<?= $nextPage ?>">&lt;</a>
+                <a href="?page=<?= $nextPage ?>">&gt;</a>
             </span>
         <?php endif ?>
 
