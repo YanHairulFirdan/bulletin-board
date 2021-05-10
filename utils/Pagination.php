@@ -18,8 +18,6 @@ class Pagination
         $this->previousPage            = ($this->currentPage > 1) ? $this->currentPage -  1 : 0;
         $this->pager                   = 5;
 
-        echo $this->currentPage;
-
         if ($numberOfPager <= 5) {
             $this->startIndex       = 1;
             $this->pager            = $numberOfPager;
@@ -34,16 +32,6 @@ class Pagination
             }
         }
 
-        // echo "<pre>";
-        // print_r([
-        //     $this->currentPage,
-        //     $this->startIndex,
-        //     $this->previousPage,
-        //     $this->nextPage,
-        //     $pagerButton
-        // ]);
-        // echo "</pre>";
-        // die;
         return [
             $this->currentPage,
             $this->startIndex,
