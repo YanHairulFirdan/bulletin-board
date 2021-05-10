@@ -25,13 +25,15 @@ class Model
 
         if (isset($_REQUEST['page']) && intval($_REQUEST['page']) > 1) {
             $offset     = (intval($_REQUEST['page']) - 1) * 10;
-            $query      = "SELECT * FROM {$this->tableName} ORDER BY created_at DESC LIMIT {$this->dataPerPage}, {$offset}";
+            $query      = "SELECT * FROM {$this->tableName} ORDER BY created_at DESC LIMIT {$this->dataPerPage} OFFSET {$offset}";
         } else {
             $query      = "SELECT * FROM {$this->tableName} ORDER BY created_at DESC LIMIT {$this->dataPerPage}";
         }
 
         $data = $this->databaseInstance->query($query);
-        $this->numberOfRecord();
+        // $this->numberOfRecord();
+        // dump($data->fetchAll());
+        // die;
         return $data;
     }
 

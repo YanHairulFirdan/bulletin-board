@@ -1,5 +1,5 @@
 <?php
-class Pagination  
+class Pagination
 {
     private $model, $startIndex, $currentPage, $nextPage, $previousPage, $pager, $dataPerPage;
     public function __construct(Model $model)
@@ -17,17 +17,20 @@ class Pagination
         $this->previousPage            = ($this->currentPage > 1) ? $this->currentPage -  1 : 0;
         $this->pager                   = 5;
 
-        if ($numberOfPager <= 5) {
-            $this->startIndex     = 1;
-            $this->pager          = $numberOfPager;
-        } else if ($numberOfPager > 5) {
-            $difference     = $numberOfPager - $this->pager;
-            $this->startIndex     = ($this->currentPage < $difference + 1) ? $this->currentPage : $difference + 1;
-            $pagerButton    = $this->startIndex + $this->pager;
 
-            if ($this->startIndex == 5) {
-                $this->startIndex     = 3;
-                $pagerButton    = 8;
+
+        if ($numberOfPager <= 5) {
+            $this->startIndex       = 1;
+            $this->pager            = $numberOfPager;
+        } else if ($numberOfPager > 5) {
+            $this->startIndex       = ($this->currentPage - 2 >= 2) ? $this->currentPage - 2 : 1;
+
+            if ($numberOfPager - $this->currentPage <= 2) {
+                $pagerButton        = $numberOfPager;
+
+                $this->startIndex   = ($numberOfPager - $this->currentPage == 0) ? $this->currentPage - 4 : $this->currentPage - 3;
+            } else {
+                $pagerButton        = $this->currentPage + 2;
             }
         }
 
