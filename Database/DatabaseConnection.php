@@ -1,5 +1,5 @@
 <?php
-require_once('config/config.php');
+// require_once('config/config.php');
 
 class DatabaseConnection
 {
@@ -17,32 +17,34 @@ class DatabaseConnection
 
     public static function getInstance($config = [])
     {
+        if (!empty($config)) {
+            $databaseType       = $config['databaseType'];
+            $host               = $config['host'];
+            $databaseName       = $config['databaseName'];
+            $username           = $config['username'];
+            $password           = $config['password'];
+
+            self::$instance     = new DatabaseConnection(
+                $databaseType,
+                $host,
+                $databaseName,
+                $username,
+                $password
+            );
+
+            return self::$instance;
+        }
         if (!self::$instance) {
-            if (count($config) > 0 && count($config) < 5) {
-                $databaseType       = $config['databaseType'];
-                $host               = $config['host'];
-                $databaseName       = $config['databaseName'];
-                $username           = $config['usename'];
-                $password           = $config['password'];
 
-                self::$instance     = new DatabaseConnection(
-                    $databaseType,
-                    $host,
-                    $databaseName,
-                    $username,
-                    $password
-                );
-            } else {
-                global $databaseType, $host, $databaseName, $username, $password;
+            global $databaseType, $host, $databaseName, $username, $password;
 
-                self::$instance = new DatabaseConnection(
-                    $databaseType,
-                    $host,
-                    $databaseName,
-                    $username,
-                    $password
-                );
-            }
+            self::$instance = new DatabaseConnection(
+                $databaseType,
+                $host,
+                $databaseName,
+                $username,
+                $password
+            );
         }
         return self::$instance;
     }
