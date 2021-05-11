@@ -18,6 +18,11 @@ class Validation
         $messages   = [];
 
         foreach ($values as $field => $value) {
+
+            if (!isset($this->rules[$field])) {
+                dump($field);
+                continue;
+            }
             $currentFieldrules = explode('|', $this->rules[$field]);
 
             foreach ($currentFieldrules as $currentKeyRule => $fieldRule) {

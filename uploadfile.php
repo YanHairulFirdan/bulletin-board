@@ -1,14 +1,19 @@
 <?php
 require_once('utils/Validation.php');
 
-if ($_POST) {
-    print_r($_FILES['type']);
+if ($_POST || $_FILES) {
+    // print_r($_FILES['type']);
     $rules = [
         'file'     => 'required|type:jpg,png,jpeg,gif'
     ];
 
+    // dump($_FILES);
     $validation     = new Validation($rules);
-    $errorMessages  = $validation->validate($_POST);
+    $errorMessages  = $validation->validate(array_merge($_POST, $_FILES));
+    if ($errorMessages) {
+        # code...
+        dump($errorMessages);
+    }
 }
 
 
@@ -25,7 +30,8 @@ if ($_POST) {
 </head>
 
 <body>
-    <form action="" method="post">
+    <form enctype="multipart/form-data" action="" method="post">
+        <input type="text" name="name" id="">
         <input type="file" name="file" id="">
         <br>
         <button type="submit">submit</button>

@@ -19,8 +19,12 @@ function length($field, $value, $values)
 
 function type($field, $value, $values)
 {
+    $message = '';
     $values = explode(',', $values);
-    echo 'in function <br>';
-    print_r($_FILES);
-    die;
+    $type = explode('/', $_FILES['file']['type']);
+
+    if (in_array($type[1], $values)) {
+        $message = 'File extension is not allowed';
+    }
+    return ($message) ? $message : null;
 }
