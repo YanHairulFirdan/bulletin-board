@@ -6,10 +6,10 @@ function required($field, $values)
 
 function length($field, $value, $values)
 {
-    $values      = explode('-', $values);
-    $min         = intval($values[0]);
-    $max         = intval($values[1]);
-    $message     = '';
+    $values  = explode('-', $values);
+    $min     = intval($values[0]);
+    $max     = intval($values[1]);
+    $message = '';
 
     if (strlen($value) < $min || strlen($value) > $max) {
         $message = "Your {$field} must be {$min} to {$max} characters long";
@@ -20,8 +20,8 @@ function length($field, $value, $values)
 function type($field, $value, $values)
 {
     $message = '';
-    $values = explode(',', $values);
-    $type = explode('/', $_FILES['file']['type']);
+    $values  = explode(',', $values);
+    $type    = explode('/', $_FILES['file']['type']);
 
     if (in_array($type[1], $values)) {
         $message = 'File extension is not allowed';
