@@ -41,10 +41,10 @@ class Model
     {
         $this->setConnection();
 
-        list($columns, $values)     = $this->extractData($data);
-        $columns                    =  substr($columns, 0, -1);
-        $values                     =  substr($values, 0, -1);
-        $query                      = "INSERT INTO $this->tableName ({$columns}) VALUES ({$values})";
+        list($columns, $values) = $this->extractData($data);
+        $columns                =  substr($columns, 0, -1);
+        $values                 =  substr($values, 0, -1);
+        $query                  = "INSERT INTO $this->tableName ({$columns}) VALUES ({$values})";
 
         $this->databaseInstance->query($query);
         header('location:index.php');
@@ -57,8 +57,8 @@ class Model
     {
         $this->setConnection();
 
-        $query              = "SELECT COUNT(*) FROM {$this->tableName}";
-        $numberOfRecords    = $this->databaseInstance->query($query);
+        $query           = "SELECT COUNT(*) FROM {$this->tableName}";
+        $numberOfRecords = $this->databaseInstance->query($query);
 
         return $numberOfRecords->fetchColumn();
     }
@@ -66,19 +66,20 @@ class Model
     private function setConnection()
     {
         if (!$this->databaseInstance) {
-            $this->databaseInstance     = $this->databaseConnection->getConnection();
+            $this->databaseInstance = $this->databaseConnection->getConnection();
         }
     }
 
     private function extractData($data)
     {
-        $columns        = $values = "";
+        $columns = "";
+        $values  = "";
 
         foreach ($data as $key => $field) {
-            $key        = htmlspecialchars($key);
-            $field      = htmlspecialchars($field);
-            $columns   .= '`' . $key . '`' . ',';
-            $values    .= "'$field'" . ',';
+            $key      = htmlspecialchars($key);
+            $field    = htmlspecialchars($field);
+            $columns .= '`' . $key . '`' . ',';
+            $values  .= "'$field'" . ',';
         }
 
         return [$columns, $values];
