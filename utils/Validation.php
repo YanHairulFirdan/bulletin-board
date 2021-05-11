@@ -15,12 +15,11 @@ class Validation
     }
     public function validate($values)
     {
-        $messages   = [];
+        $messages = [];
 
         foreach ($values as $field => $value) {
 
             if (!isset($this->rules[$field])) {
-                dump($field);
                 continue;
             }
             $currentFieldrules = explode('|', $this->rules[$field]);
@@ -29,10 +28,10 @@ class Validation
                 $findSeparator = strpos($fieldRule, ':');
 
                 if (is_numeric($findSeparator)) {
-                    $ruleContainValue       = explode(':', $fieldRule);
-                    $messages[$field]    = $ruleContainValue[0]($field, $value, $ruleContainValue[1]);
+                    $ruleContainValue = explode(':', $fieldRule);
+                    $messages[$field] = $ruleContainValue[0]($field, $value, $ruleContainValue[1]);
                 } else {
-                    $messages[$field]    = $fieldRule($field, $value);
+                    $messages[$field] = $fieldRule($field, $value);
                 }
 
 
