@@ -16,3 +16,11 @@ function length($field, $value, $values)
     }
     return (!empty($message)) ? $message : null;
 }
+
+function type($field, $value, $values)
+{
+    $values = explode(',', $values);
+    echo 'in function <br>';
+    print_r($_FILES);
+    die;
+}
