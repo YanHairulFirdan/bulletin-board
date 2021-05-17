@@ -1,10 +1,11 @@
 <?php
+
 require_once('vendor/autoload.php');
-require_once('Database/DatabaseConnection.php');
-require_once('Database/Model.php');
-require_once('helpers/functions.php');
-require_once('utils/Validation.php');
-require_once('utils/Pagination.php');
+// require_once('Database/DatabaseConnection.php');
+// require_once('Database/Model.php');
+// require_once('helpers/functions.php');
+// require_once('utils/Validation.php');
+// require_once('utils/Pagination.php');
 
 
 $databaseConnection = DatabaseConnection::getInstance();
