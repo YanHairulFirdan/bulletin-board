@@ -3,11 +3,16 @@ class Pagination
 {
 
     private $data = [];
-    private $model, $startIndex, $currentPage, $nextPage, $previousPage, $pager, $dataPerPage, $numRows, $numberOfPager, $lastIndex;
+    // private $model, $startIndex, $currentPage, $nextPage, $previousPage, $pager, $dataPerPage, $numRows, $numberOfPager, $lastIndex;
     public function __construct($numberOfRecords, $dataPerPage = 10)
     {
         $this->data['numberOfRecords'] = $numberOfRecords;
         $this->data['dataPerPage'] = $dataPerPage;
+    }
+
+    public function __get($name)
+    {
+        return $this->data[$name];
     }
 
     private function setNumberOfPager()
@@ -35,11 +40,6 @@ class Pagination
         // $this->previousPage = ($this->currentPage > 1) ? $this->currentPage -  1 : 0;
     }
 
-    public function __get($name)
-    {
-        return $this->data[$name];
-    }
-
     private function setNumberOfButton()
     {
         $this->data['numberOfButton'] = ($this->data['numberOfPager'] > 5) ? 5 : $this->data['numberOfPager'];
@@ -48,10 +48,9 @@ class Pagination
 
     private function setStartIndex()
     {
-        if ($this->numberOfPager <= 5) {
-            // $this->startIndex = 1;
+        if ($this->data['numberOfPager'] <= 5) {
             $this->data['startIndex'] = 1;
-        } elseif ($this->numberOfPager > 5) {
+        } elseif ($this->data['numberOfPager'] > 5) {
             // $this->startIndex = ($this->currentPage - 2 >= 2) ? $this->currentPage - 2 : 1;
             $this->data['startIndex'] = ($this->currentPage - 2 >= 2) ? $this->currentPage - 2 : 1;
 
@@ -78,14 +77,21 @@ class Pagination
         }
     }
 
+
+    public function printPropertyValue($name)
+    {
+        print_r($this->data[$name]);
+    }
     public function paginator()
     {
         $this->setNumberOfPager(10);
+        $this->setNumberOfButton();
         $this->setCurrentPage();
         $this->setNextPage();
         $this->setPreviousPage();
-        $this->setNumberOfButton();
         $this->setStartIndex();
         $this->setLastIndex();
+        $this->printPropertyValue('startIndex');
+        echo "<br>";
     }
 }
