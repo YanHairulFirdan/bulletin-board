@@ -14,22 +14,10 @@ $bulletins          = $bulletinsModel->getData();
 $pagination->paginator();
 // change to pagination getCurrentPage() for example
 $startIndex = $pagination->startIndex;
-$pagination->printPropertyValue('startIndex');
-echo "<br>";
 $currentPage = $pagination->currentPage;
-$pagination->printPropertyValue('currentPage');
-echo "<br>";
 $previousPage = $pagination->previousPage;
-$pagination->printPropertyValue('previousPage');
-echo "<br>";
-$pagination->printPropertyValue('nextPage');
-echo "<br>";
 $nextPage = $pagination->nextPage;
-$pagination->printPropertyValue('lastIndex');
-echo "<br>";
 $lastIndex = $pagination->lastIndex;
-$pagination->printPropertyValue('numberOfButton');
-echo "<br>";
 $numberOfButton = $pagination->numberOfButton;
 
 

@@ -44,6 +44,17 @@ class Pagination
     private function setNumberOfButton()
     {
         $this->data['numberOfButton'] = ($this->data['numberOfPager'] > 5) ? 5 : $this->data['numberOfPager'];
+        if ($this->data['numberOfPager'] <= 5) {
+            $this->data['numberOfButton'] = $this->data['numberOfPager'];
+        } elseif ($this->data['numberOfPager'] > 5) {
+            if ($this->data['numberOfPager'] - $this->data['currentPage'] <= 2) {
+                $this->data['numberOfButton'] = $this->data['numberOfPager'];
+                // $this->data['numberOfButton'] = $this->data['numberOfPager'];
+            } else {
+                // $this->data['numberOfButton'] = ($this->data['currentPage'] <= 2) ? 5 : $this->data['currentPage'] + 2;
+                $this->data['numberOfButton'] = ($this->data['currentPage'] <= 2) ? 5 : $this->data['currentPage'] + 2;
+            }
+        }
         // $this->pager = ($this->numberOfPager > 5) ? 5 : $this->numberOfPager;
     }
 
@@ -53,7 +64,7 @@ class Pagination
             $this->data['startIndex'] = 1;
         } elseif ($this->data['numberOfPager'] > 5) {
             // $this->startIndex = ($this->currentPage - 2 >= 2) ? $this->currentPage - 2 : 1;
-            $this->data['startIndex'] = ($this->currentPage - 2 >= 2) ? $this->currentPage - 2 : 1;
+            $this->data['startIndex'] = ($this->data['currentPage'] - 2 >= 2) ? $this->data['currentPage'] - 2 : 1;
 
             if ($this->data['numberOfPager'] - $this->data['currentPage'] <= 2) {
                 // $this->startIndex = ($this->numberOfPager - $this->currentPage == 0) ? $this->currentPage - 4 : $this->currentPage - 3;
@@ -86,13 +97,11 @@ class Pagination
     public function paginator()
     {
         $this->setNumberOfPager(10);
-        $this->setNumberOfButton();
         $this->setCurrentPage();
         $this->setNextPage();
         $this->setPreviousPage();
         $this->setStartIndex();
         $this->setLastIndex();
-        $this->printPropertyValue('startIndex');
-        echo "<br>";
+        $this->setNumberOfButton();
     }
 }
