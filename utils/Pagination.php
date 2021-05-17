@@ -37,7 +37,6 @@ class Pagination
 
     public function __get($name)
     {
-        echo "you called $name property \n";
         return $this->data[$name];
     }
 
@@ -66,7 +65,7 @@ class Pagination
     private function setLastIndex()
     {
         // $this->data['lastIndex'];
-        if ($this->data['$numberOfPager'] <= 5) {
+        if ($this->data['numberOfPager'] <= 5) {
             $this->data['lastIndex'] = $this->data['numberOfPager'];
         }
         if ($this->data['numberOfPager'] > 5) {
