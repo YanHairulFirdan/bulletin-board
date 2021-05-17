@@ -103,7 +103,7 @@
                 <a href="?page=<?= $previousPage ?>">&lt;</a>
             </span>
         <?php endif ?>
-        <?php for ($page = $startIndex; $page <= $pagerButton; $page++) : ?>
+        <?php for ($page = $startIndex; $page <= $lastIndex; $page++) : ?>
             <?php if (($currentPage == $page)) : ?>
                 <span class="btn-page">
                     <span><?= $currentPage ?></span>
