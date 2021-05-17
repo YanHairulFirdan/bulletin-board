@@ -13,9 +13,9 @@ class Model
 
     public function __construct(DatabaseConnection $databaseConnection, $tableName, $dataPerPage = 10)
     {
-        $this->tableName            = $tableName;
-        $this->databaseConnection   = $databaseConnection;
-        $this->dataPerPage          = $dataPerPage;
+        $this->tableName          = $tableName;
+        $this->databaseConnection = $databaseConnection;
+        $this->dataPerPage        = $dataPerPage;
     }
 
 
@@ -24,10 +24,10 @@ class Model
         $this->setConnection();
 
         if (isset($_REQUEST['page']) && intval($_REQUEST['page']) > 1) {
-            $offset     = (intval($_REQUEST['page']) - 1) * 10;
-            $query      = "SELECT * FROM {$this->tableName} ORDER BY created_at DESC LIMIT {$this->dataPerPage} OFFSET {$offset}";
+            $offset = (intval($_REQUEST['page']) - 1) * 10;
+            $query  = "SELECT * FROM {$this->tableName} ORDER BY created_at DESC LIMIT {$this->dataPerPage} OFFSET {$offset}";
         } else {
-            $query      = "SELECT * FROM {$this->tableName} ORDER BY created_at DESC LIMIT {$this->dataPerPage}";
+            $query  = "SELECT * FROM {$this->tableName} ORDER BY created_at DESC LIMIT {$this->dataPerPage}";
         }
 
         $data = $this->databaseInstance->query($query);
