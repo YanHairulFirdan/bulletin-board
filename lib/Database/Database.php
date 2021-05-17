@@ -1,5 +1,7 @@
 <?php
 
+namespace Lib\Database;
+
 use Lib\Database\DatabaseConnectionInterface;
 
 class Database
@@ -33,10 +35,10 @@ class Database
         }
     }
 
-    public function select()
+    public function select($tablename)
     {
         $this->setConnection();
-        $this->query = "SELECT * FROM TABLE";
+        $this->query = "SELECT * FROM {$tablename}";
 
         if (isset($this->columns)) {
             $this->query = str_replace('*', $this->columns, $this->query);

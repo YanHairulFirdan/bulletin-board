@@ -1,87 +1,104 @@
 <?php
 require_once 'vendor/autoload.php';
+
+namespace App\Databases;
+
+use Lib\Database\Database;
+use Lib\Database\MysqlConnection;
+
 // require_once 'helpers/file_manipulation.php';
-require_once 'config/config.php';
-require_once('Database/DatabaseConnection.php');
+// require_once 'config/config.php';
+// require_once('Database/DatabaseConnection.php');
 
-class Model
+abstract class Model
 {
-    private $tableName;
+    protected $tableName;
+
     private $databaseConnection;
-    private $databaseInstance;
-    public $dataPerPage;
+    private $database;
 
-    public function __construct(DatabaseConnection $databaseConnection, $tableName, $dataPerPage = 10)
+    public function __construct()
     {
-        $this->tableName          = $tableName;
-        $this->databaseConnection = $databaseConnection;
-        $this->dataPerPage        = $dataPerPage;
+        $this->databaseConnection = new MysqlConnection;
+        $this->database = new Database($this->databaseConnection);
     }
 
-
-    public function getData()
+    public function get()
     {
-        $this->setConnection();
-
-        if (isset($_REQUEST['page']) && intval($_REQUEST['page']) > 1) {
-            $offset = (intval($_REQUEST['page']) - 1) * 10;
-            $query  = "SELECT * FROM {$this->tableName} ORDER BY created_at DESC LIMIT {$this->dataPerPage} OFFSET {$offset}";
-        } else {
-            $query  = "SELECT * FROM {$this->tableName} ORDER BY created_at DESC LIMIT {$this->dataPerPage}";
-        }
-
-        $data = $this->databaseInstance->query($query);
-        // $this->numberOfRecord();
-        // dump($data->fetchAll());
-        // die;
-        return $data;
+        return $this->database->select($this->tableName);
     }
 
-    public function create($data)
+    public function limit($limit)
     {
-        $this->setConnection();
-
-        list($columns, $values) = $this->extractData($data);
-        $columns                =  substr($columns, 0, -1);
-        $values                 =  substr($values, 0, -1);
-        $query                  = "INSERT INTO $this->tableName ({$columns}) VALUES ({$values})";
-
-        $this->databaseInstance->query($query);
-        header('location:index.php');
+        $this->database->limit = $limit;
+        return $this;
     }
 
 
 
+    // public function getData()
+    // {
+    //     $this->setConnection();
 
-    public function numberOfRecord()
-    {
-        $this->setConnection();
+    //     if (isset($_REQUEST['page']) && intval($_REQUEST['page']) > 1) {
+    //         $offset = (intval($_REQUEST['page']) - 1) * 10;
+    //         $query  = "SELECT * FROM {$this->tableName} ORDER BY created_at DESC LIMIT {$this->dataPerPage} OFFSET {$offset}";
+    //     } else {
+    //         $query  = "SELECT * FROM {$this->tableName} ORDER BY created_at DESC LIMIT {$this->dataPerPage}";
+    //     }
 
-        $query           = "SELECT COUNT(*) FROM {$this->tableName}";
-        $numberOfRecords = $this->databaseInstance->query($query);
+    //     $data = $this->databaseInstance->query($query);
+    //     // $this->numberOfRecord();
+    //     // dump($data->fetchAll());
+    //     // die;
+    //     return $data;
+    // }
 
-        return $numberOfRecords->fetchColumn();
-    }
+    // public function create($data)
+    // {
+    //     $this->setConnection();
 
-    private function setConnection()
-    {
-        if (!$this->databaseInstance) {
-            $this->databaseInstance = $this->databaseConnection->getConnection();
-        }
-    }
+    //     list($columns, $values) = $this->extractData($data);
+    //     $columns                =  substr($columns, 0, -1);
+    //     $values                 =  substr($values, 0, -1);
+    //     $query                  = "INSERT INTO $this->tableName ({$columns}) VALUES ({$values})";
 
-    private function extractData($data)
-    {
-        $columns = "";
-        $values  = "";
+    //     $this->databaseInstance->query($query);
+    //     header('location:index.php');
+    // }
 
-        foreach ($data as $key => $field) {
-            $key      = htmlspecialchars($key);
-            $field    = htmlspecialchars($field);
-            $columns .= '`' . $key . '`' . ',';
-            $values  .= "'$field'" . ',';
-        }
 
-        return [$columns, $values];
-    }
+
+
+    // public function numberOfRecord()
+    // {
+    //     $this->setConnection();
+
+    //     $query           = "SELECT COUNT(*) FROM {$this->tableName}";
+    //     $numberOfRecords = $this->databaseInstance->query($query);
+
+    //     return $numberOfRecords->fetchColumn();
+    // }
+
+    // private function setConnection()
+    // {
+    //     if (!$this->databaseInstance) {
+    //         $this->databaseInstance = $this->databaseConnection->getConnection();
+    //     }
+    // }
+
+    // private function extractData($data)
+    // {
+    //     $columns = "";
+    //     $values  = "";
+
+    //     foreach ($data as $key => $field) {
+    //         $key      = htmlspecialchars($key);
+    //         $field    = htmlspecialchars($field);
+    //         $columns .= '`' . $key . '`' . ',';
+    //         $values  .= "'$field'" . ',';
+    //     }
+
+    //     return [$columns, $values];
+    // }
 }

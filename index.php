@@ -1,5 +1,7 @@
 <?php
 
+use Models\Bulletin;
+
 require_once('vendor/autoload.php');
 // require_once('Database/DatabaseConnection.php');
 // require_once('Database/Model.php');
@@ -8,20 +10,23 @@ require_once('vendor/autoload.php');
 // require_once('utils/Pagination.php');
 
 
-$databaseConnection = DatabaseConnection::getInstance();
-$bulletinsModel     = new Model($databaseConnection, 'bulletins');
-$pagination         = new Pagination($bulletinsModel->numberOfRecord());
-$bulletins          = $bulletinsModel->getData();
-$pagination->paginator();
-// change to pagination getCurrentPage() for example
-$startIndex = $pagination->startIndex;
-$currentPage = $pagination->currentPage;
-$previousPage = $pagination->previousPage;
-$nextPage = $pagination->nextPage;
-$lastIndex = $pagination->lastIndex;
-$numberOfButton = $pagination->numberOfButton;
+// $databaseConnection = DatabaseConnection::getInstance();
+// $bulletinsModel     = new Model($databaseConnection, 'bulletins');
+// $pagination         = new Pagination($bulletinsModel->numberOfRecord());
+// $bulletins          = $bulletinsModel->getData();
+// $pagination->paginator();
+// // change to pagination getCurrentPage() for example
+// $startIndex = $pagination->startIndex;
+// $currentPage = $pagination->currentPage;
+// $previousPage = $pagination->previousPage;
+// $nextPage = $pagination->nextPage;
+// $lastIndex = $pagination->lastIndex;
+// $numberOfButton = $pagination->numberOfButton;
 
+$bulletin = new Bulletin();
 
+print_r($bulletin->get());
+die;
 // list(
 //     $currentPage,
 //     $startIndex,

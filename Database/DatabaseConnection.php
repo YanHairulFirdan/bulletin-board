@@ -53,8 +53,8 @@ class DatabaseConnection
     {
 
         if (!$this->connection) {
-            $dsn                = "{$this->databaseType}:host={$this->host};dbname={$this->databaseName}";
-            $this->connection   = new PDO($dsn, $this->username, $this->password);
+            $dsn              = "{$this->databaseType}:host={$this->host};dbname={$this->databaseName}";
+            $this->connection = new PDO($dsn, $this->username, $this->password);
 
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
