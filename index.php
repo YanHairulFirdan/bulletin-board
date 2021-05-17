@@ -9,17 +9,20 @@ require_once('utils/Pagination.php');
 
 $databaseConnection = DatabaseConnection::getInstance();
 $bulletinsModel     = new Model($databaseConnection, 'bulletins');
-$pagination         = new Pagination($bulletinsModel);
+$pagination         = new Pagination($bulletinsModel->numberOfRecord());
 $bulletins          = $bulletinsModel->getData();
-
+$pagination->paginator();
 // change to pagination getCurrentPage() for example
-list(
-    $currentPage,
-    $startIndex,
-    $previousPage,
-    $nextPage,
-    $pagerButton
-)                           = $pagination->paginator();
+// $startIndex = $pagination->startIndex;
+// dump($startIndex);
+die;
+// list(
+//     $currentPage,
+//     $startIndex,
+//     $previousPage,
+//     $nextPage,
+//     $pagerButton
+// )                           = $pagination->paginator();
 // change for pagination
 
 if ($_POST) {
