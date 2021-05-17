@@ -1,10 +1,16 @@
 {
-	"autoloads": {
+	"autoload": {
+		"psr-4": {
+			"Lib\\Database\\": "lib/database/"
+		},
 		"classmap": [
 			"config/",
 			"Database/",
 			"helpers/",
 			"utils/"
+		],
+		"files": [
+			"config/config.php"
 		]
 	},
 	"require": {
