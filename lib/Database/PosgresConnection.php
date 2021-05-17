@@ -23,4 +23,9 @@ class PosgresConnection implements DatabaseConnectionInterface
         echo 'connection has been created succesfully';
         return $this->connection;
     }
+
+    public function getConnection()
+    {
+        return $this->connection;
+    }
 }

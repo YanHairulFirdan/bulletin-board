@@ -28,7 +28,11 @@ class MysqlConnection implements DatabaseConnectionInterface
         $this->connection = new PDO($this->dsn, $this->username, $this->password);
         echo 'connection has been created succesfully';
 
+        return $this->connection;
+    }
 
+    public function getConnection()
+    {
         return $this->connection;
     }
 }
