@@ -14,10 +14,12 @@ $bulletins          = $bulletinsModel->getData();
 $pagination->paginator();
 // change to pagination getCurrentPage() for example
 $startIndex = $pagination->startIndex;
-dump($startIndex);
+
 $currentPage = $pagination->currentPage;
-dump($currentPage);
-die;
+$previousPage = $pagination->previousPage;
+$nextPage = $pagination->nextPage;
+$lastIndex = $pagination->lastIndex;
+
 // list(
 //     $currentPage,
 //     $startIndex,
