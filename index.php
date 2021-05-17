@@ -19,6 +19,7 @@ $currentPage = $pagination->currentPage;
 $previousPage = $pagination->previousPage;
 $nextPage = $pagination->nextPage;
 $lastIndex = $pagination->lastIndex;
+$numberOfButton = $pagination->numberOfButton;
 
 // list(
 //     $currentPage,
