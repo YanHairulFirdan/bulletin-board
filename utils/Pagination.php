@@ -17,7 +17,8 @@ class Pagination
 
     private function setNumberOfPager()
     {
-        $this->data['numberOfPager'] = floor($this->data['numberOfRecords'] / $this->data['dataPerPage']);
+        $this->data['numberOfPager']  = floor($this->data['numberOfRecords'] / $this->data['dataPerPage']);
+        $this->data['numberOfPager'] += ($this->data['numberOfRecords'] % $this->data['dataPerPage'] > 0) ? 1 : 0;
         // $this->numberOfPager = floor($this->numberOfRecords / $this->dataPerPage);
     }
 
