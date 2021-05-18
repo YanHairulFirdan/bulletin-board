@@ -3,6 +3,8 @@
 require_once('vendor/autoload.php');
 
 use App\Model\Bulletin as ModelBulletin;
+use App\Utils\Pagination;
+use App\Utils\Validation;
 
 $bulletin       = new ModelBulletin();
 $numOfRows      = $bulletin->numRows();

@@ -1,4 +1,7 @@
 <?php
+
+namespace App\Utils;
+
 class Pagination
 {
 

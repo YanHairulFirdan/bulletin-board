@@ -1,6 +1,7 @@
 <?php
-require_once 'Validator/validator.php';
-require_once 'helpers/functions.php';
+
+namespace App\Utils;
+
 class Validation
 {
     // private $messages = [
