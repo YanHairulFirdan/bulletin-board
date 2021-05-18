@@ -43,6 +43,13 @@ abstract class Model
         return $this->database->select($this->tableName);
     }
 
+    public function columns(string $columns)
+    {
+        $this->database->columns = $columns;
+
+        return $this;
+    }
+
     public function numRows()
     {
         return $this->database->numrows($this->tableName);

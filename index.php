@@ -8,9 +8,8 @@ use App\Utils\Validation;
 
 
 $bulletin       = new ModelBulletin();
-$numOfRows      = $bulletin->numRows();
 $bulletins      = $bulletin->orderBy('created_at', 'DESC')->paginate(10);
-$pagination     = new Pagination($numOfRows);
+$pagination     = new Pagination($bulletin->numRows());
 
 $pagination->paginator();
 

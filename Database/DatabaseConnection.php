@@ -57,6 +57,8 @@ class DatabaseConnection
             $this->connection = new PDO($dsn, $this->username, $this->password);
 
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $data = $this->connection->query('select');
+            $data->fetchObject();
         }
 
         return $this->connection;
