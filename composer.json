@@ -2,13 +2,11 @@
 	"autoload": {
 		"psr-4": {
 			"Lib\\Database\\": "lib/database/",
-			"App\\Database\\": "database/",
 			"App\\Model\\": "Models/",
 			"App\\Utils\\": "utils/"
 		},
 		"classmap": [
 			"config/",
-			"Database/",
 			"helpers/",
 			"utils/Validator/"
 		],
