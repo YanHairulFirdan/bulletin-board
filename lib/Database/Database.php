@@ -38,6 +38,7 @@ class Database
     public function setColumn()
     {
         if (!is_null($this->columns)) {
+            $this->columns = implode(',', $this->columns);
             $this->query = str_replace('*', $this->columns, $this->query);
         }
     }
@@ -54,6 +55,7 @@ class Database
     {
         if (!is_null($this->orderBy)) {
             $subQuery = " ORDER BY {$this->orderBy}";
+
             if (!is_null($this->orderType)) {
                 $subQuery .= " {$this->orderType}";
             }
@@ -67,6 +69,7 @@ class Database
         if ($this->limit > 0) {
             $subQuery     = " LIMIT {$this->limit}";
             $this->query .= $subQuery;
+
             if (!is_null($this->offset)) {
                 $this->query .= " OFFSET {$this->offset}";
             }

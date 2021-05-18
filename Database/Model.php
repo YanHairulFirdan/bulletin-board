@@ -13,7 +13,8 @@ abstract class Model
 
     public function __construct()
     {
-        $this->database = new Database(new MysqlConnection);
+        $connectionInstance = MysqlConnection::getInstance();
+        $this->database     = new Database($connectionInstance);
     }
 
     public function get()
@@ -43,7 +44,7 @@ abstract class Model
         return $this->database->select($this->tableName);
     }
 
-    public function columns(string $columns)
+    public function columns(array $columns)
     {
         $this->database->columns = $columns;
 

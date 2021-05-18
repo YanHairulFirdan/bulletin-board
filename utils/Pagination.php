@@ -58,6 +58,7 @@ class Pagination
             $this->data['startIndex'] = 1;
         } elseif ($this->data['numberOfPager'] > 5) {
             $this->data['startIndex'] = ($this->data['currentPage'] - 2 >= 2) ? $this->data['currentPage'] - 2 : 1;
+
             if (($this->data['numberOfPager'] - $this->data['currentPage']) <= 2) {
                 $this->data['startIndex'] = ($this->data['numberOfPager'] - $this->data['currentPage'] == 0) ? $this->data['currentPage'] - 4 : $this->data['currentPage'] - 3;
             }

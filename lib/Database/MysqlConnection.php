@@ -7,7 +7,8 @@ use PDO;
 class MysqlConnection implements DatabaseConnectionInterface
 {
     private $connection, $dsn, $databaseType, $host, $databaseName, $username, $password;
-    public function __construct()
+    private static $instance = null;
+    private function __construct()
     {
         $this->databaseType = DATABASE_TYPE;
         $this->host         = HOST;
@@ -15,6 +16,15 @@ class MysqlConnection implements DatabaseConnectionInterface
         $this->username     = USERNAME;
         $this->password     = PASSWORD;
     }
+    public static function getInstance()
+    {
+        if (!self::$instance) {
+            self::$instance = new MysqlConnection;
+        }
+
+        return self::$instance;
+    }
+
     public function connect()
     {
         $this->dsn        = "{$this->databaseType}:host={$this->host};dbname={$this->databaseName}";
