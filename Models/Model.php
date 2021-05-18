@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Databases;
+namespace App\Models;
 
 use Lib\Database\Database;
 use Lib\Database\MysqlConnection;
