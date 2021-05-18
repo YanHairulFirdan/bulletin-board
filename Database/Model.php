@@ -22,13 +22,17 @@ abstract class Model
         return $this->database->select($this->tableName);
     }
 
+    public function create(array $data)
+    {
+        $this->database->insert($data, $this->tableName);
+    }
+
     public function limit($limit)
     {
         $this->database->limit = $limit;
 
         return $this;
     }
-
 
     public function paginate($limit)
     {
@@ -74,10 +78,5 @@ abstract class Model
         $this->database->whereValue = $value;
 
         return $this;
-    }
-
-    public function create(array $data)
-    {
-        $this->database->insert($data, $this->tableName);
     }
 }
