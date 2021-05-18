@@ -6,7 +6,6 @@ class Pagination
 {
 
     private $data = [];
-    // private $model, $startIndex, $currentPage, $nextPage, $previousPage, $pager, $dataPerPage, $numRows, $numberOfPager, $lastIndex;
     public function __construct($numberOfRecords, $dataPerPage = 10)
     {
         $this->data['numberOfRecords'] = $numberOfRecords;
@@ -22,26 +21,21 @@ class Pagination
     {
         $this->data['numberOfPager']  = floor($this->data['numberOfRecords'] / $this->data['dataPerPage']);
         $this->data['numberOfPager'] += ($this->data['numberOfRecords'] % $this->data['dataPerPage'] > 0) ? 1 : 0;
-        // $this->numberOfPager = floor($this->numberOfRecords / $this->dataPerPage);
     }
 
     private function setCurrentPage()
     {
         $this->data['currentPage'] = (isset($_REQUEST['page'])) ? intval($_REQUEST['page']) : 1;
-        // $this->currentPage = (isset($_REQUEST['page'])) ? intval($_REQUEST['page']) : 1;
     }
 
     private function setNextPage()
     {
         $this->data['nextPage'] = ($this->data['currentPage'] != $this->data['numberOfPager']) ? $this->data['currentPage'] + 1 : 0;
-        // $this->nextPage = ($this->currentPage != $this->numberOfPager) ? $this->currentPage + 1 : 0;
     }
 
     private function setPreviousPage()
     {
         $this->data['previousPage'] = ($this->data['currentPage'] > 1) ? $this->data['currentPage'] -  1 : 0;
-
-        // $this->previousPage = ($this->currentPage > 1) ? $this->currentPage -  1 : 0;
     }
 
     private function setNumberOfButton()
@@ -52,13 +46,10 @@ class Pagination
         } elseif ($this->data['numberOfPager'] > 5) {
             if ($this->data['numberOfPager'] - $this->data['currentPage'] <= 2) {
                 $this->data['numberOfButton'] = $this->data['numberOfPager'];
-                // $this->data['numberOfButton'] = $this->data['numberOfPager'];
             } else {
-                // $this->data['numberOfButton'] = ($this->data['currentPage'] <= 2) ? 5 : $this->data['currentPage'] + 2;
                 $this->data['numberOfButton'] = ($this->data['currentPage'] <= 2) ? 5 : $this->data['currentPage'] + 2;
             }
         }
-        // $this->pager = ($this->numberOfPager > 5) ? 5 : $this->numberOfPager;
     }
 
     private function setStartIndex()
@@ -66,11 +57,8 @@ class Pagination
         if ($this->data['numberOfPager'] <= 5) {
             $this->data['startIndex'] = 1;
         } elseif ($this->data['numberOfPager'] > 5) {
-            // $this->startIndex = ($this->currentPage - 2 >= 2) ? $this->currentPage - 2 : 1;
             $this->data['startIndex'] = ($this->data['currentPage'] - 2 >= 2) ? $this->data['currentPage'] - 2 : 1;
-
-            if ($this->data['numberOfPager'] - $this->data['currentPage'] <= 2) {
-                // $this->startIndex = ($this->numberOfPager - $this->currentPage == 0) ? $this->currentPage - 4 : $this->currentPage - 3;
+            if (($this->data['numberOfPager'] - $this->data['currentPage']) <= 2) {
                 $this->data['startIndex'] = ($this->data['numberOfPager'] - $this->data['currentPage'] == 0) ? $this->data['currentPage'] - 4 : $this->data['currentPage'] - 3;
             }
         }
@@ -78,25 +66,17 @@ class Pagination
 
     private function setLastIndex()
     {
-        // $this->data['lastIndex'];
         if ($this->data['numberOfPager'] <= 5) {
             $this->data['lastIndex'] = $this->data['numberOfPager'];
         } elseif ($this->data['numberOfPager'] > 5) {
             if ($this->data['numberOfPager'] - $this->data['currentPage'] <= 2) {
                 $this->data['lastIndex'] = $this->data['numberOfPager'];
-                // $this->data['lastIndex'] = $this->data['numberOfPager'];
             } else {
-                // $this->data['lastIndex'] = ($this->data['currentPage'] <= 2) ? 5 : $this->data['currentPage'] + 2;
                 $this->data['lastIndex'] = ($this->data['currentPage'] <= 2) ? 5 : $this->data['currentPage'] + 2;
             }
         }
     }
 
-
-    public function printPropertyValue($name)
-    {
-        print_r($this->data[$name]);
-    }
     public function paginator()
     {
         $this->setNumberOfPager(10);
