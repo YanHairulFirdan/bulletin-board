@@ -54,7 +54,6 @@ class Database
     {
         if (!is_null($this->orderBy)) {
             $subQuery = " ORDER BY {$this->orderBy}";
-
             if (!is_null($this->orderType)) {
                 $subQuery .= " {$this->orderType}";
             }
@@ -68,7 +67,6 @@ class Database
         if ($this->limit > 0) {
             $subQuery     = " LIMIT {$this->limit}";
             $this->query .= $subQuery;
-
             if (!is_null($this->offset)) {
                 $this->query .= " OFFSET {$this->offset}";
             }
@@ -87,7 +85,9 @@ class Database
     {
 
         $this->setConnection();
+
         $this->query = "SELECT * FROM {$tablename}";
+
         $this->setColumn();
         $this->setWhereClause();
         $this->setOrderBy();
@@ -100,6 +100,7 @@ class Database
     public function insert($data, $tableName)
     {
         $this->setConnection();
+
         $this->tableName        = $tableName;
         list($columns, $values) = $this->extractData($data);
         $this->query            = "INSERT INTO {$this->tableName} ({$columns}) VALUES ({$values})";
@@ -109,6 +110,7 @@ class Database
     public function update($column, $value, $data)
     {
         $this->setConnection();
+
         $updateStatement = $this->updateQuery($data);
         $this->query     = "UPDATE $this->tableName SET  {$updateStatement} WHERE $column = {$value}";
 
