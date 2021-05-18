@@ -8,7 +8,9 @@ use App\Utils\Validation;
 
 $bulletin       = new ModelBulletin();
 $numOfRows      = $bulletin->numRows();
-$bulletins      = $bulletin->paginate(10);
+$bulletins      = $bulletin->orderBy('created_at', 'DESC')->paginate(10);
+$whereBulletin  = $bulletin->where('title', '=', 'sksofofpufdjkfdfopd')->get();
+print_r($whereBulletin);
 $pagination     = new Pagination($numOfRows);
 $pagination->paginator();
 
@@ -35,5 +37,5 @@ if ($_POST) {
     }
 }
 
-
+// load the view
 require_once 'public/assets/views/index.view.php';

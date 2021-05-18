@@ -40,21 +40,13 @@ class Database
 
         $this->setConnection();
         $this->query = "SELECT * FROM {$tablename}";
+
         if (!is_null($this->columns)) {
             $this->query = str_replace('*', $this->columns, $this->query);
         }
 
-        if ($this->limit > 0) {
-            $subQuery     = " LIMIT {$this->limit}";
-            $this->query .= $subQuery;
-
-            if (!is_null($this->offset)) {
-                $this->query .= " OFFSET {$this->offset}";
-            }
-        }
-
         if (!is_null($this->where)) {
-            $subQuery     = " WHERE {$this->where} {$this->operator} {$this->whereValue}";
+            $subQuery     = " WHERE {$this->where} {$this->operator} '{$this->whereValue}'";
             $this->query .= $subQuery;
         }
 
@@ -68,10 +60,22 @@ class Database
             $this->query .= $subQuery;
         }
 
+        if ($this->limit > 0) {
+            $subQuery     = " LIMIT {$this->limit}";
+            $this->query .= $subQuery;
+
+            if (!is_null($this->offset)) {
+                $this->query .= " OFFSET {$this->offset}";
+            }
+        }
+
+
+
         if (!is_null($this->groupBy)) {
             $subQuery     = " GROUP BY {$this->groupBy}";
             $this->query .= $subQuery;
         }
+        echo $this->query . "<br>";
 
         return $this->connection->query($this->query)->fetchAll();
     }
