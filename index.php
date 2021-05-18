@@ -6,12 +6,12 @@ use App\Model\Bulletin as ModelBulletin;
 use App\Utils\Pagination;
 use App\Utils\Validation;
 
+
 $bulletin       = new ModelBulletin();
 $numOfRows      = $bulletin->numRows();
 $bulletins      = $bulletin->orderBy('created_at', 'DESC')->paginate(10);
-$whereBulletin  = $bulletin->where('title', '=', 'sksofofpufdjkfdfopd')->get();
-print_r($whereBulletin);
 $pagination     = new Pagination($numOfRows);
+
 $pagination->paginator();
 
 $startIndex     = $pagination->startIndex;
@@ -30,10 +30,14 @@ if ($_POST) {
 
     $validation    = new Validation($rules);
     $errorMessages = $validation->validate($_POST);
-    $body          = $_POST['body'];
-    $title         = $_POST['title'];
+
+
     if (!$errorMessages) {
-        $bulletinsModel->create($_POST);
+        $bulletin->create($_POST);
+        header("Refresh:0");
+    } else {
+        $body  = $_POST['body'];
+        $title = $_POST['title'];
     }
 }
 

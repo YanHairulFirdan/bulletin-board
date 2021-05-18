@@ -24,6 +24,7 @@ abstract class Model
     public function limit($limit)
     {
         $this->database->limit = $limit;
+
         return $this;
     }
 
@@ -65,5 +66,10 @@ abstract class Model
         $this->database->whereValue = $value;
 
         return $this;
+    }
+
+    public function create(array $data)
+    {
+        $this->database->insert($data, $this->tableName);
     }
 }

@@ -35,21 +35,23 @@ class Database
         }
     }
 
-    public function select($tablename)
+    public function setColumn()
     {
-
-        $this->setConnection();
-        $this->query = "SELECT * FROM {$tablename}";
-
         if (!is_null($this->columns)) {
             $this->query = str_replace('*', $this->columns, $this->query);
         }
+    }
 
+    public function setWhereClause()
+    {
         if (!is_null($this->where)) {
             $subQuery     = " WHERE {$this->where} {$this->operator} '{$this->whereValue}'";
             $this->query .= $subQuery;
         }
+    }
 
+    public function setOrderBy()
+    {
         if (!is_null($this->orderBy)) {
             $subQuery = " ORDER BY {$this->orderBy}";
 
@@ -59,7 +61,10 @@ class Database
 
             $this->query .= $subQuery;
         }
+    }
 
+    public function setLimit()
+    {
         if ($this->limit > 0) {
             $subQuery     = " LIMIT {$this->limit}";
             $this->query .= $subQuery;
@@ -68,24 +73,36 @@ class Database
                 $this->query .= " OFFSET {$this->offset}";
             }
         }
+    }
 
-
-
+    public function setGroupBy()
+    {
         if (!is_null($this->groupBy)) {
             $subQuery     = " GROUP BY {$this->groupBy}";
             $this->query .= $subQuery;
         }
-        echo $this->query . "<br>";
+    }
+
+    public function select($tablename)
+    {
+
+        $this->setConnection();
+        $this->query = "SELECT * FROM {$tablename}";
+        $this->setColumn();
+        $this->setWhereClause();
+        $this->setOrderBy();
+        $this->setLimit();
+        $this->setGroupBy();
 
         return $this->connection->query($this->query)->fetchAll();
     }
     // methods for insert data
-    public function insert($data)
+    public function insert($data, $tableName)
     {
         $this->setConnection();
+        $this->tableName        = $tableName;
         list($columns, $values) = $this->extractData($data);
-        $this->query            = "INSERT INTO $this->tableName ({$columns}) VALUES ({$values})";
-
+        $this->query            = "INSERT INTO {$this->tableName} ({$columns}) VALUES ({$values})";
         $this->connection->query($this->query);
     }
     // methods for update data
