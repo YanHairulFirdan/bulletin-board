@@ -6,7 +6,8 @@ use App\Databases\Model;
 
 class Bulletin extends Model
 {
-    protected $tablename = 'bulletins';
+    protected $tableName = 'bulletins';
+
     public function __construct()
     {
         parent::__construct();

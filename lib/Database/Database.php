@@ -37,42 +37,43 @@ class Database
 
     public function select($tablename)
     {
+
         $this->setConnection();
         $this->query = "SELECT * FROM {$tablename}";
-
-        if (isset($this->columns)) {
+        if (!is_null($this->columns)) {
             $this->query = str_replace('*', $this->columns, $this->query);
         }
 
-        if (isset($this->limit)) {
+        if ($this->limit > 0) {
             $subQuery     = " LIMIT {$this->limit}";
             $this->query .= $subQuery;
-            if (isset($this->offset)) {
+
+            if (!is_null($this->offset)) {
                 $this->query .= " OFFSET {$this->offset}";
             }
         }
 
-        if (isset($this->where)) {
+        if (!is_null($this->where)) {
             $subQuery     = " WHERE {$this->where} {$this->operator} {$this->whereValue}";
             $this->query .= $subQuery;
         }
 
-        if (isset($this->orderBy)) {
+        if (!is_null($this->orderBy)) {
             $subQuery = " ORDER BY {$this->orderBy}";
 
-            if (isset($this->orderType)) {
+            if (!is_null($this->orderType)) {
                 $subQuery .= " {$this->orderType}";
             }
 
             $this->query .= $subQuery;
         }
 
-        if (isset($this->groupBy)) {
+        if (!is_null($this->groupBy)) {
             $subQuery     = " GROUP BY {$this->groupBy}";
             $this->query .= $subQuery;
         }
 
-        $this->connection->query($this->query);
+        return $this->connection->query($this->query)->fetchAll();
     }
     // methods for insert data
     public function insert($data)
@@ -100,6 +101,15 @@ class Database
         $this->query = "DELETE {$this->tableName} WHERE {$column} = {$value}";
 
         $this->connection->query($this->query);
+    }
+
+    public function numrows($tableName)
+    {
+        $this->setConnection();
+        $this->query = "SELECT COUNT(*) FROM {$tableName}";
+        $numRows     = $this->connection->query($this->query);
+
+        return $numRows->fetchColumn();
     }
 
     private function updateQuery(array $data)

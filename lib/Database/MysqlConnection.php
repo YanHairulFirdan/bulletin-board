@@ -2,13 +2,7 @@
 
 namespace Lib\Database;
 
-require_once '../vendor/autoload.php';
-// include('IDatabaseConnection.php');
-
 use PDO;
-
-
-// use IDatabaseConection;
 
 class MysqlConnection implements DatabaseConnectionInterface
 {
@@ -24,9 +18,8 @@ class MysqlConnection implements DatabaseConnectionInterface
     public function connect()
     {
         $this->dsn        = "{$this->databaseType}:host={$this->host};dbname={$this->databaseName}";
-
         $this->connection = new PDO($this->dsn, $this->username, $this->password);
-        echo 'connection has been created succesfully';
+        $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         return $this->connection;
     }

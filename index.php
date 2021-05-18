@@ -1,40 +1,22 @@
 <?php
 
-use Models\Bulletin;
-
 require_once('vendor/autoload.php');
-// require_once('Database/DatabaseConnection.php');
-// require_once('Database/Model.php');
-// require_once('helpers/functions.php');
-// require_once('utils/Validation.php');
-// require_once('utils/Pagination.php');
 
+use App\Model\Bulletin as ModelBulletin;
 
-// $databaseConnection = DatabaseConnection::getInstance();
-// $bulletinsModel     = new Model($databaseConnection, 'bulletins');
-// $pagination         = new Pagination($bulletinsModel->numberOfRecord());
-// $bulletins          = $bulletinsModel->getData();
-// $pagination->paginator();
-// // change to pagination getCurrentPage() for example
-// $startIndex = $pagination->startIndex;
-// $currentPage = $pagination->currentPage;
-// $previousPage = $pagination->previousPage;
-// $nextPage = $pagination->nextPage;
-// $lastIndex = $pagination->lastIndex;
-// $numberOfButton = $pagination->numberOfButton;
+$bulletin       = new ModelBulletin();
+$numOfRows      = $bulletin->numRows();
+$bulletins      = $bulletin->paginate(10);
+$pagination     = new Pagination($numOfRows);
+$pagination->paginator();
 
-$bulletin = new Bulletin();
+$startIndex     = $pagination->startIndex;
+$currentPage    = $pagination->currentPage;
+$previousPage   = $pagination->previousPage;
+$nextPage       = $pagination->nextPage;
+$lastIndex      = $pagination->lastIndex;
+$numberOfButton = $pagination->numberOfButton;
 
-print_r($bulletin->get());
-die;
-// list(
-//     $currentPage,
-//     $startIndex,
-//     $previousPage,
-//     $nextPage,
-//     $pagerButton
-// )                           = $pagination->paginator();
-// change for pagination
 
 if ($_POST) {
     $rules = [

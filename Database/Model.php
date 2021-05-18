@@ -1,5 +1,5 @@
 <?php
-require_once 'vendor/autoload.php';
+// require_once 'vendor/autoload.php';
 
 namespace App\Databases;
 
@@ -34,6 +34,24 @@ abstract class Model
         return $this;
     }
 
+
+    public function paginate($limit)
+    {
+        $this->database->limit = $limit;
+
+        if (isset($_GET['page'])) {
+            if (intval($_GET['page']) > 1) {
+                $offset                 = (intval($_GET['page']) - 1) * 10;
+                $this->database->offset = $offset;
+            }
+        }
+
+        return $this->database->select($this->tableName);
+    }
+    public function numRows()
+    {
+        return $this->database->numrows($this->tableName);
+    }
 
 
     // public function getData()
