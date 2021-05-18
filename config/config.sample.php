@@ -1,6 +1,6 @@
 <?php
-$databaseType   = "mysql";
-$host           = "localhost";
-$databaseName   = "bulletinboard";
-$username       = "root";
-$password       = "";
+define("DATABASE_TYPE", "mysql");
+define("HOST", "localhost");
+define("DATABASE_NAME", "bulletinboard");
+define("USERNAME", "root");
+define("PASSWORD", "");
