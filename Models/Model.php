@@ -17,12 +17,13 @@ abstract class Model
 
     public function get()
     {
-        return $this->database->select();
+        $records = $this->database->select();
+        return $records;
     }
 
     public function create(array $data)
     {
-        $this->database->insert($data, $this->tableName);
+        $this->database->insert($data);
     }
 
     public function limit(int $limit)
@@ -43,7 +44,8 @@ abstract class Model
         }
 
 
-        return $this->database->select($this->tableName);
+        // return $this->database->select();
+        return $this;
     }
 
     public function columns(array $columns)
