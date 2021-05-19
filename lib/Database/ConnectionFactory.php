@@ -8,10 +8,10 @@ class ConnectionFactory
 	{
 		switch ($connectionType) {
 			case 'mysql':
-				return MysqlConnection::getInstance();
+				return MysqlConnection::getInstance($config);
 				break;
 			case 'Postgres':
-				return PosgresConnection::getInstance();
+				return PosgresConnection::getInstance($config);
 				break;
 		}
 	}

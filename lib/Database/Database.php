@@ -10,6 +10,7 @@ class Database
     private $connectionInstance;
     private $connection;
     private $tableName;
+    private $query;
     /*
         @var for returning error Message
      */
