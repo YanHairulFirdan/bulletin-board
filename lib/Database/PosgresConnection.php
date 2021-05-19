@@ -2,7 +2,6 @@
 
 namespace Lib\Database;
 
-use PDO;
 
 class PosgresConnection extends DatabaseConnectionAbstract
 {

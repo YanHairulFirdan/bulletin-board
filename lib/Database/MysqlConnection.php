@@ -3,8 +3,6 @@
 namespace Lib\Database;
 
 
-use PDO;
-
 class MysqlConnection extends DatabaseConnectionAbstract
 {
     private function __construct(array $config)
