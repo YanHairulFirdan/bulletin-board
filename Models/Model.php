@@ -3,7 +3,6 @@
 namespace App\Model;
 
 use Lib\Database\Database;
-use Lib\Database\MysqlConnection;
 
 
 abstract class Model
@@ -13,13 +12,12 @@ abstract class Model
 
     public function __construct()
     {
-        $connectionInstance = MysqlConnection::getInstance();
-        $this->database     = new Database($connectionInstance);
+        $this->database = new Database($this->tableName);
     }
 
     public function get()
     {
-        return $this->database->select($this->tableName);
+        return $this->database->select();
     }
 
     public function create(array $data)
@@ -27,55 +25,54 @@ abstract class Model
         $this->database->insert($data, $this->tableName);
     }
 
-    public function limit($limit)
+    public function limit(int $limit)
     {
-        $this->database->limit = $limit;
+        $this->database->setLimit($limit);
 
         return $this;
     }
 
-    public function paginate($limit)
+    public function paginate(int $limit)
     {
-        $this->database->limit = $limit;
+        if (!isset($_GET['page'])) {
+            $this->database->setLimit($limit);
+        } else {
+            $offset = (intval($_GET['page']) - 1) * 10;
 
-        if (isset($_GET['page'])) {
-            if (intval($_GET['page']) > 1) {
-                $offset                 = (intval($_GET['page']) - 1) * 10;
-                $this->database->offset = $offset;
-            }
+            $this->database->setLimit($limit, $offset);
         }
+
 
         return $this->database->select($this->tableName);
     }
 
     public function columns(array $columns)
     {
-        $this->database->columns = $columns;
+        $this->database->setColumn($columns);
 
         return $this;
     }
 
     public function numRows()
     {
-        return $this->database->numrows($this->tableName);
+        return $this->database->numrows();
     }
 
-    public function orderBy($column, $orderType = '')
+    public function orderBy(string $column, string $orderType = '')
     {
-        $this->database->orderBy = $column;
 
         if ($orderType != '') {
-            $this->database->orderType = $orderType;
+            $this->database->setOrderBy($column, $orderType);
+        } else {
+            $this->database->setOrderBy($column);
         }
 
         return $this;
     }
 
-    public function where($column, $operator = "=", $value)
+    public function where(string $column, string $operator = "=", mixed $value)
     {
-        $this->database->where      = $column;
-        $this->database->operator   = $operator;
-        $this->database->whereValue = $value;
+        $this->database->setWhereClause($column, $operator, $value);
 
         return $this;
     }

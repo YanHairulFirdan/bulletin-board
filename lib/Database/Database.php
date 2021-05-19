@@ -2,115 +2,137 @@
 
 namespace Lib\Database;
 
-use Lib\Database\DatabaseConnectionInterface;
+use Exception;
+
 
 class Database
 {
-    private $connectionInstance, $connection;
-    public $columns;
-    public $offset;
-    public $limit;
-    public $query;
-    public $orderBy;
-    public $orderType;
-    public $where;
-    public $column;
-    public $operator;
-    public $whereValue;
-    public $groupBy;
-    public $tableName;
+    private $connectionInstance;
+    private $connection;
+    private $tableName;
+    /*
+        @var for returning error Message
+     */
+    private $errorMsg;
 
 
-
-    public function __construct(DatabaseConnectionInterface $connectionInstance)
+    public function __construct(string $tableName)
     {
-        $this->connectionInstance = $connectionInstance;
+        $this->tableName          = $tableName;
+        $this->connectionInstance = ConnectionFactory::create();
     }
 
     public function setConnection()
     {
         if (!$this->connection) {
             $this->connectionInstance->connect();
+
             $this->connection = $this->connectionInstance->getConnection();
         }
     }
 
-    public function setColumn()
+    public function setColumn(array $columns)
     {
-        if (!is_null($this->columns)) {
-            $this->columns = implode(',', $this->columns);
-            $this->query = str_replace('*', $this->columns, $this->query);
+        if (count($columns) > 0) {
+            $columns      = implode(',', $columns);
+            $this->query  = "SELECT {$columns} FROM {$this->tableName}";
+        } elseif (gettype($columns) != 'array') {
+            $this->errorMsg = new Exception("Columns' value must be an array");
+            return $this->errorMsg->getMessage();
+        } else {
+            $this->errorMsg = new Exception("Columns' value mus be provide");
+            return $this->errorMsg->getMessage();
         }
     }
 
-    public function setWhereClause()
+    public function setWhereClause(string $column, string $operator = '=', mixed $value)
     {
-        if (!is_null($this->where)) {
-            $subQuery     = " WHERE {$this->where} {$this->operator} '{$this->whereValue}'";
-            $this->query .= $subQuery;
-        }
-    }
-
-    public function setOrderBy()
-    {
-        if (!is_null($this->orderBy)) {
-            $subQuery = " ORDER BY {$this->orderBy}";
-
-            if (!is_null($this->orderType)) {
-                $subQuery .= " {$this->orderType}";
+        if (!is_null($column)) {
+            if (is_string($column)) {
+                if (!is_null($value) || isset($value)) {
+                    $subQuery = " WHERE {$column} {$operator} '{$value}'";
+                }
+                $this->query .= $subQuery;
+            } else {
+                $this->errorMsg = new Exception("Column's name must be a string");
+                return $this->errorMsg->getMessage();
             }
-
-            $this->query .= $subQuery;
+        } else {
+            $this->errorMsg = new Exception("Columns' name must be provide");
+            return $this->errorMsg->getMessage();
         }
     }
 
-    public function setLimit()
+    public function setOrderBy(string $column, string $orderType = '')
     {
-        if ($this->limit > 0) {
-            $subQuery     = " LIMIT {$this->limit}";
-            $this->query .= $subQuery;
+        if (!is_null($column)) {
+            if (is_string($column)) {
+                $subQuery = " ORDER BY {$column}";
 
-            if (!is_null($this->offset)) {
-                $this->query .= " OFFSET {$this->offset}";
+                if (!is_null($orderType) || $orderType != '') {
+                    $subQuery .= " {$orderType}";
+                }
+                $this->query .= $subQuery;
+            } else {
+                $this->errorMsg = new Exception("Column's name must be a string");
+                return $this->errorMsg->getMessage();
             }
+        } else {
+            $this->errorMsg = new Exception("Columns' name must be provide");
+            return $this->errorMsg->getMessage();
         }
     }
 
-    public function setGroupBy()
+    public function setLimit(int $limit, int $offset = 0)
     {
-        if (!is_null($this->groupBy)) {
-            $subQuery     = " GROUP BY {$this->groupBy}";
+        if ($limit > 0) {
+            $subQuery     = " LIMIT {$limit}";
+            if ($offset > 0) {
+                $subQuery .= " OFFSET {$offset}";
+            }
             $this->query .= $subQuery;
+        } else {
+            $this->errorMsg = new Exception("Limit must be greater than 0");
+            return $this->errorMsg->getMessage();
         }
     }
 
-    public function select($tablename)
+    public function setGroupBy(string $column)
     {
+        if (!is_null($column)) {
+            $subQuery     = " GROUP BY {$column}";
+            $this->query .= $subQuery;
+        } else {
+            $this->errorMsg = new Exception("Column's name must be provided");
+            return $this->errorMsg->getMessage();
+        }
+    }
 
+    public function select()
+    {
         $this->setConnection();
 
-        $this->query = "SELECT * FROM {$tablename}";
-
-        $this->setColumn();
-        $this->setWhereClause();
-        $this->setOrderBy();
-        $this->setLimit();
-        $this->setGroupBy();
+        if (!empty($this->query)) {
+            if (strpos($this->query, 'SELECT') === false) {
+                $this->query = "SELECT * FROM {$this->tableName} {$this->query}";
+            }
+        } else {
+            $this->query = "SELECT * FROM {$this->tableName}";
+        }
 
         return $this->connection->query($this->query)->fetchAll();
     }
     // methods for insert data
-    public function insert($data, $tableName)
+    public function insert(array $data)
     {
         $this->setConnection();
 
-        $this->tableName        = $tableName;
         list($columns, $values) = $this->extractData($data);
         $this->query            = "INSERT INTO {$this->tableName} ({$columns}) VALUES ({$values})";
         $this->connection->query($this->query);
     }
     // methods for update data
-    public function update($column, $value, $data)
+    public function update(string $column, mixed $value, array $data)
     {
         $this->setConnection();
 
@@ -121,7 +143,7 @@ class Database
     }
 
     // methods for delete data
-    public function delete($column, $value)
+    public function delete(string $column, mixed $value)
     {
         $this->setConnection();
         $this->query = "DELETE {$this->tableName} WHERE {$column} = {$value}";
@@ -129,10 +151,10 @@ class Database
         $this->connection->query($this->query);
     }
 
-    public function numrows($tableName)
+    public function numrows()
     {
         $this->setConnection();
-        $this->query = "SELECT COUNT(*) FROM {$tableName}";
+        $this->query = "SELECT COUNT(*) FROM {$this->tableName}";
         $numRows     = $this->connection->query($this->query);
 
         return $numRows->fetchColumn();
@@ -141,7 +163,6 @@ class Database
     private function updateQuery(array $data)
     {
         $updateStatement = '';
-        //                title => 'bla bla bla
         foreach ($data as $key => $field) {
             $key              = htmlspecialchars($key);
             $field            = htmlspecialchars($field);
