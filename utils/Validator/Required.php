@@ -10,7 +10,13 @@ class Required  implements IValidator
         $field         = $data['field'];
         $fieldValue    = $data['fieldValue'];
 
-        $this->message =  empty($fieldValue) ? "{$field} Must be fill in!" : null;
+        if (is_array($fieldValue)) {
+            if ($fieldValue['error'] === 4) {
+                $this->message = "{$field} is required!";
+            }
+        } else {
+            $this->message = empty($data['fieldValue']) ? "{$field} Must be fill in!" : null;
+        }
     }
     public function getMessage()
     {
