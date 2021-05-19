@@ -1,8 +1,10 @@
 <?php
+
 namespace Lib\Database;
 
-class ConnectionFactory{
-	public static function create($connectionType='mysql')
+class ConnectionFactory
+{
+	public static function create($connectionType = 'mysql', array $config = [])
 	{
 		switch ($connectionType) {
 			case 'mysql':

@@ -12,6 +12,7 @@
 		],
 		"files": [
 			"config/config.php",
+			"helpers/functions.php",
 			"utils/Validator/validator.php"
 		]
 	},
