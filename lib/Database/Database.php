@@ -39,10 +39,8 @@ class Database
             $this->query  = "SELECT {$columns} FROM {$this->tableName}";
         } elseif (gettype($columns) != 'array') {
             throw new Exception("Columns' value must be an array");
-            return $this->errorMsg->getMessage();
         } else {
             throw new Exception("Columns' value mus be provide");
-            return $this->errorMsg->getMessage();
         }
     }
 
@@ -55,7 +53,6 @@ class Database
             $this->query .= $subQuery;
         } else {
             throw new Exception("Columns' name must be provide");
-            return $this->errorMsg->getMessage();
         }
     }
 
@@ -71,7 +68,6 @@ class Database
             $this->query .= $subQuery;
         } else {
             throw new Exception("Columns' name must be provide");
-            return $this->errorMsg->getMessage();
         }
     }
 
@@ -85,7 +81,6 @@ class Database
             $this->query .= $subQuery;
         } else {
             throw new Exception("Limit must be greater than 0");
-            return $this->errorMsg->getMessage();
         }
     }
 
@@ -96,7 +91,6 @@ class Database
             $this->query .= $subQuery;
         } else {
             throw new Exception("Column's name must be provided");
-            return $this->errorMsg->getMessage();
         }
     }
 
