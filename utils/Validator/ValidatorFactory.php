@@ -16,6 +16,9 @@ class ValidatorFactory
             case 'type':
                 return new Type();
                 break;
+            case 'size':
+                return new Size();
+                break;
         }
     }
 }

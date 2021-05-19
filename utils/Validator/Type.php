@@ -9,10 +9,10 @@ class Type  implements IValidator
 
     public function check($data)
     {
-        $values = explode(',', $data['field']);
-        $type   = explode('/', $_FILES[$data['field']]['type']);
+        $types = explode(',', $data['requirementValue']);
+        $type  = explode('/', $_FILES[$data['field']]['type']);
 
-        if (!in_array($type[1], $values)) {
+        if (!in_array($type[1], $types)) {
             $this->message = 'File extension is not allowed';
         }
     }

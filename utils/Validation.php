@@ -16,9 +16,9 @@ class Validation
         $this->rules = $rules;
     }
 
-    public function validate($values)
+    public function validate($formData)
     {
-        foreach ($values as $field => $fieldValue) {
+        foreach ($formData as $field => $fieldValue) {
             $currentFieldrules = explode('|', $this->rules[$field]);
 
             foreach ($currentFieldrules as $currentKeyRule => $fieldRule) {
