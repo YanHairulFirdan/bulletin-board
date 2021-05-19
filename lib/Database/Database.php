@@ -37,10 +37,10 @@ class Database
             $columns      = implode(',', $columns);
             $this->query  = "SELECT {$columns} FROM {$this->tableName}";
         } elseif (gettype($columns) != 'array') {
-            $this->errorMsg = new Exception("Columns' value must be an array");
+            throw new Exception("Columns' value must be an array");
             return $this->errorMsg->getMessage();
         } else {
-            $this->errorMsg = new Exception("Columns' value mus be provide");
+            throw new Exception("Columns' value mus be provide");
             return $this->errorMsg->getMessage();
         }
     }
@@ -48,17 +48,12 @@ class Database
     public function setWhereClause(string $column, string $operator = '=', mixed $value)
     {
         if (!is_null($column)) {
-            if (is_string($column)) {
-                if (!is_null($value) || isset($value)) {
-                    $subQuery = " WHERE {$column} {$operator} '{$value}'";
-                }
-                $this->query .= $subQuery;
-            } else {
-                $this->errorMsg = new Exception("Column's name must be a string");
-                return $this->errorMsg->getMessage();
+            if (!is_null($value) || isset($value)) {
+                $subQuery = " WHERE {$column} {$operator} '{$value}'";
             }
+            $this->query .= $subQuery;
         } else {
-            $this->errorMsg = new Exception("Columns' name must be provide");
+            throw new Exception("Columns' name must be provide");
             return $this->errorMsg->getMessage();
         }
     }
@@ -66,19 +61,15 @@ class Database
     public function setOrderBy(string $column, string $orderType = '')
     {
         if (!is_null($column)) {
-            if (is_string($column)) {
-                $subQuery = " ORDER BY {$column}";
+            $subQuery = " ORDER BY {$column}";
 
-                if (!is_null($orderType) || $orderType != '') {
-                    $subQuery .= " {$orderType}";
-                }
-                $this->query .= $subQuery;
-            } else {
-                $this->errorMsg = new Exception("Column's name must be a string");
-                return $this->errorMsg->getMessage();
+            if (!is_null($orderType) || $orderType != '') {
+                $subQuery .= " {$orderType}";
             }
+
+            $this->query .= $subQuery;
         } else {
-            $this->errorMsg = new Exception("Columns' name must be provide");
+            throw new Exception("Columns' name must be provide");
             return $this->errorMsg->getMessage();
         }
     }
@@ -92,7 +83,7 @@ class Database
             }
             $this->query .= $subQuery;
         } else {
-            $this->errorMsg = new Exception("Limit must be greater than 0");
+            throw new Exception("Limit must be greater than 0");
             return $this->errorMsg->getMessage();
         }
     }
@@ -103,7 +94,7 @@ class Database
             $subQuery     = " GROUP BY {$column}";
             $this->query .= $subQuery;
         } else {
-            $this->errorMsg = new Exception("Column's name must be provided");
+            throw new Exception("Column's name must be provided");
             return $this->errorMsg->getMessage();
         }
     }
