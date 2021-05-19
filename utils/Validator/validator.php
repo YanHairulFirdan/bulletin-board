@@ -1,7 +1,13 @@
 <?php
 function required($field, $values)
 {
-    return empty($values) ? "{$field} Must be fill in!" : null;
+    if (is_array($values)) {
+        if ($values['error'] === 4) {
+            return "{$field} is required!";
+        }
+    } else {
+        return empty($values) ? "{$field} Must be fill in!" : null;
+    }
 }
 
 function length($field, $value, $values)
@@ -17,13 +23,14 @@ function length($field, $value, $values)
     return (!empty($message)) ? $message : null;
 }
 
-function type($field, $value, $values)
+function type($fieldName, $fieldValue, $fileType)
 {
+    echo "type validator called";
     $message = '';
-    $values  = explode(',', $values);
-    $type    = explode('/', $_FILES['file']['type']);
-
-    if (in_array($type[1], $values)) {
+    $values  = explode(',', $fileType);
+    $type    = explode('/', $_FILES[$fieldName]['type']);
+    dump($fieldValue);
+    if (!in_array($type[1], $values)) {
         $message = 'File extension is not allowed';
     }
     return ($message) ? $message : null;

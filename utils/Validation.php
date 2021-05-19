@@ -2,6 +2,8 @@
 
 namespace App\Utils;
 
+use App\Utils\Validator\ValidatorFactory;
+
 class Validation
 {
     // private $messages = [
@@ -10,19 +12,18 @@ class Validation
     // ];
 
     private $rules;
+    private $data;
+    private $validatorClass;
     public function __construct($rules)
     {
         $this->rules = $rules;
     }
     public function validate($values)
     {
-        $messages = [];
-
+        $messages       = [];
+        $data           = [];
+        $validatorClass = '';
         foreach ($values as $field => $value) {
-
-            if (!isset($this->rules[$field])) {
-                continue;
-            }
             $currentFieldrules = explode('|', $this->rules[$field]);
 
             foreach ($currentFieldrules as $currentKeyRule => $fieldRule) {
@@ -30,11 +31,26 @@ class Validation
 
                 if (is_numeric($findSeparator)) {
                     $ruleContainValue = explode(':', $fieldRule);
-                    $messages[$field] = $ruleContainValue[0]($field, $value, $ruleContainValue[1]);
+                    $this->validatorClass   = $ruleContainValue[0];
+                    $this->data             = [
+                        'field'            => $field,
+                        'fieldValue'       => $value,
+                        'requirementValue' => $ruleContainValue[1]
+                    ];
                 } else {
-                    $messages[$field] = $fieldRule($field, $value);
+                    $this->validatorClass = $fieldRule;
+                    $this->data           = [
+                        'field'      => $field,
+                        'fieldValue' => $value
+                    ];
                 }
 
+                // require_once "Validator/{$this->validatorClass}.php";
+                $validator = ValidatorFactory::create($this->validatorClass);
+
+                $validator->check($this->data);
+
+                $messages[$field] = $validator->getMessage();
 
                 if (!empty($messages[$field])) {
                     break;
@@ -45,5 +61,10 @@ class Validation
         }
 
         return (count($messages) > 0) ? $messages : null;
+    }
+
+    private function setValidaotorType($currentFieldrules)
+    {
+        # code...
     }
 }
