@@ -28,7 +28,8 @@ if ($_POST) {
     ];
 
     $validation    = new Validation($rules);
-    $errorMessages = $validation->validate($_POST);
+    $validation->validate($_POST);
+    $errorMessages = $validation->getErrorMessage();
 
 
     if (!$errorMessages) {
