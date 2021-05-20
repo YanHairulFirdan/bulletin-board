@@ -29,8 +29,6 @@ abstract class AbstractConnection
     public function connect()
     {
         $this->dsn        = "{$this->databaseType}:host={$this->host};dbname={$this->databaseName}";
-        dump($this->dsn);
-        // die;
         $this->connection = new PDO($this->dsn, $this->username, $this->password);
 
         $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
