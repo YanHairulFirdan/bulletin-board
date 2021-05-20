@@ -19,6 +19,9 @@ class Validation
     public function validate($formData)
     {
         foreach ($formData as $field => $fieldValue) {
+            if (!key_exists($field, $this->rules)) {
+                continue;
+            }
             $currentFieldrules = explode('|', $this->rules[$field]);
 
             foreach ($currentFieldrules as $currentKeyRule => $fieldRule) {
@@ -52,9 +55,9 @@ class Validation
             $ruleContainValue       = explode(':', $fieldRule);
             $this->validatorClass   = $ruleContainValue[0];
             $this->data             = [
-                'field'            => $field,
-                'fieldValue'       => $fieldValue,
-                'requirementValue' => $ruleContainValue[1]
+                'field'      => $field,
+                'fieldValue' => $fieldValue,
+                'requisite'  => $ruleContainValue[1]
             ];
         } else {
             $this->validatorClass = $fieldRule;

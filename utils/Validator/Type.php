@@ -9,7 +9,9 @@ class Type  implements IValidator
 
     public function check($data)
     {
-        $types = explode(',', $data['requirementValue']);
+        dump($data);
+        die;
+        $types = explode(',', $data['requisite']);
         $type  = explode('/', $_FILES[$data['field']]['type']);
 
         if (!in_array($type[1], $types)) {

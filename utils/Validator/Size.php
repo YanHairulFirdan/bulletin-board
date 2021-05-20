@@ -10,7 +10,7 @@ class Size implements IValidator
     public function check($data)
     {
         $field   = $data['field'];
-        $maxSize = $data['requirementValue'] / 1000;
+        $maxSize = $data['requisite'] / 1000;
         $size    = $_FILES[$data['field']]['size'] / 1000;
 
         if ($size > $maxSize) {
