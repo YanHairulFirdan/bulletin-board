@@ -4,7 +4,6 @@ namespace App\Model;
 
 use Lib\Database\Database;
 
-
 abstract class Model
 {
     protected $tableName;

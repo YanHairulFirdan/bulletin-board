@@ -2,7 +2,6 @@
 
 namespace App\Utils\Validator;
 
-
 class Length  implements IValidator
 {
     private $message;

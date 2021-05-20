@@ -53,9 +53,9 @@ class Validation
         $findSeparator = strpos($fieldRule, ':');
 
         if (is_numeric($findSeparator)) {
-            $ruleContainValue       = explode(':', $fieldRule);
-            $this->validatorClass   = $ruleContainValue[0];
-            $this->data             = [
+            $ruleContainValue     = explode(':', $fieldRule);
+            $this->validatorClass = $ruleContainValue[0];
+            $this->data           = [
                 'field'      => $field,
                 'fieldValue' => $fieldValue,
                 'requisite'  => $ruleContainValue[1]

@@ -4,7 +4,7 @@
 			"Lib\\Database\\": "lib/database/",
 			"App\\Model\\": "Models/",
 			"App\\Utils\\": "utils/",
-			"App\\Utils\\Validator": "utils/Validator/"
+			"App\\Utils\\Validator\\": "utils/Validator/"
 		},
 		"classmap": [
 			"config/",
@@ -13,8 +13,7 @@
 		],
 		"files": [
 			"config/config.php",
-			"helpers/functions.php",
-			"utils/Validator/validator.php"
+			"helpers/functions.php"
 		]
 	},
 	"require": {

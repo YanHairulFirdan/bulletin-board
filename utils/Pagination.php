@@ -9,7 +9,7 @@ class Pagination
     public function __construct($numberOfRecords, $dataPerPage = 10)
     {
         $this->data['numberOfRecords'] = $numberOfRecords;
-        $this->data['dataPerPage'] = $dataPerPage;
+        $this->data['dataPerPage']     = $dataPerPage;
     }
 
     public function __get($name)
@@ -41,6 +41,7 @@ class Pagination
     private function setNumberOfButton()
     {
         $this->data['numberOfButton'] = ($this->data['numberOfPager'] > 5) ? 5 : $this->data['numberOfPager'];
+
         if ($this->data['numberOfPager'] <= 5) {
             $this->data['numberOfButton'] = $this->data['numberOfPager'];
         } elseif ($this->data['numberOfPager'] > 5) {
