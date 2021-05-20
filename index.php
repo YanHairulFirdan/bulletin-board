@@ -27,12 +27,11 @@ if ($_POST) {
         'body'  => 'required|length:10-220',
     ];
 
-    $validation    = new Validation($rules);
+    $validation = new Validation($rules);
 
     $validation->validate($_POST);
 
     $data['errorMessages'] = $validation->getErrorMessage();
-
 
     if (!$data['errorMessages']) {
         $bulletin->create($_POST);

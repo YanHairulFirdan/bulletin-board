@@ -23,12 +23,6 @@ class Database
      */
     private $connectionInstance;
     /**
-     * The attribute for get PDO instance.
-     *
-     * @var Object
-     */
-    private $connection;
-    /**
      * The attribute for get table name.
      *
      * @var string
@@ -53,10 +47,8 @@ class Database
 
     public function setConnection()
     {
-        if (!$this->connection) {
+        if (!$this->connectionInstance->getConnection()) {
             $this->connectionInstance->connect();
-
-            $this->connection = $this->connectionInstance->getConnection();
         }
     }
 
@@ -134,7 +126,8 @@ class Database
             $this->query = "SELECT * FROM {$this->tableName}";
         }
 
-        return $this->connection->query($this->query)->fetchAll();
+        // return $this->connection->query($this->query)->fetchAll();
+        return $this->connectionInstance->getConnection()->query($this->query)->fetchAll();
     }
 
     public function insert(array $data)
@@ -143,7 +136,7 @@ class Database
 
         list($columns, $values) = $this->extractData($data);
         $this->query            = "INSERT INTO {$this->tableName} ({$columns}) VALUES ({$values})";
-        $this->connection->query($this->query);
+        $this->connectionInstance->getConnection()->query($this->query);
     }
 
     public function update(string $column, mixed $value, array $data)
@@ -153,7 +146,7 @@ class Database
         $updateStatement = $this->updateQuery($data);
         $this->query     = "UPDATE $this->tableName SET  {$updateStatement} WHERE $column = {$value}";
 
-        $this->connection->query($this->query);
+        $this->connectionInstance->getConnection()->query($this->query);
     }
 
     public function delete(string $column, mixed $value)
@@ -161,14 +154,14 @@ class Database
         $this->setConnection();
         $this->query = "DELETE {$this->tableName} WHERE {$column} = {$value}";
 
-        $this->connection->query($this->query);
+        $this->connectionInstance->getConnection()->query($this->query);
     }
 
     public function numrows()
     {
         $this->setConnection();
         $this->query = "SELECT COUNT(*) FROM {$this->tableName}";
-        $numRows     = $this->connection->query($this->query);
+        $numRows     = $this->connectionInstance->getConnection()->query($this->query);
 
         return $numRows->fetchColumn();
     }
