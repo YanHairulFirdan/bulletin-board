@@ -31,7 +31,7 @@ function type($fieldName, $fieldValue, $fileType)
     $type    = explode('/', $_FILES[$fieldName]['type']);
     dump($fieldValue);
     if (!in_array($type[1], $values)) {
-        $message = 'File extension is not allowed';
+        $message = "File extension is not allowed. File extension must be {$fileType}";
     }
     return ($message) ? $message : null;
 }

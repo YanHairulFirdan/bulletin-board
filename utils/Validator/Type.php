@@ -9,13 +9,11 @@ class Type  implements IValidator
 
     public function check($data)
     {
-        dump($data);
-        die;
         $types = explode(',', $data['requisite']);
         $type  = explode('/', $_FILES[$data['field']]['type']);
 
         if (!in_array($type[1], $types)) {
-            $this->message = 'File extension is not allowed';
+            $this->message = "File extension is not allowed. File extension must be {$data['requisite']}";
         }
     }
 

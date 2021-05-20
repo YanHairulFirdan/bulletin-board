@@ -78,4 +78,11 @@ abstract class Model
 
         return $this;
     }
+
+    public function groupBy(string $column)
+    {
+        $this->database->setGroupBy($column);
+
+        return $this;
+    }
 }
