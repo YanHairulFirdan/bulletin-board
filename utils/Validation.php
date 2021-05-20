@@ -22,6 +22,7 @@ class Validation
             if (!key_exists($field, $this->rules)) {
                 continue;
             }
+
             $currentFieldrules = explode('|', $this->rules[$field]);
 
             foreach ($currentFieldrules as $currentKeyRule => $fieldRule) {
