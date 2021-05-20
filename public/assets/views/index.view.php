@@ -69,7 +69,7 @@
                     </label>
                 </div>
                 <div class="input-field">
-                    <input type="text" name="title" style="display: inline-block; width: 100%; height: 2em;" style id="title" value="<?= isset($data['title']) ? $data['title'] : '' ?>">
+                    <input type="text" name="title" style="display: inline-block; width: 100%; height: 2em;" style id="title" value="<?= isset($_POST['body']) ? $_POST['body'] : '' ?>">
                 </div>
             </div>
             <div class="form-input" style="width: inherit;">
@@ -79,7 +79,7 @@
                     </label>
                 </div>
                 <div class="input-field">
-                    <textarea name="body" id="body" style="display: inline-block; width: 100%; height: 4em;" style><?= isset($data['body']) ? $data['body'] : '' ?></textarea>
+                    <textarea name="body" id="body" style="display: inline-block; width: 100%; height: 4em;" style><?= isset($_POST['title']) ? $_POST['title'] : '' ?></textarea>
                 </div>
             </div>
             <button class="btn" type="submit" style="margin-top: 2em; display: inline-block; width: 100%; height: 3em;">Submit</button>

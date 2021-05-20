@@ -7,9 +7,9 @@ use App\Utils\Pagination;
 use App\Utils\Validation;
 
 
-$bulletin       = new ModelBulletin();
-$data['bulletins']      = $bulletin->orderBy('created_at', 'DESC')->paginate(10)->get();
-$pagination     = new Pagination($bulletin->numRows());
+$bulletin          = new ModelBulletin();
+$data['bulletins'] = $bulletin->orderBy('created_at', 'DESC')->paginate(10)->get();
+$pagination        = new Pagination($bulletin->numRows());
 
 $pagination->paginator();
 
@@ -28,19 +28,16 @@ if ($_POST) {
     ];
 
     $validation    = new Validation($rules);
+
     $validation->validate($_POST);
+
     $data['errorMessages'] = $validation->getErrorMessage();
 
 
     if (!$data['errorMessages']) {
         $bulletin->create($_POST);
         header("Refresh:0");
-    } else {
-        $data['body']  = $_POST['body'];
-        $data['title'] = $_POST['title'];
     }
 }
 // load the view
 load_view('index', $data);
-
-// require_once 'public/assets/views/index.view.php';
