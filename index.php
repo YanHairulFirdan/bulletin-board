@@ -8,17 +8,17 @@ use App\Utils\Validation;
 
 
 $bulletin       = new ModelBulletin();
-$bulletins      = $bulletin->orderBy('created_at', 'DESC')->paginate(10)->get();
+$data['bulletins']      = $bulletin->orderBy('created_at', 'DESC')->paginate(10)->get();
 $pagination     = new Pagination($bulletin->numRows());
 
 $pagination->paginator();
 
-$startIndex     = $pagination->startIndex;
-$currentPage    = $pagination->currentPage;
-$previousPage   = $pagination->previousPage;
-$nextPage       = $pagination->nextPage;
-$lastIndex      = $pagination->lastIndex;
-$numberOfButton = $pagination->numberOfButton;
+$data['startIndex']     = $pagination->startIndex;
+$data['currentPage']    = $pagination->currentPage;
+$data['previousPage']   = $pagination->previousPage;
+$data['nextPage']       = $pagination->nextPage;
+$data['lastIndex']      = $pagination->lastIndex;
+$data['numberOfButton'] = $pagination->numberOfButton;
 
 
 if ($_POST) {
@@ -29,17 +29,18 @@ if ($_POST) {
 
     $validation    = new Validation($rules);
     $validation->validate($_POST);
-    $errorMessages = $validation->getErrorMessage();
+    $data['errorMessages'] = $validation->getErrorMessage();
 
 
-    if (!$errorMessages) {
+    if (!$data['errorMessages']) {
         $bulletin->create($_POST);
         header("Refresh:0");
     } else {
-        $body  = $_POST['body'];
-        $title = $_POST['title'];
+        $data['body']  = $_POST['body'];
+        $data['title'] = $_POST['title'];
     }
 }
-
 // load the view
-require_once 'public/assets/views/index.view.php';
+load_view('index', $data);
+
+// require_once 'public/assets/views/index.view.php';

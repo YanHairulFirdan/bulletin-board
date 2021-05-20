@@ -52,9 +52,9 @@
 
 <body style="width: 60%; margin: auto;">
     <div class="container">
-        <?php if (isset($errorMessages)) : ?>
+        <?php if (isset($data['errorMessages'])) : ?>
             <ul style="width: inherit; padding: 2em; color: #fff; background-color: red;">
-                <?php foreach ($errorMessages as $message) : ?>
+                <?php foreach ($data['errorMessages'] as $message) : ?>
                     <li>
                         <?= $message ?>
                     </li>
@@ -69,7 +69,7 @@
                     </label>
                 </div>
                 <div class="input-field">
-                    <input type="text" name="title" style="display: inline-block; width: 100%; height: 2em;" style id="title" value="<?= isset($title) ? $title : '' ?>">
+                    <input type="text" name="title" style="display: inline-block; width: 100%; height: 2em;" style id="title" value="<?= isset($data['title']) ? $data['title'] : '' ?>">
                 </div>
             </div>
             <div class="form-input" style="width: inherit;">
@@ -79,14 +79,14 @@
                     </label>
                 </div>
                 <div class="input-field">
-                    <textarea name="body" id="body" style="display: inline-block; width: 100%; height: 4em;" style><?= isset($body) ? $body : '' ?></textarea>
+                    <textarea name="body" id="body" style="display: inline-block; width: 100%; height: 4em;" style><?= isset($data['body']) ? $data['body'] : '' ?></textarea>
                 </div>
             </div>
             <button class="btn" type="submit" style="margin-top: 2em; display: inline-block; width: 100%; height: 3em;">Submit</button>
         </form>
     </div>
 
-    <?php foreach ($bulletins as $key => $bulletin) : ?>
+    <?php foreach ($data['bulletins'] as $key => $bulletin) : ?>
 
         <div class="board-wrapper" style="padding: 1em 2em; display: flex; justify-content: space-between; border-top: 1px solid #000; border-bottom: 1px solid #000;">
             <span class="board-title">
@@ -98,15 +98,15 @@
         </div>
     <?php endforeach ?>
     <div class="pagination" style="margin: 3em auto; width: 80%; display: flex; justify-content: space-between;">
-        <?php if ($previousPage) : ?>
+        <?php if ($data['previousPage']) : ?>
             <span class="btn-page">
-                <a href="?page=<?= $previousPage ?>">&lt;</a>
+                <a href="?page=<?= $data['previousPage'] ?>">&lt;</a>
             </span>
         <?php endif ?>
-        <?php for ($page = $startIndex; $page <= $numberOfButton; $page++) : ?>
-            <?php if (($currentPage == $page)) : ?>
+        <?php for ($page = $data['startIndex']; $page <= $data['numberOfButton']; $page++) : ?>
+            <?php if (($data['currentPage'] == $page)) : ?>
                 <span class="btn-page">
-                    <span><?= $currentPage ?></span>
+                    <span><?= $data['currentPage'] ?></span>
                 </span>
             <?php else : ?>
                 <span class="btn-page">
@@ -116,9 +116,9 @@
         <?php endfor ?>
 
 
-        <?php if ($nextPage) : ?>
+        <?php if ($data['nextPage']) : ?>
             <span class="btn-page">
-                <a href="?page=<?= $nextPage ?>">&gt;</a>
+                <a href="?page=<?= $data['nextPage'] ?>">&gt;</a>
             </span>
         <?php endif ?>
 
