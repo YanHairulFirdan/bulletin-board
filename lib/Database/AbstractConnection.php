@@ -15,23 +15,22 @@ abstract class AbstractConnection
     protected $password;
     protected static $instance = null;
 
-    public function __construct(array $config)
+    public function __construct()
     {
-        // config = include 'config/database.php';
-        dump($_SERVER);
-        // die;
-        dump(require_once 'config/database.php');
-        // dump(include $_SERVER['DOCUMENT_ROOT'] . '/BulletinBoard/config/database.php');
-        $this->databaseType = check_value('databaseType', DATABASE_TYPE, $config);
-        $this->host         = check_value('host', HOST, $config);
-        $this->databaseName = check_value('databaseName', DATABASE_NAME, $config);
-        $this->username     = check_value('username', USERNAME, $config);
-        $this->password     = check_value('password', PASSWORD, $config);
+
+        $configs            = include $_SERVER['DOCUMENT_ROOT'] . '/BulletinBoard/config/database.php';
+        $this->databaseType = $configs['dbType'];
+        $this->host         = $configs['db_configs'][$this->databaseType]['host'];
+        $this->databaseName = $configs['db_configs'][$this->databaseType]['databaseName'];
+        $this->username     = $configs['db_configs'][$this->databaseType]['username'];
+        $this->password     = $configs['db_configs'][$this->databaseType]['password'];
     }
 
     public function connect()
     {
         $this->dsn        = "{$this->databaseType}:host={$this->host};dbname={$this->databaseName}";
+        dump($this->dsn);
+        // die;
         $this->connection = new PDO($this->dsn, $this->username, $this->password);
 
         $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -44,5 +43,5 @@ abstract class AbstractConnection
         return $this->connection;
     }
 
-    public abstract static function getInstance(array $config);
+    public abstract static function getInstance();
 }

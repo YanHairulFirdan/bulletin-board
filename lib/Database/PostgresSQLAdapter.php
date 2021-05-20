@@ -4,15 +4,15 @@ namespace Lib\Database;
 
 class PostgresSQLAdapter extends AbstractConnection
 {
-    private function __construct(array $config)
+    private function __construct()
     {
-        parent::__construct($config);
+        parent::__construct();
     }
 
-    public static function getInstance(array $config)
+    public static function getInstance()
     {
         if (!self::$instance) {
-            self::$instance = new PostgresSQLAdapter($config);
+            self::$instance = new PostgresSQLAdapter();
         }
 
         return self::$instance;

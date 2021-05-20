@@ -42,7 +42,7 @@ class Database
     public function __construct(string $tableName)
     {
         $this->tableName          = $tableName;
-        $this->connectionInstance = ConnectionFactory::create();
+        $this->connectionInstance = ConnectionFactory::create(get_config_value("DATABASE_TYPE", 'mysql'));
     }
 
     public function setConnection()

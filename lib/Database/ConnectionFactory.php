@@ -13,14 +13,14 @@ namespace Lib\Database;
 
 class ConnectionFactory
 {
-	public static function create(string $connectionType = 'mysql', array $config = [])
+	public static function create(string $connectionType)
 	{
 		switch ($connectionType) {
 			case 'mysql':
-				return MysqlAdapter::getInstance($config);
+				return MysqlAdapter::getInstance();
 				break;
 			case 'PostgresSQL':
-				return PostgresSQLAdapter::getInstance($config);
+				return PostgresSQLAdapter::getInstance();
 				break;
 		}
 	}
