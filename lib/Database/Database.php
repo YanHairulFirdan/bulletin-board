@@ -136,6 +136,7 @@ class Database
 
         list($columns, $values) = $this->extractData($data);
         $this->query            = "INSERT INTO {$this->tableName} ({$columns}) VALUES ({$values})";
+
         $this->connectionInstance->getConnection()->query($this->query);
     }
 
