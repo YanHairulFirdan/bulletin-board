@@ -2,9 +2,8 @@
 
 namespace App\Utils\Validator;
 
-class Required  implements IValidator
+class Required extends AbstractRule
 {
-    private $message;
     public function check($data)
     {
         $field      = $data['field'];
@@ -17,9 +16,5 @@ class Required  implements IValidator
         } else {
             $this->message = empty($data['fieldValue']) ? "{$field} Must be fill in!" : null;
         }
-    }
-    public function getMessage()
-    {
-        return $this->message;
     }
 }

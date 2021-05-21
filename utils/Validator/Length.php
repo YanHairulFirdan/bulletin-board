@@ -2,10 +2,8 @@
 
 namespace App\Utils\Validator;
 
-class Length  implements IValidator
+class Length extends AbstractRule
 {
-    private $message;
-
     public function check($data)
     {
         $field      = $data['field'];
@@ -17,10 +15,5 @@ class Length  implements IValidator
         if (strlen($fieldValue) < $min || strlen($fieldValue) > $max) {
             $this->message = "Your {$field} must be {$min} to {$max} characters long";
         }
-    }
-
-    public function getMessage()
-    {
-        return $this->message;
     }
 }

@@ -3,10 +3,8 @@
 namespace App\Utils\Validator;
 
 
-class Size implements IValidator
+class Size extends AbstractRule
 {
-    private $message;
-
     public function check($data)
     {
         $field   = $data['field'];
@@ -16,10 +14,5 @@ class Size implements IValidator
         if ($size > $maxSize) {
             $this->message = "File size for {$field} is {$maxSize} MB";
         }
-    }
-
-    public function getMessage()
-    {
-        return $this->message;
     }
 }
