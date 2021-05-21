@@ -32,12 +32,9 @@ class Validation
 
                 $validator->check($this->data);
 
-                $this->errorMessages[$field] = $validator->getMessage();
-
-                if (!empty($this->errorMessages[$field])) {
+                if ($validator->getMessage()) {
+                    $this->errorMessages[$field] = $validator->getMessage();
                     break;
-                } else {
-                    unset($this->errorMessages[$field]);
                 }
             }
         }
