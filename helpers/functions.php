@@ -7,19 +7,6 @@ function dump($data)
     echo "</pre>";
 }
 
-
-function check_value($index, $defaulValue, $ConfigArr)
-{
-
-    if (array_key_exists($index, $ConfigArr)) {
-        if (strlen($ConfigArr[$index]) > 0) {
-            return $ConfigArr[$index];
-        } else
-            return $defaulValue;
-    } else
-        return $defaulValue;
-}
-
 function br()
 {
     echo "<br>";
@@ -32,4 +19,19 @@ function load_view(string $viewName, $data)
     } else {
         throw new Exception("file not exists", 1);
     }
+}
+
+
+function get_root_path()
+{
+    return str_replace('\\', '/', dirname(__DIR__));
+}
+
+function db_default_config()
+{
+    $rootPath  = get_root_path();
+    $rootPath .= '/config/database.php';
+    $configs   = include get_root_path() . '/config/database.php';
+
+    return $configs;
 }

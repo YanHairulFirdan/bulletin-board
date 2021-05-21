@@ -18,7 +18,7 @@ abstract class AbstractConnection
     public function __construct()
     {
 
-        $configs            = include $_SERVER['DOCUMENT_ROOT'] . '/BulletinBoard/config/database.php';
+        $configs            = db_default_config();
         $this->databaseType = $configs['dbType'];
         $this->host         = $configs['db_configs'][$this->databaseType]['host'];
         $this->databaseName = $configs['db_configs'][$this->databaseType]['databaseName'];
