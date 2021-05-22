@@ -12,10 +12,7 @@ class Pagination
         $this->data['dataPerPage']     = $dataPerPage;
     }
 
-    public function __get($name)
-    {
-        return $this->data[$name];
-    }
+
 
     private function setNumberOfPager()
     {
@@ -58,10 +55,15 @@ class Pagination
         if ($this->data['numberOfPager'] <= 5) {
             $this->data['startIndex'] = 1;
         } elseif ($this->data['numberOfPager'] > 5) {
-            $this->data['startIndex'] = ($this->data['currentPage'] - 2 >= 2) ? $this->data['currentPage'] - 2 : 1;
+            if ($this->data['currentPage'] - 2 >= 2) {
 
-            if (($this->data['numberOfPager'] - $this->data['currentPage']) <= 2) {
-                $this->data['startIndex'] = ($this->data['numberOfPager'] - $this->data['currentPage'] == 0) ? $this->data['currentPage'] - 4 : $this->data['currentPage'] - 3;
+                if ($this->data['currentPage'] == $this->data['numberOfPager']) {
+                    $this->data['startIndex'] = $this->data['currentPage'] - 4;
+                } else {
+                    $this->data['startIndex'] = $this->data['currentPage'] - 2;
+                }
+            } else {
+                $this->data['startIndex'] = 1;
             }
         }
     }
@@ -71,10 +73,14 @@ class Pagination
         if ($this->data['numberOfPager'] <= 5) {
             $this->data['lastIndex'] = $this->data['numberOfPager'];
         } elseif ($this->data['numberOfPager'] > 5) {
-            if ($this->data['numberOfPager'] - $this->data['currentPage'] <= 2) {
+            if ($this->data['numberOfPager'] - $this->data['currentPage'] <= 4) {
                 $this->data['lastIndex'] = $this->data['numberOfPager'];
             } else {
-                $this->data['lastIndex'] = ($this->data['currentPage'] <= 2) ? 5 : $this->data['currentPage'] + 2;
+                if ($this->data['currentPage'] > 2) {
+                    $this->data['lastIndex'] = $this->data['currentPage'] + 2;
+                } else {
+                    $this->data['lastIndex'] = 5;
+                }
             }
         }
     }
@@ -83,10 +89,16 @@ class Pagination
     {
         $this->setNumberOfPager(10);
         $this->setCurrentPage();
-        $this->setNextPage();
-        $this->setPreviousPage();
         $this->setStartIndex();
+        $this->setPreviousPage();
+        $this->setNextPage();
         $this->setLastIndex();
         $this->setNumberOfButton();
+    }
+    public function __get($name)
+    {
+        if (key_exists($name, $this->data)) {
+        }
+        return $this->data[$name];
     }
 }

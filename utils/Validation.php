@@ -42,7 +42,7 @@ class Validation
 
     public function getErrorMessage()
     {
-        return (count($this->errorMessages) > 0) ? $this->errorMessages : null;
+        return ($this->errorMessages != null) ? $this->errorMessages : null;
     }
 
     private function setValidatorType($fieldRule, $field, $fieldValue)

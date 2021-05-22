@@ -13,12 +13,12 @@ $pagination        = new Pagination($bulletin->numRows());
 
 $pagination->paginator();
 
-$data['startIndex']     = $pagination->startIndex;
 $data['currentPage']    = $pagination->currentPage;
 $data['previousPage']   = $pagination->previousPage;
-$data['nextPage']       = $pagination->nextPage;
-$data['lastIndex']      = $pagination->lastIndex;
 $data['numberOfButton'] = $pagination->numberOfButton;
+$data['nextPage']       = $pagination->nextPage;
+$data['startIndex']     = $pagination->startIndex;
+$data['lastIndex']      = $pagination->lastIndex;
 
 
 if ($_POST) {

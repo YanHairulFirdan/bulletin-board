@@ -103,7 +103,7 @@
                 <a href="?page=<?= $data['previousPage'] ?>">&lt;</a>
             </span>
         <?php endif ?>
-        <?php for ($page = $data['startIndex']; $page <= $data['numberOfButton']; $page++) : ?>
+        <?php for ($page = $data['startIndex']; $page <= $data['lastIndex']; $page++) : ?>
             <?php if (($data['currentPage'] == $page)) : ?>
                 <span class="btn-page">
                     <span><?= $data['currentPage'] ?></span>
