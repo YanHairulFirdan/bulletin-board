@@ -15,7 +15,6 @@ $pagination->paginator();
 
 $data['currentPage']    = $pagination->currentPage;
 $data['previousPage']   = $pagination->previousPage;
-$data['numberOfButton'] = $pagination->numberOfButton;
 $data['nextPage']       = $pagination->nextPage;
 $data['startIndex']     = $pagination->startIndex;
 $data['lastIndex']      = $pagination->lastIndex;

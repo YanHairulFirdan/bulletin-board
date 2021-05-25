@@ -35,21 +35,6 @@ class Pagination
         $this->data['previousPage'] = ($this->data['currentPage'] > 1) ? $this->data['currentPage'] -  1 : 0;
     }
 
-    private function setNumberOfButton()
-    {
-        $this->data['numberOfButton'] = ($this->data['numberOfPager'] > 5) ? 5 : $this->data['numberOfPager'];
-
-        if ($this->data['numberOfPager'] <= 5) {
-            $this->data['numberOfButton'] = $this->data['numberOfPager'];
-        } elseif ($this->data['numberOfPager'] > 5) {
-            if ($this->data['numberOfPager'] - $this->data['currentPage'] <= 2) {
-                $this->data['numberOfButton'] = $this->data['numberOfPager'];
-            } else {
-                $this->data['numberOfButton'] = ($this->data['currentPage'] <= 2) ? 5 : $this->data['currentPage'] + 2;
-            }
-        }
-    }
-
     private function setStartIndex()
     {
         if ($this->data['numberOfPager'] <= 5) {
@@ -93,8 +78,8 @@ class Pagination
         $this->setPreviousPage();
         $this->setNextPage();
         $this->setLastIndex();
-        $this->setNumberOfButton();
     }
+
     public function __get($name)
     {
         if (key_exists($name, $this->data)) {
