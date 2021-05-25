@@ -147,7 +147,7 @@ class Database
         $this->setConnection();
 
         $updateStatement = $this->updateQuery($data);
-        $this->query     = "UPDATE $this->tableName SET  {$updateStatement} WHERE $column = {$value}";
+        $this->query     = "UPDATE $this->tableName SET{$updateStatement} WHERE {$column} = {$value}";
 
         $this->connectionInstance->getConnection()->query($this->query);
     }
@@ -155,6 +155,7 @@ class Database
     public function delete(string $column, mixed $value)
     {
         $this->setConnection();
+
         $this->query = "DELETE {$this->tableName} WHERE {$column} = {$value}";
 
         $this->connectionInstance->getConnection()->query($this->query);
@@ -163,6 +164,7 @@ class Database
     public function numrows()
     {
         $this->setConnection();
+
         $this->query = "SELECT COUNT(*) FROM {$this->tableName}";
         $numRows     = $this->connectionInstance->getConnection()->query($this->query);
 

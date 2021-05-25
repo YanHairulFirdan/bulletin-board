@@ -6,6 +6,7 @@ namespace App\Utils\Validator;
 class Size extends AbstractRule
 {
     private $unit = 1000;
+
     public function check($data)
     {
         $field   = $data['field'];
@@ -13,7 +14,7 @@ class Size extends AbstractRule
         $size    = $_FILES[$data['field']]['size']  / $this->unit;
 
         if ($size > $maxSize) {
-            $this->message = "File size for {$field} is {$maxSize} MB";
+            $this->message = "File max size for {$field} is {$maxSize} MB";
         }
     }
 }
