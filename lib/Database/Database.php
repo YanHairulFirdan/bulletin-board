@@ -55,8 +55,8 @@ class Database
     public function setColumn(array $columns)
     {
         if (count($columns) > 0) {
-            $columns      = implode(',', $columns);
-            $this->query  = "SELECT {$columns} FROM {$this->tableName}";
+            $columns     = implode(',', $columns);
+            $this->query = "SELECT {$columns} FROM {$this->tableName}";
         } elseif (gettype($columns) != 'array') {
             throw new Exception("Columns' value must be an array");
         } else {
