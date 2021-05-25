@@ -4,7 +4,6 @@ namespace App\Utils;
 
 class Pagination
 {
-
     private $data = [];
 
     public function __construct($numberOfRecords, $dataPerPage = 10)

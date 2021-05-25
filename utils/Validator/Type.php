@@ -2,7 +2,6 @@
 
 namespace App\Utils\Validator;
 
-
 class Type extends AbstractRule
 {
     public function check($data)

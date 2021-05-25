@@ -2,6 +2,8 @@
 
 namespace App\Utils\Validator;
 
+use Exception;
+
 class ValidatorFactory
 {
     public static function create(string $validatorType)
@@ -18,6 +20,9 @@ class ValidatorFactory
                 break;
             case 'size':
                 return new Size();
+                break;
+            default:
+                throw new Exception("Validator type not found", 1);
                 break;
         }
     }

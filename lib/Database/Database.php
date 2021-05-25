@@ -94,7 +94,7 @@ class Database
     public function setLimit(int $limit, int $offset = 0)
     {
         if ($limit > 0) {
-            $subQuery     = " LIMIT {$limit}";
+            $subQuery = " LIMIT {$limit}";
             if ($offset > 0) {
                 $subQuery .= " OFFSET {$offset}";
             }

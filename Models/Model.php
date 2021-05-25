@@ -17,6 +17,7 @@ abstract class Model
     public function get()
     {
         $records = $this->database->select();
+
         return $records;
     }
 
@@ -42,8 +43,6 @@ abstract class Model
             $this->database->setLimit($limit, $offset);
         }
 
-
-        // return $this->database->select();
         return $this;
     }
 
@@ -61,7 +60,6 @@ abstract class Model
 
     public function orderBy(string $column, string $orderType = '')
     {
-
         if ($orderType != '') {
             $this->database->setOrderBy($column, $orderType);
         } else {

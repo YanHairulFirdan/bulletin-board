@@ -1,6 +1,9 @@
 <?php
 
 namespace Lib\Database;
+
+use Exception;
+
 /*
     |--------------------------------------------------------------------------
     | Factory connection
@@ -21,6 +24,9 @@ class ConnectionFactory
 				break;
 			case 'PostgresSQL':
 				return PostgresSQLAdapter::getInstance();
+				break;
+			default:
+				throw new Exception("Database type not found", 1);
 				break;
 		}
 	}
