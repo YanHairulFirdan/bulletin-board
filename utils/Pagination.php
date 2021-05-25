@@ -6,13 +6,12 @@ class Pagination
 {
 
     private $data = [];
+
     public function __construct($numberOfRecords, $dataPerPage = 10)
     {
         $this->data['numberOfRecords'] = $numberOfRecords;
         $this->data['dataPerPage']     = $dataPerPage;
     }
-
-
 
     private function setNumberOfPager()
     {
@@ -41,9 +40,10 @@ class Pagination
             $this->data['startIndex'] = 1;
         } elseif ($this->data['numberOfPager'] > 5) {
             if ($this->data['currentPage'] - 2 >= 2) {
-
                 if ($this->data['currentPage'] == $this->data['numberOfPager']) {
                     $this->data['startIndex'] = $this->data['currentPage'] - 4;
+                } elseif ($this->data['currentPage'] + 1 == $this->data['numberOfPager']) {
+                    $this->data['startIndex'] = $this->data['currentPage'] - 3;
                 } else {
                     $this->data['startIndex'] = $this->data['currentPage'] - 2;
                 }
@@ -58,7 +58,7 @@ class Pagination
         if ($this->data['numberOfPager'] <= 5) {
             $this->data['lastIndex'] = $this->data['numberOfPager'];
         } elseif ($this->data['numberOfPager'] > 5) {
-            if ($this->data['numberOfPager'] - $this->data['currentPage'] <= 4) {
+            if ($this->data['numberOfPager'] - $this->data['currentPage'] < 3) {
                 $this->data['lastIndex'] = $this->data['numberOfPager'];
             } else {
                 if ($this->data['currentPage'] > 2) {
@@ -83,7 +83,7 @@ class Pagination
     public function __get($name)
     {
         if (key_exists($name, $this->data)) {
+            return $this->data[$name];
         }
-        return $this->data[$name];
     }
 }
