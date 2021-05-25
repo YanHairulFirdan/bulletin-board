@@ -126,8 +126,10 @@ class Database
             $this->query = "SELECT * FROM {$this->tableName}";
         }
 
-        // return $this->connection->query($this->query)->fetchAll();
-        return $this->connectionInstance->getConnection()->query($this->query)->fetchAll();
+        $results     = $this->connectionInstance->getConnection()->query($this->query)->fetchAll();
+        $this->query = '';
+
+        return $results;
     }
 
     public function insert(array $data)
