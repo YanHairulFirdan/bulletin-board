@@ -22,7 +22,7 @@ $data['lastIndex']      = $pagination->lastIndex;
 
 if ($_POST) {
     $rules = [
-        'title' => 'required|length:10-32',
+        'title' => 'required|length:20-42',
         'body'  => 'required|length:10-220',
     ];
 

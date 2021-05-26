@@ -64,10 +64,6 @@ class Database
         if (count($columns) > 0) {
             $columns     = implode(',', $columns);
             $this->query = "SELECT {$columns} FROM {$this->tableName}";
-        } elseif (gettype($columns) != 'array') {
-            throw new Exception("Columns' value must be an array");
-        } else {
-            throw new Exception("Columns' value mus be provide");
         }
     }
 
@@ -78,8 +74,6 @@ class Database
                 $subQuery = " WHERE {$column} {$operator} '{$value}'";
             }
             $this->query .= $subQuery;
-        } else {
-            throw new Exception("Columns' name must be provide");
         }
     }
 
@@ -93,8 +87,6 @@ class Database
             }
 
             $this->query .= $subQuery;
-        } else {
-            throw new Exception("Columns' name must be provide");
         }
     }
 
@@ -106,8 +98,6 @@ class Database
                 $subQuery .= " OFFSET {$offset}";
             }
             $this->query .= $subQuery;
-        } else {
-            throw new Exception("Limit must be greater than 0");
         }
     }
 
@@ -116,8 +106,6 @@ class Database
         if (!is_null($column)) {
             $subQuery     = " GROUP BY {$column}";
             $this->query .= $subQuery;
-        } else {
-            throw new Exception("Column's name must be provided");
         }
     }
 
