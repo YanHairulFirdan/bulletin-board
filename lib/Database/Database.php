@@ -17,11 +17,18 @@ use Exception;
 class Database
 {
     /**
-     * The attribute for get database connection instance.
+     * The attribute for get database connection class.
      *
      * @var Object
      */
-    private $connectionInstance;
+    private $dbConnection;
+    /**
+     * The attribute for get database connection.
+     *
+     * @var Object
+     */
+    private $pdo;
+
     /**
      * The attribute for get table name.
      *
@@ -42,13 +49,13 @@ class Database
     public function __construct(string $tableName)
     {
         $this->tableName          = $tableName;
-        $this->connectionInstance = ConnectionFactory::create(get_config_value("DATABASE_TYPE", 'mysql'));
+        $this->dbConnection = ConnectionFactory::create(get_config_value("DATABASE_TYPE", 'mysql'));
     }
 
     public function setConnection()
     {
-        if (!$this->connectionInstance->getConnection()) {
-            $this->connectionInstance->connect();
+        if (!$this->pdo) {
+            $this->pdo = $this->dbConnection->connect();
         }
     }
 
@@ -126,7 +133,7 @@ class Database
             $this->query = "SELECT * FROM {$this->tableName}";
         }
 
-        $results     = $this->connectionInstance->getConnection()->query($this->query)->fetchAll();
+        $results     = $this->pdo->query($this->query)->fetchAll();
         $this->query = '';
 
         return $results;
@@ -139,7 +146,7 @@ class Database
         list($columns, $values) = $this->extractData($data);
         $this->query            = "INSERT INTO {$this->tableName} ({$columns}) VALUES ({$values})";
 
-        $this->connectionInstance->getConnection()->query($this->query);
+        $this->pdo->query($this->query);
     }
 
     public function update(string $column, mixed $value, array $data)
@@ -149,7 +156,7 @@ class Database
         $updateStatement = $this->updateQuery($data);
         $this->query     = "UPDATE $this->tableName SET{$updateStatement} WHERE {$column} = {$value}";
 
-        $this->connectionInstance->getConnection()->query($this->query);
+        $this->pdo->query($this->query);
     }
 
     public function delete(string $column, mixed $value)
@@ -158,7 +165,7 @@ class Database
 
         $this->query = "DELETE {$this->tableName} WHERE {$column} = {$value}";
 
-        $this->connectionInstance->getConnection()->query($this->query);
+        $this->pdo->query($this->query);
     }
 
     public function numrows()
@@ -166,7 +173,7 @@ class Database
         $this->setConnection();
 
         $this->query = "SELECT COUNT(*) FROM {$this->tableName}";
-        $numRows     = $this->connectionInstance->getConnection()->query($this->query);
+        $numRows     = $this->pdo->query($this->query);
 
         return $numRows->fetchColumn();
     }
