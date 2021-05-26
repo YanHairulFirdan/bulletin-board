@@ -57,12 +57,14 @@ class Validation
                 'fieldValue' => $fieldValue,
                 'requisite'  => $ruleContainValue[1]
             ];
-        } else {
-            $this->validatorClass = $fieldRule;
-            $this->data           = [
-                'field'      => $field,
-                'fieldValue' => $fieldValue
-            ];
+
+            return;
         }
+
+        $this->validatorClass = $fieldRule;
+        $this->data           = [
+            'field'      => $field,
+            'fieldValue' => $fieldValue
+        ];
     }
 }
