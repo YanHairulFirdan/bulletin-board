@@ -3,8 +3,8 @@
 		"psr-4": {
 			"Lib\\Database\\": "lib/database/",
 			"App\\Model\\": "Models/",
-			"App\\Utils\\": "utils/",
-			"App\\Utils\\Validator\\": "utils/Validator/"
+			"Lib\\Utils\\": "utils/",
+			"Lib\\Utils\\Validator\\": "utils/Validator/"
 		},
 		"classmap": [
 			"config/",
