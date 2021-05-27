@@ -148,9 +148,6 @@ class Database
             $this->query = "SELECT * FROM {$this->tableName}";
         }
 
-        dump($this->query);
-        dump($this->columnName);
-        dump($this->columnValue);
         $execute     = $this->pdo->prepare($this->query);
 
         if ($this->columnValue) {
@@ -179,8 +176,6 @@ class Database
         $execute                                = $this->pdo->prepare($this->query);
 
         $execute->execute($values);
-        dump($this->pdo->errorinfo());
-        die;
     }
 
     public function update(string $column, $value, array $data)

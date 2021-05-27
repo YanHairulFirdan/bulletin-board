@@ -12,8 +12,8 @@ $bulletins  = $bulletin->orderBy('created_at', 'DESC')->limit(10)->get();
 $pagination = new Pagination($bulletin->numRows());
 
 $pagination->paginator();
-echo 'this is root';
-dump(ROOT);
+
+
 if ($_POST) {
     $rules = [
         'title' => 'required|length:10-180',
