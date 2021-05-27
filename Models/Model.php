@@ -29,7 +29,9 @@ abstract class Model
     public function limit(int $limit)
     {
         $this->database->setLimit($limit);
-
+        if (isset($_GET['page'])) {
+            $this->offset($_GET['page']);
+        }
         return $this;
     }
 
@@ -81,5 +83,10 @@ abstract class Model
         $this->database->setGroupBy($column);
 
         return $this;
+    }
+
+    public function offset(int $offset)
+    {
+        $this->database->setOffset($offset);
     }
 }

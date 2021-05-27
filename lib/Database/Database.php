@@ -101,6 +101,17 @@ class Database
         }
     }
 
+    public function setOffset(int $offset)
+    {
+        dump($_GET);
+        die;
+        // filter_input()
+        if ($offset > 0) {
+            $subQuery = " OFFSET {$offset}";
+        }
+        $this->query .= $subQuery;
+    }
+
     public function setGroupBy(string $column)
     {
         if (!is_null($column)) {
