@@ -92,11 +92,4 @@ abstract class Model
     {
         $this->database->setOffset($offset);
     }
-
-    public function whereAnd(array $columns, array $values)
-    {
-        $this->database->whereAnd($columns, $values);
-
-        return $this;
-    }
 }

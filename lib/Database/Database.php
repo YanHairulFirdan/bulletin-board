@@ -58,6 +58,13 @@ class Database
     /** 
      * @param mixed column name
      * for creating database instance and database connection instance
+    
+     */
+    private $columnBind;
+    /** 
+     * @param array column name
+     * for creating database instance and database connection instance
+    
      */
     private $columnName;
 
@@ -87,10 +94,9 @@ class Database
     {
         if (!is_null($column)) {
             if (!is_null($value) || isset($value)) {
-                $subQuery          = " WHERE {$column} {$operator} :$column";
-                $this->columnValue = $value;
-                $this->columnName  =  ":$column";
-                $this->query      .= $subQuery;
+                $subQuery                     = " WHERE {$column} {$operator} :$column";
+                $this->columnBind[":$column"] = $value;
+                $this->query                 .= $subQuery;
             }
         }
     }
@@ -150,13 +156,11 @@ class Database
 
         $execute     = $this->pdo->prepare($this->query);
 
-        if ($this->columnValue) {
-            if (is_array($this->columnName)) {
-                foreach ($this->columnName as $key => $value) {
-                    $execute->bindValue($key, $value);
-                }
-            } else
-                $execute->bindValue($this->columnName, $this->columnValue);
+        if ($this->columnBind) {
+            foreach ($this->columnBind as $key => $value) {
+                $execute->bindValue($key, $value);
+            }
+            $this->columnBind = [];
         }
 
         $execute->execute();
@@ -250,24 +254,5 @@ class Database
         $columns       .= ")";
 
         return [$columns, $values, $preparedValue];
-    }
-
-    public function whereAnd(array $columns, array $values)
-    {
-        $subQuery = 'WHERE ';
-        foreach ($columns as $key => $column) {
-            if ($key != count($columns) - 1) {
-                $subQuery .= "$column = :$column  AND ";
-            } else {
-
-                $subQuery .= "$column = :$column";
-            }
-        }
-        // $subQuery          = " WHERE {$column} {$operator} :$column";
-        $this->columnValue = $values;
-        foreach ($values as $key => $value) {
-            $this->columnName[":{$columns[$key]}"] = $value;
-        }
-        $this->query      .= $subQuery;
     }
 }
