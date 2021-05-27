@@ -1,8 +1,13 @@
 <?php
-function filter_get_request()
+function get_request()
 {
     if (count($_GET) == 1) {
         $key = array_key_first($_GET);
-        dump($key);
+
+        if (filter_var($_GET[$key], FILTER_SANITIZE_NUMBER_INT)) {
+            $value = filter_var($_GET[$key], FILTER_SANITIZE_NUMBER_INT);
+
+            return $value;
+        };
     }
 }

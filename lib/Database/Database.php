@@ -103,9 +103,6 @@ class Database
 
     public function setOffset(int $offset)
     {
-        dump($_GET);
-        die;
-        // filter_input()
         if ($offset > 0) {
             $subQuery = " OFFSET {$offset}";
         }

@@ -29,8 +29,11 @@ abstract class Model
     public function limit(int $limit)
     {
         $this->database->setLimit($limit);
-        if (isset($_GET['page'])) {
-            $this->offset($_GET['page']);
+        $getParam = get_request();
+        // dump($getParam);
+        // die;
+        if ($getParam) {
+            $this->offset($getParam);
         }
         return $this;
     }
