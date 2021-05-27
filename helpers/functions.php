@@ -12,8 +12,9 @@ function br()
     echo "<br>";
 }
 
-function load_view(string $viewName, $data)
+function load_view(string $viewName, ...$params)
 {
+    extract($params[0]);
     if (file_exists("public/assets/views/{$viewName}.view.php")) {
         return require_once "public/assets/views/{$viewName}.view.php";
     } else {

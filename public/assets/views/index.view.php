@@ -52,9 +52,9 @@
 
 <body style="width: 60%; margin: auto;">
     <div class="container">
-        <?php if (isset($data['errorMessages'])) : ?>
+        <?php if (isset($errorMessages)) : ?>
             <ul style="width: inherit; padding: 2em; color: #fff; background-color: red;">
-                <?php foreach ($data['errorMessages'] as $message) : ?>
+                <?php foreach ($errorMessages as $message) : ?>
                     <li>
                         <?= $message ?>
                     </li>
@@ -86,7 +86,7 @@
         </form>
     </div>
 
-    <?php foreach ($data['bulletins'] as $key => $bulletin) : ?>
+    <?php foreach ($bulletins as $key => $bulletin) : ?>
 
         <div class="board-wrapper" style="padding: 1em 2em; display: flex; justify-content: space-between; border-top: 1px solid #000; border-bottom: 1px solid #000;">
             <span class="board-title">
@@ -98,15 +98,15 @@
         </div>
     <?php endforeach ?>
     <div class="pagination" style="margin: 3em auto; width: 80%; display: flex; justify-content: space-between;">
-        <?php if ($data['previousPage']) : ?>
+        <?php if ($pagination->previousPage) : ?>
             <span class="btn-page">
-                <a href="?page=<?= $data['previousPage'] ?>">&lt;</a>
+                <a href="?page=<?= $pagination->previousPage ?>">&lt;</a>
             </span>
         <?php endif ?>
-        <?php for ($page = $data['startIndex']; $page <= $data['lastIndex']; $page++) : ?>
-            <?php if (($data['currentPage'] == $page)) : ?>
+        <?php for ($page = $pagination->startIndex; $page <= $pagination->lastIndex; $page++) : ?>
+            <?php if (($pagination->currentPage == $page)) : ?>
                 <span class="btn-page">
-                    <span><?= $data['currentPage'] ?></span>
+                    <span><?= $pagination->currentPage ?></span>
                 </span>
             <?php else : ?>
                 <span class="btn-page">
@@ -116,9 +116,9 @@
         <?php endfor ?>
 
 
-        <?php if ($data['nextPage']) : ?>
+        <?php if ($pagination->nextPage) : ?>
             <span class="btn-page">
-                <a href="?page=<?= $data['nextPage'] ?>">&gt;</a>
+                <a href="?page=<?= $pagination->nextPage ?>">&gt;</a>
             </span>
         <?php endif ?>
 
