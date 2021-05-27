@@ -23,16 +23,16 @@ function load_view(string $viewName, $params)
 }
 
 
-function get_root_path()
+function root_path()
 {
     return str_replace('\\', '/', dirname(__DIR__));
 }
 
 function db_default_config()
 {
-    $rootPath  = get_root_path();
+    $rootPath  = root_path();
     $rootPath .= '/config/database.php';
-    $configs   = include get_root_path() . '/config/database.php';
+    $configs   = include root_path() . '/config/database.php';
 
     return $configs;
 }

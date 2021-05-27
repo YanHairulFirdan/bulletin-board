@@ -1,6 +1,7 @@
 Database/DatabaseConnection.php
 insert_dummy.php
 /vendor
+/Models/User.php
 /playground
 /config/config.php
 pagination.txt

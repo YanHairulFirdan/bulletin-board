@@ -43,8 +43,8 @@ abstract class Model
         if (!isset($_GET['page'])) {
             $this->database->setLimit($limit);
         } else {
-            $offset = (intval($_GET['page']) - 1) * 10;
 
+            $offset = (intval($_GET['page']) - 1) * 10;
             $this->database->setLimit($limit, $offset);
         }
 
@@ -74,7 +74,7 @@ abstract class Model
         return $this;
     }
 
-    public function where(string $column, string $operator = "=", mixed $value)
+    public function where(string $column, string $operator = "=", $value)
     {
         $this->database->setWhereClause($column, $operator, $value);
 
@@ -91,5 +91,12 @@ abstract class Model
     public function offset(int $offset)
     {
         $this->database->setOffset($offset);
+    }
+
+    public function whereAnd(array $columns, array $values)
+    {
+        $this->database->whereAnd($columns, $values);
+
+        return $this;
     }
 }
