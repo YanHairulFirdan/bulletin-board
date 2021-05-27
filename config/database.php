@@ -1,12 +1,16 @@
 <?php
 return [
-    "dbType" => config("DATABASE_TYPE", 'mysql'),
-    "db_configs" => [
+    'type' => config('DATABASE_TYPE', 'mysql'),
+    'config' => [
         'mysql' => [
-            'databaseName' => config('DATABASE_NAME'),                           #get table from config
+            'databaseName' => config('DATABASE_NAME'),     #get database from config
             'host'         => config('HOST', 'localhost'), #get host from config
             'username'     => config('USERNAME', 'root'),  #get username from config
-            'password'     => config('PASSWORD')       #get password from config
+            'password'     => config('PASSWORD')           #get password from config
+        ],
+        'sqlite' => [
+            'databaseName' => config('DATABASE_NAME'),      #get database from config
+            'directory'    => config('DATABASE_DIRECTORY'), #get database file
         ]
     ]
 ];

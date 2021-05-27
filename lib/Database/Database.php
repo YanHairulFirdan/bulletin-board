@@ -21,7 +21,7 @@ class Database
      *
      * @var Object
      */
-    private $dbConnection;
+    private $dbAdapter;
     /**
      * The attribute for get database connection.
      *
@@ -49,13 +49,13 @@ class Database
     public function __construct(string $tableName)
     {
         $this->tableName          = $tableName;
-        $this->dbConnection = ConnectionFactory::create(get_config_value("DATABASE_TYPE", 'mysql'));
+        $this->dbAdapter = ConnectionFactory::create(config("DATABASE_TYPE", 'mysql'));
     }
 
     public function setConnection()
     {
         if (!$this->pdo) {
-            $this->pdo = $this->dbConnection->connect();
+            $this->pdo = $this->dbAdapter->connect();
         }
     }
 

@@ -26,15 +26,15 @@ if ($_POST) {
         'title' => 'required|length:20-42',
         'body'  => 'required|length:10-220',
     ];
-
+    $formData = $_POST;
     $validation = new Validation($rules);
 
-    $validation->validate($_POST);
+    $validation->validate($formData);
 
     $errorMessages = $validation->getErrorMessage();
 
     if (!$errorMessages) {
-        $bulletin->create($_POST);
+        $bulletin->create($formData);
         header("Refresh:0");
     }
 

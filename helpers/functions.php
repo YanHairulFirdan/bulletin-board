@@ -12,14 +12,14 @@ function br()
     echo "<br>";
 }
 
-function load_view(string $viewName, ...$params)
+function load_view(string $viewName, $params)
 {
-    extract($params[0]);
-    if (file_exists("public/assets/views/{$viewName}.view.php")) {
-        return require_once "public/assets/views/{$viewName}.view.php";
-    } else {
+    extract($params);
+    if (!file_exists("public/assets/views/{$viewName}.view.php")) {
         throw new Exception("file not exists", 1);
     }
+
+    require_once "public/assets/views/{$viewName}.view.php";
 }
 
 

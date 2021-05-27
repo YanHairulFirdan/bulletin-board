@@ -18,11 +18,11 @@ class MysqlAdapter implements DBAdapterInterface
     private function __construct()
     {
         $configs            = db_default_config();
-        $this->databaseType = $configs['dbType'];
-        $this->host         = $configs['db_configs'][$this->databaseType]['host'];
-        $this->databaseName = $configs['db_configs'][$this->databaseType]['databaseName'];
-        $this->username     = $configs['db_configs'][$this->databaseType]['username'];
-        $this->password     = $configs['db_configs'][$this->databaseType]['password'];
+        $this->databaseType = $configs['type'];
+        $this->host         = $configs['config'][$this->databaseType]['host'];
+        $this->databaseName = $configs['config'][$this->databaseType]['databaseName'];
+        $this->username     = $configs['config'][$this->databaseType]['username'];
+        $this->password     = $configs['config'][$this->databaseType]['password'];
     }
 
     public function connect()

@@ -3,6 +3,8 @@
 namespace Lib\Database;
 
 use Exception;
+use Lib\Database\Adapter\MysqlAdapter;
+use Lib\Database\Adapter\PostgresSQLAdapter;
 
 /*
     |--------------------------------------------------------------------------
