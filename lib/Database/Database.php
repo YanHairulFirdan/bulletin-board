@@ -30,12 +30,6 @@ class Database
      */
 
     private $pdo;
-    /**
-     * The attribute for get database connection.
-     *
-     * @var Object
-     */
-    private $queryBuilder;
 
     /**
      * The attribute for get table name.
@@ -51,28 +45,17 @@ class Database
     private $query;
 
     /** 
-     * @param mixed column value
-     * for creating database instance and database connection instance
-     */
-    private $columnValue;
-    /** 
-     * @param mixed column name
-     * for creating database instance and database connection instance
+     * @param mixed column bind
+     * for using pdo bindValue()
     
      */
     private $columnBind;
-    /** 
-     * @param array column name
-     * for creating database instance and database connection instance
-    
-     */
-    private $columnName;
+
 
     public function __construct(string $tableName)
     {
         $this->tableName    = $tableName;
         $this->dbAdapter    = ConnectionFactory::create(config("DATABASE_TYPE", 'mysql'));
-        $this->queryBuilder = new QueryBuilder();
     }
 
     public function setConnection()

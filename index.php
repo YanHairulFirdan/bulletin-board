@@ -6,7 +6,7 @@ use App\Model\Bulletin;
 use Lib\Utils\Pagination;
 use Lib\Utils\Validation;
 
-$bulletin   = new Bulletin();
+$bulletin   =  new Bulletin();
 $bulletins  = $bulletin->orderBy('created_at', 'DESC')->limit(10)->get();
 $pagination = new Pagination($bulletin->numRows());
 
