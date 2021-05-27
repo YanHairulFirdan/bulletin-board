@@ -1,6 +1,7 @@
 <?php
 
-namespace Lib\Database;
+namespace Lib\Database\Adapter;
+
 
 class MysqlAdapter extends AbstractConnection
 {

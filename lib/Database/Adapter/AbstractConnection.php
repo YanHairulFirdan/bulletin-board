@@ -1,6 +1,6 @@
 <?php
 
-namespace Lib\Database;
+namespace Lib\Database\Adapter;
 
 use PDO;
 
