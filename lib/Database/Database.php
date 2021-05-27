@@ -143,13 +143,10 @@ class Database
         $this->query            = "INSERT INTO {$this->tableName} ({$columns}) VALUES ({$values})";
 
         try {
-            $result = $this->pdo->query($this->query);
+            $this->pdo->query($this->query);
         } catch (Exception $exception) {
             $exception->getMessage();
         }
-        var_dump($result);
-        dump($this->pdo->errorInfo());
-        die;
     }
 
     public function update(string $column, mixed $value, array $data)
