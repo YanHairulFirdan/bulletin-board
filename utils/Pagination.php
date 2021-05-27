@@ -35,36 +35,36 @@ class Pagination
 
     private function setStartIndex()
     {
-        if ($this->data['numberOfPager'] <= 5) {
-            $this->data['startIndex'] = 1;
-        } elseif ($this->data['numberOfPager'] > 5) {
+        $this->data['startIndex'] = 1;
+
+        if ($this->data['numberOfPager'] > 5) {
             if ($this->data['currentPage'] - 2 >= 2) {
+                $this->data['startIndex'] = $this->data['currentPage'] - 2;
+
                 if ($this->data['currentPage'] == $this->data['numberOfPager']) {
                     $this->data['startIndex'] = $this->data['currentPage'] - 4;
                 } elseif ($this->data['currentPage'] + 1 == $this->data['numberOfPager']) {
                     $this->data['startIndex'] = $this->data['currentPage'] - 3;
-                } else {
-                    $this->data['startIndex'] = $this->data['currentPage'] - 2;
                 }
-            } else {
-                $this->data['startIndex'] = 1;
             }
         }
     }
 
     private function setLastIndex()
     {
-        if ($this->data['numberOfPager'] <= 5) {
-            $this->data['lastIndex'] = $this->data['numberOfPager'];
-        } elseif ($this->data['numberOfPager'] > 5) {
-            if ($this->data['numberOfPager'] - $this->data['currentPage'] < 3) {
-                $this->data['lastIndex'] = $this->data['numberOfPager'];
-            } else {
-                if ($this->data['currentPage'] > 2) {
-                    $this->data['lastIndex'] = $this->data['currentPage'] + 2;
-                } else {
-                    $this->data['lastIndex'] = 5;
-                }
+        $this->data['lastIndex'] = $this->data['numberOfPager'];
+
+        if ($this->data['numberOfPager'] > 5) {
+            if (empty($_GET) || $this->data['currentPage'] === 1) {
+                $this->data['lastIndex'] = 5;
+            }
+
+            if (
+                ($this->data['currentPage'] > 2)
+                &&
+                ($this->data['numberOfPager'] - $this->data['currentPage'] >= 2)
+            ) {
+                $this->data['lastIndex'] = $this->data['currentPage'] + 2;
             }
         }
     }

@@ -13,13 +13,8 @@ $pagination = new Pagination($bulletin->numRows());
 
 $pagination->paginator();
 
-$currentPage  = $pagination->currentPage;
-$previousPage = $pagination->previousPage;
-$nextPage     = $pagination->nextPage;
-$startIndex   = $pagination->startIndex;
-$lastIndex    = $pagination->lastIndex;
-
-// dump($bulletins);
+dump("start index " . $pagination->startIndex);
+dump("last index " . $pagination->lastIndex);
 
 if ($_POST) {
     $rules = [

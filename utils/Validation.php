@@ -18,6 +18,7 @@ class Validation
 
     public function validate($formData)
     {
+        // call_user_func()
         foreach ($formData as $field => $fieldValue) {
             if (!key_exists($field, $this->rules)) {
                 continue;
