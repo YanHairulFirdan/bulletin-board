@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Utils\Validator;
+namespace Lib\Utils\Validator;
 
 class Required extends AbstractRule
 {

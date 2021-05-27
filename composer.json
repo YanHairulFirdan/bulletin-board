@@ -2,7 +2,7 @@
 	"autoload": {
 		"psr-4": {
 			"Lib\\Database\\": "lib/database/",
-			"App\\Model\\": "Models/",
+			"App": "App/",
 			"Lib\\Utils\\": "utils/",
 			"Lib\\Utils\\Validator\\": "utils/Validator/"
 		},
