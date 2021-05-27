@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Utils;
+namespace Lib\Utils;
 
 class Pagination
 {

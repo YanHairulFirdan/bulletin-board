@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Utils;
+namespace Lib\Utils;
 
-use App\Utils\Validator\ValidatorFactory;
+use Lib\Utils\Validator\ValidatorFactory;
 
 class Validation
 {

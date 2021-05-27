@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Utils\Validator;
+namespace Lib\Utils\Validator;
 
 use Exception;
 
