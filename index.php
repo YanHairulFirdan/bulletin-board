@@ -13,12 +13,10 @@ $pagination = new Pagination($bulletin->numRows());
 
 $pagination->paginator();
 
-dump("start index " . $pagination->startIndex);
-dump("last index " . $pagination->lastIndex);
 
 if ($_POST) {
     $rules = [
-        'title' => 'required|length:10-80',
+        'title' => 'required|length:10-180',
         'body'  => 'required|length:10-220',
     ];
     $formData = $_POST;

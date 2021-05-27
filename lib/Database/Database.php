@@ -22,12 +22,20 @@ class Database
      * @var Object
      */
     private $dbAdapter;
+
     /**
      * The attribute for get database connection.
      *
      * @var Object
      */
+
     private $pdo;
+    /**
+     * The attribute for get database connection.
+     *
+     * @var Object
+     */
+    private $queryBuilder;
 
     /**
      * The attribute for get table name.
@@ -43,13 +51,28 @@ class Database
     private $query;
 
     /** 
-     * @param string table name
+     * @param mixed column value
      * for creating database instance and database connection instance
      */
+    private $columnValue;
+    /** 
+     * @param mixed column name
+     * for creating database instance and database connection instance
+    
+     */
+    private $columnBind;
+    /** 
+     * @param array column name
+     * for creating database instance and database connection instance
+    
+     */
+    private $columnName;
+
     public function __construct(string $tableName)
     {
-        $this->tableName          = $tableName;
-        $this->dbAdapter = ConnectionFactory::create(config("DATABASE_TYPE", 'mysql'));
+        $this->tableName    = $tableName;
+        $this->dbAdapter    = ConnectionFactory::create(config("DATABASE_TYPE", 'mysql'));
+        $this->queryBuilder = new QueryBuilder();
     }
 
     public function setConnection()
@@ -67,13 +90,14 @@ class Database
         }
     }
 
-    public function setWhereClause(string $column, string $operator = '=', mixed $value)
+    public function setWhereClause(string $column, string $operator = '=', $value)
     {
         if (!is_null($column)) {
             if (!is_null($value) || isset($value)) {
-                $subQuery = " WHERE {$column} {$operator} '{$value}'";
+                $subQuery                     = " WHERE {$column} {$operator} :$column";
+                $this->columnBind[":$column"] = $value;
+                $this->query                 .= $subQuery;
             }
-            $this->query .= $subQuery;
         }
     }
 
@@ -106,6 +130,7 @@ class Database
         if ($offset > 0) {
             $subQuery = " OFFSET {$offset}";
         }
+
         $this->query .= $subQuery;
     }
 
@@ -129,8 +154,19 @@ class Database
             $this->query = "SELECT * FROM {$this->tableName}";
         }
 
-        $results     = $this->pdo->query($this->query)->fetchAll();
-        $this->query = '';
+        $execute     = $this->pdo->prepare($this->query);
+
+        if ($this->columnBind) {
+            foreach ($this->columnBind as $key => $value) {
+                $execute->bindValue($key, $value);
+            }
+            $this->columnBind = [];
+        }
+
+        $execute->execute();
+
+        $results      = $execute->fetchAll();
+        $this->query  = '';
 
         return $results;
     }
@@ -139,33 +175,38 @@ class Database
     {
         $this->setConnection();
 
-        list($columns, $values) = $this->extractData($data);
-        $this->query            = "INSERT INTO {$this->tableName} ({$columns}) VALUES ({$values})";
+        list($columns, $values, $preparedValue) = $this->extractData($data);
+        $this->query                            = "INSERT INTO {$this->tableName} {$columns} VALUES {$preparedValue}";
+        $execute                                = $this->pdo->prepare($this->query);
 
         try {
             $this->pdo->query($this->query);
         } catch (Exception $exception) {
             $exception->getMessage();
         }
+
+        $execute->execute($values);
     }
 
-    public function update(string $column, mixed $value, array $data)
+    public function update(string $column, $value, array $data)
     {
         $this->setConnection();
 
-        $updateStatement = $this->updateQuery($data);
-        $this->query     = "UPDATE $this->tableName SET{$updateStatement} WHERE {$column} = {$value}";
+        list($updateStatement, $values) = $this->updateQuery($data);
+        $this->query                    = "UPDATE $this->tableName SET{$updateStatement} WHERE {$column} = ?";
+        $execute                        = $this->pdo->prepare($this->query);
 
-        $this->pdo->query($this->query);
+        $execute->execute([...$values, $value]);
     }
 
-    public function delete(string $column, mixed $value)
+    public function delete(string $column, $value)
     {
         $this->setConnection();
 
-        $this->query = "DELETE {$this->tableName} WHERE {$column} = {$value}";
+        $this->query = "DELETE {$this->tableName} WHERE {$column} = (?)";
+        $execute     = $this->pdo->prepare($this->query);
 
-        $this->pdo->query($this->query);
+        $execute->execute([$value]);
     }
 
     public function numrows()
@@ -173,39 +214,51 @@ class Database
         $this->setConnection();
 
         $this->query = "SELECT COUNT(*) FROM {$this->tableName}";
-        $numRows     = $this->pdo->query($this->query);
+        $execute     = $this->pdo->prepare($this->query);
 
-        return $numRows->fetchColumn();
+        $execute->execute();
+
+        $numRows     = $execute->fetchColumn();
+
+        return $numRows;
     }
 
     private function updateQuery(array $data)
     {
-        $updateStatement = '';
+        $updateStatement = '(';
+        $values          = [];
         foreach ($data as $key => $field) {
             $key              = htmlspecialchars($key);
             $field            = htmlspecialchars($field);
-            $updateStatement .= '`' . "$key = $field"  . '`' . ',';
+            $updateStatement .= '`' . "$key = ?"  . '`' . ',';
+            $values[]         = $field;
         }
 
         $updateStatement = substr($updateStatement, 0, -1);
+        $updateStatement .= ')';
 
-        return $updateStatement;
+        return [$updateStatement, $values];
     }
 
     private function extractData(array $data)
     {
-        $columns = "";
-        $values  = "";
+        $preparedValue = "(";
+        $columns       = "(";
+        $values        = [];
 
         foreach ($data as $key => $field) {
-            $key      = htmlspecialchars($key);
-            $field    = htmlspecialchars($field);
-            $columns .= '`' . $key . '`' . ',';
-            $values  .= "'$field'" . ',';
+            $key            = htmlspecialchars($key);
+            $field          = htmlspecialchars($field);
+            $preparedValue .= '?,';
+            $columns       .= $key . ',';
+            $values[]       = $field;
         }
-        $columns = substr($columns, 0, -1);
-        $values  = substr($values, 0, -1);
 
-        return [$columns, $values];
+        $columns        = substr($columns, 0, -1);
+        $preparedValue  = substr($preparedValue, 0, -1);
+        $preparedValue .= ")";
+        $columns       .= ")";
+
+        return [$columns, $values, $preparedValue];
     }
 }

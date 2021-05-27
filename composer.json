@@ -13,6 +13,7 @@
 		],
 		"files": [
 			"config/config.php",
+			"config/paths.php",
 			"helpers/functions.php",
 			"helpers/request.php",
 			"helpers/config_value.php"
