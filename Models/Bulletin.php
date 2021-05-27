@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-use App\Model\Model;
+use Lib\Model\Model as Model;
 
 class Bulletin extends Model
 {
