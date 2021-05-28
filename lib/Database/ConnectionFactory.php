@@ -5,6 +5,8 @@ namespace Lib\Database;
 use Exception;
 use Lib\Database\Adapter\MysqlAdapter;
 use Lib\Database\Adapter\PostgresSQLAdapter;
+use Lib\Database\Adapter\SQLiteAdapter;
+
 
 /*
     |--------------------------------------------------------------------------
@@ -26,6 +28,9 @@ class ConnectionFactory
 				break;
 			case 'PostgresSQL':
 				return PostgresSQLAdapter::getInstance();
+				break;
+			case 'SQLite':
+				return SQLiteAdapter::getInstance();
 				break;
 			default:
 				throw new Exception("Database type not found", 1);
