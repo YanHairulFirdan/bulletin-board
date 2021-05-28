@@ -55,9 +55,12 @@ class Pagination
         $this->data['lastIndex'] = $this->data['numberOfPager'];
         $getRequest              = get_request();
 
+
         if ($this->data['numberOfPager'] > 5) {
             if (
                 empty($getRequest)
+                ||
+                is_string($getRequest)
                 ||
                 $this->data['currentPage'] === 1
             ) {

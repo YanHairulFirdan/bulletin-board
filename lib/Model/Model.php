@@ -29,22 +29,11 @@ abstract class Model
     public function limit(int $limit)
     {
         $this->database->setLimit($limit);
+
         $getParam = get_request();
 
-        if ($getParam) {
+        if ($getParam && is_numeric($getParam)) {
             $this->offset($getParam);
-        }
-        return $this;
-    }
-
-    public function paginate(int $limit)
-    {
-        if (!isset($_GET['page'])) {
-            $this->database->setLimit($limit);
-        } else {
-
-            $offset = (intval($_GET['page']) - 1) * 10;
-            $this->database->setLimit($limit, $offset);
         }
 
         return $this;
