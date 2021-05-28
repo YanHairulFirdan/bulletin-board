@@ -1,16 +1,15 @@
 <?php
 function get_request()
 {
-    $value = null;
     if (count($_GET) == 1) {
         $key   = array_key_first($_GET);
-        $value = filter_var($_GET[$key], FILTER_SANITIZE_STRING);
-
-        if (filter_var($_GET[$key], FILTER_SANITIZE_NUMBER_INT)) {
-            $value = filter_var($_GET[$key], FILTER_SANITIZE_NUMBER_INT);
-            $value = preg_match("/[\w]/", $value);
+        $getParam = $_GET[$key];
+        if (intval($getParam) > 0) {
+            $getParam = filter_var($_GET[$key], FILTER_SANITIZE_NUMBER_INT);
+        } else {
+            $getParam = filter_var($_GET[$key], FILTER_SANITIZE_STRING);
         }
     }
 
-    return $value;
+    return $getParam;
 }

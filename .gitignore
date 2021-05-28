@@ -5,6 +5,11 @@ insert_dummy.php
 /playground
 /config/config.php
 pagination.txt
+crud.php
+edit.php
+delete.php
+Public/assets/views/crud.view.php
+Public/assets/views/edit.view.php
 # /temp/
 
 # These are some examples of commonly ignored file patterns.
