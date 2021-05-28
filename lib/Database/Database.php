@@ -156,9 +156,9 @@ class Database
     {
         $this->setConnection();
 
-        list($columns, $values, $preparedValue) = $this->extractData($dataInsert);
-        $this->query                            = "INSERT INTO {$this->tableName} {$columns} VALUES {$preparedValue}";
-        $execute                                = $this->pdo->prepare($this->query);
+        list($columns, $preparedValue) = $this->extractData($dataInsert);
+        $this->query                   = "INSERT INTO {$this->tableName} {$columns} VALUES {$preparedValue}";
+        $execute                       = $this->pdo->prepare($this->query);
 
         foreach ($dataInsert as $key => $data) {
             $execute->bindValue(":{$key}", $data);
@@ -213,7 +213,7 @@ class Database
             $values[]         = $field;
         }
 
-        $updateStatement = substr($updateStatement, 0, -1);
+        $updateStatement  = substr($updateStatement, 0, -1);
         $updateStatement .= ')';
 
         return [$updateStatement, $values];
@@ -223,14 +223,12 @@ class Database
     {
         $preparedValue = "(";
         $columns       = "(";
-        $values        = [];
 
         foreach ($dataInsert as $key => $field) {
             $key            = htmlspecialchars($key);
             $field          = htmlspecialchars($field);
             $preparedValue .= ":{$key},";
             $columns       .= $key . ',';
-            $values[]       = $field;
         }
 
         $columns        = substr($columns, 0, -1);
@@ -238,6 +236,6 @@ class Database
         $preparedValue .= ")";
         $columns       .= ")";
 
-        return [$columns, $values, $preparedValue];
+        return [$columns, $preparedValue];
     }
 }
