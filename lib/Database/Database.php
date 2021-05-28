@@ -169,11 +169,11 @@ class Database
         $execute->execute();
     }
 
-    public function update(string $column, $value, array $data)
+    public function update(string $column, $value, array $dataUpdate)
     {
         $this->setConnection();
 
-        list($updateStatement, $values) = $this->updateQuery($data);
+        list($updateStatement, $values) = $this->updateQuery($dataUpdate);
         $this->query                    = "UPDATE $this->tableName SET{$updateStatement} WHERE {$column} = ?";
         $execute                        = $this->pdo->prepare($this->query);
 
@@ -204,11 +204,11 @@ class Database
         return $numRows;
     }
 
-    private function updateQuery(array $data)
+    private function updateQuery(array $dataUpdate)
     {
         $updateStatement = '(';
         $values          = [];
-        foreach ($data as $key => $field) {
+        foreach ($dataUpdate as $key => $field) {
             $key              = htmlspecialchars($key);
             $field            = htmlspecialchars($field);
             $updateStatement .= '`' . "$key = ?"  . '`' . ',';
@@ -221,13 +221,13 @@ class Database
         return [$updateStatement, $values];
     }
 
-    private function extractData(array $data)
+    private function extractData(array $dataInsert)
     {
         $preparedValue = "(";
         $columns       = "(";
         $values        = [];
 
-        foreach ($data as $key => $field) {
+        foreach ($dataInsert as $key => $field) {
             $key            = htmlspecialchars($key);
             $field          = htmlspecialchars($field);
             $preparedValue .= ":{$key},";
