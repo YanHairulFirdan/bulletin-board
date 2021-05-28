@@ -20,7 +20,7 @@ class Pagination
 
     private function setCurrentPage()
     {
-        $this->data['currentPage'] = (isset($_REQUEST['page'])) ? intval($_REQUEST['page']) : 1;
+        $this->data['currentPage'] = is_numeric(get_request()) ? intval(get_request()) : 1;
     }
 
     private function setNextPage()
@@ -55,16 +55,12 @@ class Pagination
         $this->data['lastIndex'] = $this->data['numberOfPager'];
         $getRequest              = get_request();
 
-
         if ($this->data['numberOfPager'] > 5) {
             if (
-                empty($getRequest)
-                ||
-                is_string($getRequest)
-                ||
-                $this->data['currentPage'] === 1
+                is_null($getRequest) || $this->data['currentPage'] === 1
             ) {
                 $this->data['lastIndex'] = 5;
+                dump('ok');
             }
 
             if (

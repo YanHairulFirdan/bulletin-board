@@ -171,11 +171,17 @@ class Database
     {
         $this->setConnection();
 
-        list($updateStatement, $values) = $this->updateQuery($dataUpdate);
-        $this->query                    = "UPDATE $this->tableName SET{$updateStatement} WHERE {$column} = ?";
-        $execute                        = $this->pdo->prepare($this->query);
+        $updateStatement = $this->updateQuery($dataUpdate);
+        $this->query     = "UPDATE $this->tableName SET {$updateStatement} WHERE {$column} = :{$column}";
+        $execute         = $this->pdo->prepare($this->query);
 
-        $execute->execute([...$values, $value]);
+        $execute->bindValue(":{$column}", $value);
+
+        foreach ($this->columnBind as $key => $bindValue) {
+            $execute->bindValue($key, $bindValue);
+        }
+
+        $execute->execute();
     }
 
     public function delete(string $column, $value)
@@ -204,20 +210,18 @@ class Database
 
     private function updateQuery(array $dataUpdate)
     {
-        $updateStatement = '(';
-        $values          = [];
+        $updateStatement = '';
 
         foreach ($dataUpdate as $key => $field) {
-            $key              = htmlspecialchars($key);
-            $field            = htmlspecialchars($field);
-            $updateStatement .= '`' . "$key = ?"  . '`' . ',';
-            $values[]         = $field;
+            $key                         = htmlspecialchars($key);
+            $field                       = htmlspecialchars($field);
+            $updateStatement            .=  "`$key` = :{$key} ,";
+            $this->columnBind[":{$key}"] = $field;
         }
 
         $updateStatement  = substr($updateStatement, 0, -1);
-        $updateStatement .= ')';
 
-        return [$updateStatement, $values];
+        return $updateStatement;
     }
 
     private function extractData(array $dataInsert)

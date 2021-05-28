@@ -1,6 +1,7 @@
 <?php
 function get_request()
 {
+    $getParam = null;
     if (count($_GET) == 1) {
         $key   = array_key_first($_GET);
         $getParam = $_GET[$key];

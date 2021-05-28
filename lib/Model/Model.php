@@ -80,4 +80,9 @@ abstract class Model
     {
         $this->database->setOffset($offset);
     }
+
+    public function edit(string $column, $columnValue, array $dataEdit)
+    {
+        $this->database->update($column, $columnValue, $dataEdit);
+    }
 }
