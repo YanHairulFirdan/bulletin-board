@@ -20,6 +20,7 @@ class ConnectionFactory
 {
 	public static function create(string $connectionType)
 	{
+		dump($connectionType);
 		switch ($connectionType) {
 			case 'mysql':
 				return MysqlAdapter::getInstance();

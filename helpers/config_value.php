@@ -1,10 +1,9 @@
 <?php
-function config(string $key, $defaultValue = '')
+function config($config, $defaultValue = '')
 {
-    $configs = get_defined_constants(true)['user'];
-
-    if (array_key_exists($key, $configs)) {
-        return $configs[$key];
+    dump($config);
+    if (!empty($config)) {
+        return $config;
     }
 
     if (!empty($defaultValue)) {

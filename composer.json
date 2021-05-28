@@ -9,11 +9,12 @@
 			"lib/utils/Validator/"
 		],
 		"files": [
-			"App/config/config.php",
-			"App/config/paths.php",
 			"helpers/functions.php",
 			"helpers/request.php",
-			"helpers/config_value.php"
+			"helpers/config_value.php",
+			"App/config/config.php",
+			"App/config/database.php",
+			"App/config/paths.php"
 		]
 	},
 	"require": {

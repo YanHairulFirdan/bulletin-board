@@ -53,7 +53,7 @@ class Database
     public function __construct(string $tableName)
     {
         $this->tableName    = $tableName;
-        $this->dbAdapter    = ConnectionFactory::create(config("DATABASE_TYPE", 'mysql'));
+        $this->dbAdapter    = ConnectionFactory::create(config(DATABASE_TYPE, 'mysql'));
     }
 
     public function setConnection()
