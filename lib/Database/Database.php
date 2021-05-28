@@ -154,21 +154,19 @@ class Database
         return $results;
     }
 
-    public function insert(array $data)
+    public function insert(array $dataInsert)
     {
         $this->setConnection();
 
-        list($columns, $values, $preparedValue) = $this->extractData($data);
+        list($columns, $values, $preparedValue) = $this->extractData($dataInsert);
         $this->query                            = "INSERT INTO {$this->tableName} {$columns} VALUES {$preparedValue}";
         $execute                                = $this->pdo->prepare($this->query);
 
-        try {
-            $this->pdo->query($this->query);
-        } catch (Exception $exception) {
-            $exception->getMessage();
+        foreach ($dataInsert as $key => $data) {
+            $execute->bindValue(":{$key}", $data);
         }
 
-        $execute->execute($values);
+        $execute->execute();
     }
 
     public function update(string $column, $value, array $data)
@@ -232,7 +230,7 @@ class Database
         foreach ($data as $key => $field) {
             $key            = htmlspecialchars($key);
             $field          = htmlspecialchars($field);
-            $preparedValue .= '?,';
+            $preparedValue .= ":{$key},";
             $columns       .= $key . ',';
             $values[]       = $field;
         }
