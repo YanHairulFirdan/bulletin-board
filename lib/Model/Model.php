@@ -30,8 +30,7 @@ abstract class Model
     {
         $this->database->setLimit($limit);
         $getParam = get_request();
-        // dump($getParam);
-        // die;
+
         if ($getParam) {
             $this->offset($getParam);
         }

@@ -53,9 +53,14 @@ class Pagination
     private function setLastIndex()
     {
         $this->data['lastIndex'] = $this->data['numberOfPager'];
+        $getRequest              = get_request();
 
         if ($this->data['numberOfPager'] > 5) {
-            if (empty($_GET) || $this->data['currentPage'] === 1) {
+            if (
+                empty($getRequest)
+                ||
+                $this->data['currentPage'] === 1
+            ) {
                 $this->data['lastIndex'] = 5;
             }
 
