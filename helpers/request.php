@@ -7,10 +7,9 @@ function get_request()
 
         if (filter_var($_GET[$key], FILTER_SANITIZE_NUMBER_INT)) {
             $value = filter_var($_GET[$key], FILTER_SANITIZE_NUMBER_INT);
-            $value = preg_match('[0-9]', $value);
+            $value = preg_match("/[\w]/", $value);
         }
     }
-    // dump($value);
-    // die;
-    return $value ? $value : null;
+
+    return $value;
 }
