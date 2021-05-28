@@ -206,6 +206,7 @@ class Database
     {
         $updateStatement = '(';
         $values          = [];
+
         foreach ($dataUpdate as $key => $field) {
             $key              = htmlspecialchars($key);
             $field            = htmlspecialchars($field);
