@@ -1,7 +1,6 @@
 <?php
 function config($config, $defaultValue = '')
 {
-    dump($config);
     if (!empty($config)) {
         return $config;
     }
