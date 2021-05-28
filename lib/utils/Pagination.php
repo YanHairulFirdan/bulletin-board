@@ -60,7 +60,6 @@ class Pagination
                 is_null($getRequest) || $this->data['currentPage'] === 1
             ) {
                 $this->data['lastIndex'] = 5;
-                dump('ok');
             }
 
             if (

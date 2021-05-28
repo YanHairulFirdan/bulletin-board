@@ -85,4 +85,9 @@ abstract class Model
     {
         $this->database->update($column, $columnValue, $dataEdit);
     }
+
+    public function delete(string $column, $value)
+    {
+        $this->database->delete($column, $value);
+    }
 }

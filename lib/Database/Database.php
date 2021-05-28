@@ -181,17 +181,24 @@ class Database
             $execute->bindValue($key, $bindValue);
         }
 
-        $execute->execute();
+        $updateResult = $execute->execute();
+
+        return $updateResult;
     }
 
     public function delete(string $column, $value)
     {
         $this->setConnection();
 
-        $this->query = "DELETE {$this->tableName} WHERE {$column} = (?)";
+        $this->query = "DELETE FROM {$this->tableName} WHERE {$column} = :{$column}";
+
         $execute     = $this->pdo->prepare($this->query);
 
-        $execute->execute([$value]);
+        $execute->bindValue(":{$column}", $value);
+
+        $deleteResult = $execute->execute();
+
+        return $deleteResult;
     }
 
     public function numrows()
