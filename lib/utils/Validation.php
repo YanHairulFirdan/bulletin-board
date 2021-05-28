@@ -7,7 +7,7 @@ use Lib\Utils\Validator\ValidatorFactory;
 class Validation
 {
     private $rules;
-    private $data;
+    private $validationParams;
     private $validatorClass;
     private $errorMessages;
 
@@ -31,7 +31,7 @@ class Validation
 
                 $validator = ValidatorFactory::create($this->validatorClass);
 
-                $validator->check($this->data);
+                $validator->check($this->validationParams);
 
                 if ($validator->getMessage()) {
                     $this->errorMessages[$field] = $validator->getMessage();
@@ -48,12 +48,10 @@ class Validation
 
     private function setValidatorType($fieldRule, $field, $fieldValue)
     {
-        $findSeparator = strpos($fieldRule, ':');
-
-        if (is_numeric($findSeparator)) {
-            $ruleContainValue     = explode(':', $fieldRule);
-            $this->validatorClass = $ruleContainValue[0];
-            $this->data           = [
+        if (is_numeric(strpos($fieldRule, ':'))) {
+            $ruleContainValue       = explode(':', $fieldRule);
+            $this->validatorClass   = $ruleContainValue[0];
+            $this->validationParams = [
                 'field'      => $field,
                 'fieldValue' => $fieldValue,
                 'requisite'  => $ruleContainValue[1]
@@ -62,8 +60,8 @@ class Validation
             return;
         }
 
-        $this->validatorClass = $fieldRule;
-        $this->data           = [
+        $this->validatorClass   = $fieldRule;
+        $this->validationParams = [
             'field'      => $field,
             'fieldValue' => $fieldValue
         ];

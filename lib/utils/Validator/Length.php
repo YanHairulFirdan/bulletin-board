@@ -4,11 +4,12 @@ namespace Lib\Utils\Validator;
 
 class Length extends AbstractRule
 {
-    public function check($data)
+    public function check($params)
     {
-        $field      = $data['field'];
-        $fieldValue = $data['fieldValue'];
-        $requisite  = explode('-', $data['requisite']);
+        extract($params);
+        $field      = $field;
+        $fieldValue = $fieldValue;
+        $requisite  = explode('-', $requisite);
         $min        = intval($requisite[0]);
         $max        = intval($requisite[1]);
 

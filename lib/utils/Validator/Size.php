@@ -7,11 +7,11 @@ class Size extends AbstractRule
 {
     private $unit = 1000;
 
-    public function check($data)
+    public function check($params)
     {
-        $field   = $data['field'];
-        $maxSize = $data['requisite'];
-        $size    = $_FILES[$data['field']]['size']  / $this->unit;
+        extract($params);
+        $maxSize = $requisite;
+        $size    = $_FILES[$field]['size']  / $this->unit;
 
         if ($size > $maxSize) {
             $this->message = "File max size for {$field} is {$maxSize} MB";
