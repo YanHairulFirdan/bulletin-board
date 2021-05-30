@@ -30,7 +30,7 @@ if ($_POST) {
         header("Refresh:0");
     }
 
-    load_view('index', compact('bulletins', 'pagination', 'errorMessages'));
+    load_view('index', ['bulletins' => $bulletins, 'pagination' => $pagination, 'errorMessages' => $errorMessages]);
 }
 
-load_view('index', compact('bulletins', 'pagination'));
+load_view('index', ['bulletins' => $bulletins, 'pagination' => $pagination]);

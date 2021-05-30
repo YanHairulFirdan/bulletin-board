@@ -12,9 +12,8 @@ function br()
     echo "<br>";
 }
 
-function load_view(string $viewName, $params)
+function load_view(string $viewName, array $viewVariables = [])
 {
-    extract($params);
     if (!file_exists("public/assets/views/{$viewName}.view.php")) {
         throw new Exception("file not exists", 1);
     }
