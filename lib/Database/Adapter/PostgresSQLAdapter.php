@@ -4,7 +4,7 @@ namespace Lib\Database\Adapter;
 
 use PDO;
 
-class PostgresSQLAdapter implements DBAdapterInterface
+class PostgresSQLAdapter extends BaseAdapter implements DBAdapterInterface
 {
     private $connection;
     private $dsn;

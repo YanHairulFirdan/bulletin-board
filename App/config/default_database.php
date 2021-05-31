@@ -1,4 +1,5 @@
 <?php
+
 return [
     'type' => config(DATABASE_TYPE, 'mysql'),
     'config' => [

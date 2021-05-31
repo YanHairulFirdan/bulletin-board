@@ -4,13 +4,9 @@ namespace Lib\Database\Adapter;
 
 use PDO;
 
-class SQLiteAdapter implements DBAdapterInterface
+class SQLiteAdapter extends BaseAdapter implements DBAdapterInterface
 {
-    private $connection;
-    private $dsn;
-    private $databaseType;
-    private $databaseName;
-    private static $instance = null;
+    private $directory;
 
     private function __construct()
     {

@@ -4,16 +4,8 @@ namespace Lib\Database\Adapter;
 
 use PDO;
 
-class MysqlAdapter implements DBAdapterInterface
+class MysqlAdapter extends BaseAdapter implements DBAdapterInterface
 {
-    private $connection;
-    private $dsn;
-    private $databaseType;
-    private $host;
-    private $databaseName;
-    private $username;
-    private $password;
-    private static $instance = null;
 
     private function __construct()
     {

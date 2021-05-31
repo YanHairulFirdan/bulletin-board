@@ -30,8 +30,7 @@ function root_path()
 function db_default_config()
 {
     $rootPath  = root_path();
-    $rootPath .= '/config/database.php';
-    $configs   = include root_path() . '/App/config/database.php';
+    $configs   = include $rootPath . '/app/config/default_database.php';
 
     return $configs;
 }
