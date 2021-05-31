@@ -20,6 +20,8 @@ class Pagination
 
     public function setCurrentPage($currentPage)
     {
+        $this->setNumberOfPager($this->data['dataPerPage']);
+
         $this->data['currentPage'] = (is_array($currentPage)) ? $this->sanitizeParam($currentPage) : $currentPage;
     }
 
@@ -53,14 +55,12 @@ class Pagination
     private function setLastIndex()
     {
         $this->data['lastIndex'] = $this->data['numberOfPager'];
-        $getRequest              = get_request();
 
         if ($this->data['numberOfPager'] > 5) {
-            if (
-                is_null($getRequest) || $this->data['currentPage'] === 1
-            ) {
+            if ($this->data['currentPage'] == 1) {
                 $this->data['lastIndex'] = 5;
             }
+
 
             if (
                 ($this->data['currentPage'] > 2)
@@ -74,8 +74,6 @@ class Pagination
 
     public function paginator()
     {
-        $this->setNumberOfPager(10);
-        // $this->setCurrentPage();
         $this->setStartIndex();
         $this->setPreviousPage();
         $this->setNextPage();

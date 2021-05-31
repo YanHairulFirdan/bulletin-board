@@ -97,32 +97,34 @@
             </span>
         </div>
     <?php endforeach ?>
-    <div class="pagination" style="margin: 3em auto; width: 80%; display: flex; justify-content: space-between;">
-        <?php if ($viewVariables['pagination']->previousPage) : ?>
-            <span class="btn-page">
-                <a href="?page=<?= $viewVariables['pagination']->previousPage ?>">&lt;</a>
-            </span>
-        <?php endif ?>
-        <?php for ($page = $viewVariables['pagination']->startIndex; $page <= $viewVariables['pagination']->lastIndex; $page++) : ?>
-            <?php if (($viewVariables['pagination']->currentPage == $page)) : ?>
+    <?php if (!($viewVariables['pagination']->currentPage > $viewVariables['pagination']->numberOfPager)) : ?>
+        <div class="pagination" style="margin: 3em auto; width: 80%; display: flex; justify-content: space-between;">
+            <?php if ($viewVariables['pagination']->previousPage) : ?>
                 <span class="btn-page">
-                    <span><?= $viewVariables['pagination']->currentPage ?></span>
-                </span>
-            <?php else : ?>
-                <span class="btn-page">
-                    <a href="?page=<?= $page ?>"><?= $page ?> </a>
+                    <a href="?page=<?= $viewVariables['pagination']->previousPage ?>">&lt;</a>
                 </span>
             <?php endif ?>
-        <?php endfor ?>
+            <?php for ($page = $viewVariables['pagination']->startIndex; $page <= $viewVariables['pagination']->lastIndex; $page++) : ?>
+                <?php if (($viewVariables['pagination']->currentPage == $page)) : ?>
+                    <span class="btn-page">
+                        <span><?= $viewVariables['pagination']->currentPage ?></span>
+                    </span>
+                <?php else : ?>
+                    <span class="btn-page">
+                        <a href="?page=<?= $page ?>"><?= $page ?> </a>
+                    </span>
+                <?php endif ?>
+            <?php endfor ?>
 
 
-        <?php if ($viewVariables['pagination']->nextPage) : ?>
-            <span class="btn-page">
-                <a href="?page=<?= $viewVariables['pagination']->nextPage ?>">&gt;</a>
-            </span>
+            <?php if ($viewVariables['pagination']->nextPage) : ?>
+                <span class="btn-page">
+                    <a href="?page=<?= $viewVariables['pagination']->nextPage ?>">&gt;</a>
+                </span>
+            <?php endif ?>
         <?php endif ?>
 
-    </div>
+        </div>
 </body>
 
 </html>

@@ -95,13 +95,10 @@ class Database
         }
     }
 
-    public function setLimit(int $limit, int $offset = 0)
+    public function setLimit(int $limit)
     {
         if ($limit > 0) {
-            $subQuery = " LIMIT {$limit}";
-            if ($offset > 0) {
-                $subQuery .= " OFFSET {$offset}";
-            }
+            $subQuery     = " LIMIT {$limit}";
             $this->query .= $subQuery;
         }
     }
@@ -110,9 +107,8 @@ class Database
     {
         if ($offset > 0) {
             $subQuery = " OFFSET {$offset}";
+            $this->query .= $subQuery;
         }
-
-        $this->query .= $subQuery;
     }
 
     public function setGroupBy(string $column)

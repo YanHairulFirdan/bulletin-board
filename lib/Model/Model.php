@@ -42,6 +42,8 @@ abstract class Model
         $getParam = get_request();
 
         if ($getParam && is_numeric($getParam)) {
+            $getParam--;
+            $getParam *= $limit;
             $this->offset($getParam);
         }
 
@@ -64,9 +66,10 @@ abstract class Model
     {
         if ($orderType != '') {
             $this->database->setOrderBy($column, $orderType);
-        } else {
-            $this->database->setOrderBy($column);
+            return $this;
         }
+
+        $this->database->setOrderBy($column);
 
         return $this;
     }

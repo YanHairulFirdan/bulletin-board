@@ -15,7 +15,6 @@ $pagination->setCurrentPage($param);
 
 $pagination->paginator();
 
-
 if ($_POST) {
     $rules      = [
         'title' => 'required|length:10-180',
@@ -36,4 +35,4 @@ if ($_POST) {
     load_view('index', ['bulletins' => $bulletins, 'pagination' => $pagination, 'errorMessages' => $errorMessages]);
 }
 
-load_view('index', ['bulletins' => $bulletins, 'pagination' => $pagination]);
+load_view('index', compact('bulletins', 'pagination'));
