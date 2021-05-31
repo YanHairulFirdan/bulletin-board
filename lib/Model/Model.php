@@ -26,6 +26,15 @@ abstract class Model
         $this->database->insert($data);
     }
 
+    public function findByID($id)
+    {
+        $this->database->setWhereClause('id', '=', $id);
+
+        $record = $this->database->select();
+
+        return $record;
+    }
+
     public function limit(int $limit)
     {
         $this->database->setLimit($limit);
