@@ -7,11 +7,6 @@ function dump($data)
     echo "</pre>";
 }
 
-function br()
-{
-    echo "<br>";
-}
-
 function load_view(string $viewName, array $viewVariables = [])
 {
     if (!file_exists("public/assets/views/{$viewName}.view.php")) {
