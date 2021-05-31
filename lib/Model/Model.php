@@ -94,6 +94,7 @@ abstract class Model
 
             $this->database->setOffset($offset);
         }
+
         return $this;
     }
 
