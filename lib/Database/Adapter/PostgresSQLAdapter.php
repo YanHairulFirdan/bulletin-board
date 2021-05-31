@@ -17,12 +17,7 @@ class PostgresSQLAdapter extends BaseAdapter implements DBAdapterInterface
 
     private function __construct()
     {
-        $configs            = db_default_config();
-        $this->databaseType = $configs['dbType'];
-        $this->host         = $configs['db_configs'][$this->databaseType]['host'];
-        $this->databaseName = $configs['db_configs'][$this->databaseType]['databaseName'];
-        $this->username     = $configs['db_configs'][$this->databaseType]['username'];
-        $this->password     = $configs['db_configs'][$this->databaseType]['password'];
+        parent::__construct();
     }
 
     public function connect()
