@@ -18,13 +18,6 @@ class Pagination
         $this->data['numberOfPager'] += ($this->data['numberOfRecords'] % $this->data['dataPerPage'] > 0) ? 1 : 0;
     }
 
-    public function setCurrentPage($currentPage)
-    {
-        $this->setNumberOfPager($this->data['dataPerPage']);
-        $this->data['currentPage'] = (is_array($currentPage)) ? $this->sanitizeParam($currentPage) : $currentPage;
-        // dump($this->data);
-    }
-
     private function setNextPage()
     {
         $this->data['nextPage'] = ($this->data['currentPage'] != $this->data['numberOfPager']) ? $this->data['currentPage'] + 1 : 0;
@@ -85,6 +78,12 @@ class Pagination
         if (key_exists($name, $this->data)) {
             return $this->data[$name];
         }
+    }
+
+    public function setCurrentPage($currentPage)
+    {
+        $this->setNumberOfPager($this->data['dataPerPage']);
+        $this->data['currentPage'] = (is_array($currentPage)) ? $this->sanitizeParam($currentPage) : $currentPage;
     }
 
     private function sanitizeParam($param)
