@@ -2,8 +2,8 @@
 	"autoload": {
 		"psr-4": {
 			"Lib\\": "lib/",
-			"App\\": "App/",
-			"App\\Model\\": "App/Models/"
+			"App\\": "app/",
+			"App\\Model\\": "app/models/"
 		},
 		"classmap": [
 			"lib/utils/Validator/"
@@ -11,9 +11,9 @@
 		"files": [
 			"helpers/functions.php",
 			"helpers/request.php",
-			"App/config/config.php",
-			"App/config/database.php",
-			"App/config/paths.php"
+			"app/config/config.php",
+			"app/config/database.php",
+			"app/config/paths.php"
 		]
 	},
 	"require": {
