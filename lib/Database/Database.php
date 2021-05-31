@@ -52,8 +52,8 @@ class Database
 
     public function __construct(string $tableName)
     {
-        $this->tableName    = $tableName;
-        $this->dbAdapter    = ConnectionFactory::create(config(DATABASE_TYPE, 'mysql'));
+        $this->tableName = $tableName;
+        $this->dbAdapter = ConnectionFactory::create(config(DATABASE_TYPE, 'mysql'));
     }
 
     public function setConnection()
@@ -106,7 +106,7 @@ class Database
     public function setOffset(int $offset)
     {
         if ($offset > 0) {
-            $subQuery = " OFFSET {$offset}";
+            $subQuery     = " OFFSET {$offset}";
             $this->query .= $subQuery;
         }
     }
@@ -143,7 +143,6 @@ class Database
         $execute->execute();
 
         $results      = $execute->fetchAll();
-
         $this->query  = '';
 
         return $results;

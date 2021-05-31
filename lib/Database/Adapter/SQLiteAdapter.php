@@ -20,6 +20,8 @@ class SQLiteAdapter extends BaseAdapter implements DBAdapterInterface
         $this->dsn        = "{$this->databaseType}:/{$this->directory}/{$this->databaseName}.db";
         $this->connection = new PDO($this->dsn);
 
+        $this->setPDOAttributes();
+
         return $this->connection;
     }
 

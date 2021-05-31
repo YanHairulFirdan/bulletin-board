@@ -92,10 +92,10 @@ class Pagination
             $key   = array_key_first($_GET);
             $param = $_GET[$key];
             $param = filter_var($_GET[$key], FILTER_SANITIZE_NUMBER_INT);
-        }
 
-        if (!is_numeric($param)) {
-            return 1;
+            if (!is_numeric($param)) {
+                return 1;
+            }
         }
 
         return $param;
