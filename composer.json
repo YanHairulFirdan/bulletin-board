@@ -11,9 +11,9 @@
 		"files": [
 			"helpers/functions.php",
 			"helpers/request.php",
-			"app/config/config.php",
-			"app/config/database.php",
-			"app/config/paths.php"
+			"app/config/default_database.php",
+			"config/config.php",
+			"config/paths.php"
 		]
 	},
 	"require": {
