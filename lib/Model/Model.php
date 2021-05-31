@@ -64,6 +64,7 @@ abstract class Model
     {
         if ($orderType != '') {
             $this->database->setOrderBy($column, $orderType);
+
             return $this;
         }
 
