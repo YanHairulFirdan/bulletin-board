@@ -28,6 +28,10 @@ abstract class Model
 
     public function findByID($id)
     {
+        if (!is_numeric($id)) {
+            echo "<h3>404 data not found</h3>";
+            exit;
+        }
         $this->database->setWhereClause('id', '=', $id);
 
         $record = $this->database->select();
