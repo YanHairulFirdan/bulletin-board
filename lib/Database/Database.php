@@ -135,7 +135,7 @@ class Database
             $this->query = "SELECT * FROM {$this->tableName}";
         }
 
-        $execute     = $this->pdo->prepare($this->query);
+        $execute = $this->pdo->prepare($this->query);
 
         if ($this->columnBind) {
             foreach ($this->columnBind as $key => $value) {
@@ -165,6 +165,9 @@ class Database
         }
 
         $execute->execute();
+
+        $this->columnBind = [];
+        $this->query      = '';
     }
 
     public function update(string $column, $value, array $dataUpdate)
@@ -181,7 +184,9 @@ class Database
             $execute->bindValue($field, $value);
         }
 
-        $updateResult = $execute->execute();
+        $updateResult     = $execute->execute();
+        $this->columnBind = [];
+        $this->query      = '';
 
         return $updateResult;
     }
@@ -191,7 +196,6 @@ class Database
         $this->setConnection();
 
         $this->query = "DELETE FROM {$this->tableName} WHERE {$column} = :{$column}";
-
         $execute     = $this->pdo->prepare($this->query);
 
         $execute->bindValue(":{$column}", $value);
@@ -243,11 +247,11 @@ class Database
             $columns       .= $key . ',';
         }
 
-        $columns           = substr($columns, 0, -1);
-        $preparedValue     = substr($preparedValue, 0, -1);
-        $preparedValue    .= ")";
-        $columns          .= ")";
-        $insertSubquery    =  "{$columns} VALUES {$preparedValue}";
+        $columns        = substr($columns, 0, -1);
+        $preparedValue  = substr($preparedValue, 0, -1);
+        $preparedValue .= ")";
+        $columns       .= ")";
+        $insertSubquery =  "{$columns} VALUES {$preparedValue}";
 
         return $insertSubquery;
     }
