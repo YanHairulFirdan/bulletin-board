@@ -45,14 +45,6 @@ abstract class Model
         $this->limit = $limit;
         $this->database->setLimit($this->limit);
 
-        // $getParam = get_request();
-
-        // if ($getParam && is_numeric($getParam)) {
-        //     $getParam--;
-        //     $getParam *= $limit;
-        //     $this->offset($getParam);
-        // }
-
         return $this;
     }
 
