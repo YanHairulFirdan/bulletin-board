@@ -21,8 +21,8 @@ class Pagination
     public function setCurrentPage($currentPage)
     {
         $this->setNumberOfPager($this->data['dataPerPage']);
-
         $this->data['currentPage'] = (is_array($currentPage)) ? $this->sanitizeParam($currentPage) : $currentPage;
+        // dump($this->data);
     }
 
     private function setNextPage()

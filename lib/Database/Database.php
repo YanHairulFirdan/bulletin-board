@@ -143,6 +143,7 @@ class Database
         $execute->execute();
 
         $results      = $execute->fetchAll();
+
         $this->query  = '';
 
         return $results;
@@ -211,6 +212,7 @@ class Database
         $execute->execute();
 
         $numRows     = $execute->fetchColumn();
+        $this->query = '';
 
         return $numRows;
     }

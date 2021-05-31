@@ -7,13 +7,16 @@ use Lib\Utils\Pagination;
 use Lib\Utils\Validation;
 
 $bulletin   =  new Bulletin();
-$bulletins  = $bulletin->orderBy('created_at', 'DESC')->limit(10)->get();
 $pagination = new Pagination($bulletin->numRows());
 $param      = (!empty($_GET)) ? $_GET : 1;
 
 $pagination->setCurrentPage($param);
 
+
 $pagination->paginator();
+$offset = $pagination->currentPage;
+
+$bulletins  = $bulletin->orderBy('created_at', 'DESC')->limit(10)->offset($offset)->get();
 
 if ($_POST) {
     $rules      = [

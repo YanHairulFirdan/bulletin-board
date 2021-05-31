@@ -8,6 +8,7 @@ abstract class Model
 {
     protected $tableName;
     private $database;
+    private $limit;
 
     public function __construct()
     {
@@ -41,15 +42,16 @@ abstract class Model
 
     public function limit(int $limit)
     {
-        $this->database->setLimit($limit);
+        $this->limit = $limit;
+        $this->database->setLimit($this->limit);
 
-        $getParam = get_request();
+        // $getParam = get_request();
 
-        if ($getParam && is_numeric($getParam)) {
-            $getParam--;
-            $getParam *= $limit;
-            $this->offset($getParam);
-        }
+        // if ($getParam && is_numeric($getParam)) {
+        //     $getParam--;
+        //     $getParam *= $limit;
+        //     $this->offset($getParam);
+        // }
 
         return $this;
     }
@@ -94,7 +96,13 @@ abstract class Model
 
     public function offset(int $offset)
     {
-        $this->database->setOffset($offset);
+        if ($offset > 1) {
+            $offset--;
+            $offset *= $this->limit;
+
+            $this->database->setOffset($offset);
+        }
+        return $this;
     }
 
     public function edit(string $column, $columnValue, array $dataEdit)
