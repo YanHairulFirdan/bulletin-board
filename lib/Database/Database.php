@@ -156,12 +156,12 @@ class Database
     {
         $this->setConnection();
 
-        list($columns, $preparedValue) = $this->extractData($dataInsert);
-        $this->query                   = "INSERT INTO {$this->tableName} {$columns} VALUES {$preparedValue}";
-        $execute                       = $this->pdo->prepare($this->query);
+        $insertSubquery = $this->extractData($dataInsert);
+        $this->query    = "INSERT INTO {$this->tableName} {$insertSubquery}";
+        $execute        = $this->pdo->prepare($this->query);
 
-        foreach ($dataInsert as $key => $data) {
-            $execute->bindValue(":{$key}", $data);
+        foreach ($this->columnBind as $field => $value) {
+            $execute->bindValue($field, $value);
         }
 
         $execute->execute();
@@ -177,8 +177,8 @@ class Database
 
         $execute->bindValue(":{$column}", $value);
 
-        foreach ($this->columnBind as $key => $bindValue) {
-            $execute->bindValue($key, $bindValue);
+        foreach ($this->columnBind as $field => $value) {
+            $execute->bindValue($field, $value);
         }
 
         $updateResult = $execute->execute();
@@ -217,18 +217,18 @@ class Database
 
     private function updateQuery(array $dataUpdate)
     {
-        $updateStatement = '';
+        $updateSubquery = '';
 
-        foreach ($dataUpdate as $key => $field) {
-            $key                         = htmlspecialchars($key);
-            $field                       = htmlspecialchars($field);
-            $updateStatement            .=  "`$key` = :{$key} ,";
-            $this->columnBind[":{$key}"] = $field;
+        foreach ($dataUpdate as $field => $value) {
+            $this->setColumnBind($field, $value);
+
+            $updateSubquery               .=  "`$field` = :{$field} ,";
+            $this->columnBind[":{$field}"] = $value;
         }
 
-        $updateStatement  = substr($updateStatement, 0, -1);
+        $updateSubquery  = substr($updateSubquery, 0, -1);
 
-        return $updateStatement;
+        return $updateSubquery;
     }
 
     private function extractData(array $dataInsert)
@@ -237,17 +237,25 @@ class Database
         $columns       = "(";
 
         foreach ($dataInsert as $key => $field) {
-            $key            = htmlspecialchars($key);
-            $field          = htmlspecialchars($field);
+            $this->setColumnBind($key, $field);
+
             $preparedValue .= ":{$key},";
             $columns       .= $key . ',';
         }
 
-        $columns        = substr($columns, 0, -1);
-        $preparedValue  = substr($preparedValue, 0, -1);
-        $preparedValue .= ")";
-        $columns       .= ")";
+        $columns           = substr($columns, 0, -1);
+        $preparedValue     = substr($preparedValue, 0, -1);
+        $preparedValue    .= ")";
+        $columns          .= ")";
+        $insertSubquery    =  "{$columns} VALUES {$preparedValue}";
 
-        return [$columns, $preparedValue];
+        return $insertSubquery;
+    }
+
+    private function setColumnBind($field, $value)
+    {
+        $field                         = filter_var($field, FILTER_SANITIZE_STRING);
+        $field                         = filter_var($field, FILTER_SANITIZE_STRING);
+        $this->columnBind[":{$field}"] = $value;
     }
 }
