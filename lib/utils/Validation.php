@@ -48,22 +48,15 @@ class Validation
 
     private function setValidatorType($fieldRule, $field, $fieldValue)
     {
-        if (is_numeric(strpos($fieldRule, ':'))) {
-            $ruleContainValue       = explode(':', $fieldRule);
-            $this->validatorClass   = $ruleContainValue[0];
-            $this->validationParams = [
-                'field'      => $field,
-                'fieldValue' => $fieldValue,
-                'requisite'  => $ruleContainValue[1]
-            ];
+        $this->validatorClass   = $fieldRule;
 
-            return;
+        if (is_numeric(strpos($fieldRule, ':'))) {
+            $ruleContainValue                    = explode(':', $fieldRule);
+            $this->validatorClass                = $ruleContainValue[0];
+            $this->validationParams['requisite'] = $ruleContainValue[1];
         }
 
-        $this->validatorClass   = $fieldRule;
-        $this->validationParams = [
-            'field'      => $field,
-            'fieldValue' => $fieldValue
-        ];
+        $this->validationParams['field']      = $field;
+        $this->validationParams['fieldValue'] = $fieldValue;
     }
 }
