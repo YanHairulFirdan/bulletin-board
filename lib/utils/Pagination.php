@@ -50,7 +50,7 @@ class Pagination
         $this->data['lastIndex'] = $this->data['numberOfPager'];
 
         if ($this->data['numberOfPager'] > 5) {
-            if ($this->data['currentPage'] == 1) {
+            if ($this->data['currentPage'] <= 2) {
                 $this->data['lastIndex'] = 5;
             }
 
