@@ -7,6 +7,7 @@ class Length extends AbstractRule
     public function check($params)
     {
         extract($params);
+
         $field      = $field;
         $fieldValue = $fieldValue;
         $requisite  = explode('-', $requisite);

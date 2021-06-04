@@ -10,6 +10,7 @@ class Size extends AbstractRule
     public function check($params)
     {
         extract($params);
+
         $maxSize = $requisite;
         $size    = $_FILES[$field]['size']  / $this->unit;
 

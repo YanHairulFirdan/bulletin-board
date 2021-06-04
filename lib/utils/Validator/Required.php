@@ -15,6 +15,7 @@ class Required extends AbstractRule
                 return;
             }
         }
+
         $this->message = empty($data['fieldValue']) ? "{$field} Must be fill in!" : null;
     }
 }
