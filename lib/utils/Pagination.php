@@ -54,7 +54,6 @@ class Pagination
                 $this->data['lastIndex'] = 5;
             }
 
-
             if (
                 ($this->data['currentPage'] > 2)
                 &&
