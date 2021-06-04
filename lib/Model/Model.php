@@ -31,8 +31,10 @@ abstract class Model
     {
         if (!is_numeric($id)) {
             echo "<h3>404 data not found</h3>";
+
             exit;
         }
+
         $this->database->setWhereClause('id', '=', $id);
 
         $record = $this->database->select();
@@ -43,6 +45,7 @@ abstract class Model
     public function limit(int $limit)
     {
         $this->limit = $limit;
+
         $this->database->setLimit($this->limit);
 
         return $this;
