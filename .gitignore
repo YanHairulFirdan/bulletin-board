@@ -10,6 +10,9 @@ edit.php
 delete.php
 Public/assets/views/crud.view.php
 Public/assets/views/edit.view.php
+lib/utils/validator/validator.php
+
+#/lib/utils/Validator/validator.php
 # /temp/
 
 # These are some examples of commonly ignored file patterns.

@@ -43,20 +43,19 @@ class Validation
 
     public function getErrorMessage()
     {
-        return ($this->errorMessages != null) ? $this->errorMessages : null;
+        return ($this->errorMessages) ? $this->errorMessages : null;
     }
 
     private function setValidatorType($fieldRule, $field, $fieldValue)
     {
-        $this->validatorClass   = $fieldRule;
+        $this->validatorClass                 = $fieldRule;
+        $this->validationParams['field']      = $field;
+        $this->validationParams['fieldValue'] = $fieldValue;
 
         if (is_numeric(strpos($fieldRule, ':'))) {
             $ruleContainValue                    = explode(':', $fieldRule);
             $this->validatorClass                = $ruleContainValue[0];
             $this->validationParams['requisite'] = $ruleContainValue[1];
         }
-
-        $this->validationParams['field']      = $field;
-        $this->validationParams['fieldValue'] = $fieldValue;
     }
 }
