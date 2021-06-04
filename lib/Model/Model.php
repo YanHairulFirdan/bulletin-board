@@ -91,6 +91,7 @@ abstract class Model
     {
         if ($offset > 1) {
             $offset--;
+
             $offset *= $this->limit;
 
             $this->database->setOffset($offset);
