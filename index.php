@@ -37,6 +37,7 @@ if ($_POST) {
 
     if (!$errorMessages) {
         $bulletin->create($formData);
+
         header("Refresh:0");
     }
     $viewData['errorMessages'] = $errorMessages;
