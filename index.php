@@ -40,6 +40,7 @@ if ($_POST) {
 
         header("Refresh:0");
     }
+
     $viewData['errorMessages'] = $errorMessages;
 }
 
