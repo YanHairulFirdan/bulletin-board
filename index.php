@@ -18,11 +18,6 @@ $offset = $pagination->currentPage;
 
 $bulletins  = $bulletin->orderBy('created_at', 'DESC')->limit(10)->offset($offset)->get();
 
-$viewData   = [
-    'bulletins' => $bulletins,
-    'pagination' => $pagination,
-];
-
 if ($_POST) {
     $rules      = [
         'title' => 'required|length:10-180',
@@ -41,7 +36,7 @@ if ($_POST) {
         header("Refresh:0");
     }
 
-    $viewData['errorMessages'] = $errorMessages;
+    load_view('index', compact('bulletins', 'pagination', 'errorMessages'));
 }
 
-load_view('index', $viewData);
+load_view('index', compact('bulletins', 'pagination'));
