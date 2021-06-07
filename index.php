@@ -25,6 +25,7 @@ if ($_POST) {
     ];
     $formData   = $_POST;
     $validation = new Validation($rules);
+    
 
     $validation->validate($formData);
 
