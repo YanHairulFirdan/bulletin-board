@@ -6,17 +6,16 @@ use App\Model\Bulletin;
 use Lib\Utils\Pagination;
 use Lib\Utils\Validation;
 
-$bulletin   =  new Bulletin();
+$bulletin   = new Bulletin();
 $pagination = new Pagination($bulletin->numRows());
 $param      = (!empty($_GET)) ? $_GET : 1;
 
 $pagination->setCurrentPage($param);
 
-
 $pagination->paginator();
-$offset = $pagination->currentPage;
 
-$bulletins  = $bulletin->orderBy('created_at', 'DESC')->limit(10)->offset($offset)->get();
+$offset    = $pagination->currentPage;
+$bulletins = $bulletin->orderBy('created_at', 'DESC')->limit(10)->offset($offset)->get();
 
 if ($_POST) {
     $rules      = [
@@ -25,7 +24,6 @@ if ($_POST) {
     ];
     $formData   = $_POST;
     $validation = new Validation($rules);
-    
 
     $validation->validate($formData);
 
