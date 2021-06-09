@@ -20,12 +20,12 @@ class Pagination
 
     private function setNextPage()
     {
-        $this->data['nextPage'] = ($this->data['currentPage'] != $this->data['numberOfPager']) ? $this->data['currentPage']++ : 0;
+        $this->data['nextPage'] = ($this->data['currentPage'] != $this->data['numberOfPager']) ? $this->data['currentPage'] + 1 : 0;
     }
 
     private function setPreviousPage()
     {
-        $this->data['previousPage'] = ($this->data['currentPage'] > 1) ? $this->data['currentPage']-- : 0;
+        $this->data['previousPage'] = ($this->data['currentPage'] > 1) ? $this->data['currentPage'] - 1 : 0;
     }
 
     private function setStartIndex()
@@ -38,7 +38,7 @@ class Pagination
 
                 if ($this->data['currentPage'] == $this->data['numberOfPager']) {
                     $this->data['startIndex'] = $this->data['currentPage'] - 4;
-                } elseif ($this->data['currentPage']++  == $this->data['numberOfPager']) {
+                } elseif ($this->data['currentPage'] + 1 == $this->data['numberOfPager']) {
                     $this->data['startIndex'] = $this->data['currentPage'] - 3;
                 }
             }

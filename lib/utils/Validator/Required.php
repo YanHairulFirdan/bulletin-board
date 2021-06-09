@@ -14,8 +14,9 @@ class Required extends AbstractRule
         if (is_array($fieldValue)) {
             if ($fieldValue['error'] === 4) {
                 $this->message = "{$field} is required!";
-                return;
             }
+
+            return;
         }
 
         $this->message = empty($fieldValue) ? "{$field} Must be fill in!" : null;
