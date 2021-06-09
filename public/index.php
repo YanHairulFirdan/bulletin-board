@@ -1,6 +1,6 @@
 <?php
 
-require_once('vendor/autoload.php');
+require_once('../vendor/autoload.php');
 
 use App\Models\Bulletin;
 use Lib\Utils\Pagination;
@@ -41,7 +41,7 @@ try {
     }
 
     // load_view('index', compact('bulletins', 'pagination'));
-    require_once "public/assets/views/index.view.php";
+    require_once "assets/views/index.view.php";
 } catch (Exception $e) {
     dump($e->getMessage());
 }
