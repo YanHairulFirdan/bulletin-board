@@ -4,10 +4,12 @@ namespace Lib\Utils\Validator;
 
 class Required extends AbstractRule
 {
-    public function check($data)
+    public function check($params)
     {
-        $field      = $data['field'];
-        $fieldValue = $data['fieldValue'];
+        extract($params);
+
+        $field      = $field;
+        $fieldValue = $fieldValue;
 
         if (is_array($fieldValue)) {
             if ($fieldValue['error'] === 4) {
@@ -16,6 +18,6 @@ class Required extends AbstractRule
             }
         }
 
-        $this->message = empty($data['fieldValue']) ? "{$field} Must be fill in!" : null;
+        $this->message = empty($fieldValue) ? "{$field} Must be fill in!" : null;
     }
 }
