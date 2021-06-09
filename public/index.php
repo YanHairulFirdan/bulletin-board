@@ -35,11 +35,8 @@ try {
 
             redirect('index.php');
         }
-
-        // load_view('index', compact('bulletins', 'pagination', 'errors'));
     }
 
-    // load_view('index', compact('bulletins', 'pagination'));
     require_once "assets/views/index.view.php";
 } catch (Exception $e) {
     dump($e->getMessage());
