@@ -10,8 +10,7 @@
 		"files": [
 			"helpers/functions.php",
 			"config/database.php",
-			"config/paths.php",
-			"app/config/default_database.php"
+			"config/paths.php"
 		]
 	},
 	"require": {

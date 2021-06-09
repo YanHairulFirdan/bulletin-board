@@ -8,21 +8,20 @@ abstract class BaseAdapter
 {
     protected $connection;
     protected $dsn;
-    protected $databaseType;
-    protected $host;
-    protected $databaseName;
-    protected $username;
-    protected $password;
+    protected $databaseType    = 'mysql';
+    protected $host            = 'localhost';
+    protected $databaseName    = 'bulletin';
+    protected $username        = 'root';
+    protected $password        = '';
     protected static $instance = null;
 
     protected function __construct()
     {
-        $configs            = db_default_config();
-        $this->databaseType = $configs['type'];
-        $this->host         = $configs['config'][$this->databaseType]['host'];
-        $this->databaseName = $configs['config'][$this->databaseType]['databaseName'];
-        $this->username     = $configs['config'][$this->databaseType]['username'];
-        $this->password     = $configs['config'][$this->databaseType]['password'];
+        $this->databaseType = DATABASE_TYPE ?: $this->databaseType;
+        $this->host         = HOST ?: $this->host;
+        $this->databaseName = DATABASE_NAME ?: $this->databaseName;
+        $this->username     = USERNAME ?: $this->username;
+        $this->password     = PASSWORD ?: $this->password;
     }
 
     protected function setPDOAttributes()

@@ -2,7 +2,7 @@
 
 require_once('vendor/autoload.php');
 
-use App\Model\Bulletin;
+use App\Models\Bulletin;
 use Lib\Utils\Pagination;
 use Lib\Utils\Validation;
 

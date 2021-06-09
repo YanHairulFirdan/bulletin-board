@@ -29,14 +29,3 @@ function db_default_config()
 
     return $configs;
 }
-
-function config($config, $defaultValue = '')
-{
-    if (!empty($config)) {
-        return $config;
-    }
-
-    if (!empty($defaultValue)) {
-        return $defaultValue;
-    }
-}
