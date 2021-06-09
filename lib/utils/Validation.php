@@ -34,6 +34,7 @@ class Validation
 
                 if ($validator->getMessage()) {
                     $this->errorMessages[$field] = $validator->getMessage();
+
                     break;
                 }
             }
