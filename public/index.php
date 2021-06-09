@@ -19,25 +19,24 @@ try {
     $offset    = $pagination->currentPage;
     $bulletins = $bulletin->orderBy('created_at', 'DESC')->limit($limit)->offset($offset)->get();
 
-    if ($_POST) {
+    if ($formData = $_POST) {
         $rules      = [
             'title' => 'required|length:10-180',
             'body'  => 'required|length:10-220',
         ];
-        $formData   = $_POST;
         $validation = new Validation($rules);
 
         $validation->validate($formData);
 
-        $errorMessages = $validation->getErrorMessage();
+        $errors     = $validation->getErrorMessage();
 
-        if (!$errorMessages) {
+        if (!$errors) {
             $bulletin->create($formData);
 
             redirect('index.php');
         }
 
-        // load_view('index', compact('bulletins', 'pagination', 'errorMessages'));
+        // load_view('index', compact('bulletins', 'pagination', 'errors'));
     }
 
     // load_view('index', compact('bulletins', 'pagination'));

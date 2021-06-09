@@ -52,15 +52,16 @@
 
 <body style="width: 60%; margin: auto;">
     <div class="container">
-        <?php if (isset($errorMessages)) : ?>
+        <?php if (isset($errors)) : ?>
             <ul style="width: inherit; padding: 2em; color: #fff; background-color: red;">
-                <?php foreach ($errorMessages as $message) : ?>
+                <?php foreach ($errors as $message) : ?>
                     <li>
                         <?= $message ?>
                     </li>
                 <?php endforeach; ?>
             </ul>
         <?php endif; ?>
+
         <form action="" method="POST" style="padding: 2em;">
             <div class="form-input" style="width: inherit;">
                 <div class="input-title" style="margin: 2em 0;">
@@ -87,7 +88,6 @@
     </div>
 
     <?php foreach ($bulletins as $key => $bulletin) : ?>
-
         <div class="board-wrapper" style="padding: 1em 2em; display: flex; justify-content: space-between; border-top: 1px solid #000; border-bottom: 1px solid #000;">
             <span class="board-title">
                 <?= $bulletin['title'] ?>
@@ -100,7 +100,6 @@
 
     <?php if (!($pagination->currentPage > $pagination->numberOfPager)) : ?>
         <div class="pagination" style="margin: 3em auto; width: 80%; display: flex; justify-content: space-between;">
-
             <?php if ($pagination->previousPage) : ?>
                 <span class="btn-page">
                     <a href="?page=<?= $pagination->previousPage ?>">&lt;</a>
@@ -121,7 +120,6 @@
 
             <?php endfor ?>
 
-
             <?php if ($pagination->nextPage) : ?>
                 <span class="btn-page">
                     <a href="?page=<?= $pagination->nextPage ?>">&gt;</a>
@@ -129,7 +127,6 @@
             <?php endif ?>
 
         <?php endif ?>
-
         </div>
 </body>
 
