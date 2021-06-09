@@ -10,13 +10,14 @@ $bulletin   = new Bulletin();
 try {
     $pagination = new Pagination($bulletin->numRows());
     $param      = (!empty($_GET)) ? $_GET : 1;
+    $limit      = $pagination->dataPerPage;
 
     $pagination->setCurrentPage($param);
 
     $pagination->paginator();
 
     $offset    = $pagination->currentPage;
-    $bulletins = $bulletin->orderBy('created_at', 'DESC')->limit(10)->offset($offset)->get();
+    $bulletins = $bulletin->orderBy('created_at', 'DESC')->limit($limit)->offset($offset)->get();
 
     if ($_POST) {
         $rules      = [

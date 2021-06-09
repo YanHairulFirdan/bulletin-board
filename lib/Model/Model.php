@@ -8,7 +8,6 @@ abstract class Model
 {
     protected $tableName;
     private $database;
-    private $limit;
 
     public function __construct()
     {
@@ -29,12 +28,6 @@ abstract class Model
 
     public function findByID($id)
     {
-        if (!is_numeric($id)) {
-            echo "<h3>404 data not found</h3>";
-
-            exit;
-        }
-
         $this->database->setWhereClause('id', '=', $id);
 
         $record = $this->database->select();
@@ -44,9 +37,7 @@ abstract class Model
 
     public function limit(int $limit)
     {
-        $this->limit = $limit;
-
-        $this->database->setLimit($this->limit);
+        $this->database->setLimit($limit);
 
         return $this;
     }
@@ -63,15 +54,9 @@ abstract class Model
         return $this->database->numrows();
     }
 
-    public function orderBy(string $column, string $orderType = '')
+    public function orderBy(string $column, string $orderType = 'ASC')
     {
-        if ($orderType != '') {
-            $this->database->setOrderBy($column, $orderType);
-
-            return $this;
-        }
-
-        $this->database->setOrderBy($column);
+        $this->database->setOrderBy($column, $orderType);
 
         return $this;
     }
@@ -92,13 +77,7 @@ abstract class Model
 
     public function offset(int $offset)
     {
-        if ($offset > 1) {
-            $offset--;
-
-            $offset *= $this->limit;
-
-            $this->database->setOffset($offset);
-        }
+        $this->database->setOffset($offset);
 
         return $this;
     }

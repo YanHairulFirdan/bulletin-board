@@ -48,6 +48,7 @@ class Database
     
      */
     private $columnBind;
+    private $limit;
 
 
     public function __construct(string $tableName)
@@ -85,12 +86,7 @@ class Database
     public function setOrderBy(string $column, string $orderType = '')
     {
         if (!is_null($column)) {
-            $subQuery = " ORDER BY {$column}";
-
-            if (!is_null($orderType) || $orderType != '') {
-                $subQuery .= " {$orderType}";
-            }
-
+            $subQuery     = " ORDER BY {$column} {$orderType}";
             $this->query .= $subQuery;
         }
     }
@@ -98,6 +94,7 @@ class Database
     public function setLimit(int $limit)
     {
         if ($limit > 0) {
+            $this->limit  = $limit;
             $subQuery     = " LIMIT {$limit}";
             $this->query .= $subQuery;
         }
@@ -105,7 +102,9 @@ class Database
 
     public function setOffset(int $offset)
     {
-        if ($offset > 0) {
+        if ($offset > 1) {
+            $offset--;
+            $offset      *= $this->limit;
             $subQuery     = " OFFSET {$offset}";
             $this->query .= $subQuery;
         }

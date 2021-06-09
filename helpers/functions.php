@@ -28,3 +28,9 @@ function redirect($url, $permanent = true)
 
     exit;
 }
+
+
+function old_input(string $key)
+{
+    return htmlspecialchars($_POST[$key]);
+}
