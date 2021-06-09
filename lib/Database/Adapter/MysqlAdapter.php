@@ -6,12 +6,6 @@ use PDO;
 
 class MysqlAdapter extends BaseAdapter implements DBAdapterInterface
 {
-
-    private function __construct()
-    {
-        parent::__construct();
-    }
-
     public function connect()
     {
         $this->dsn        = "{$this->databaseType}:host={$this->host};dbname={$this->databaseName}";

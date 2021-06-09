@@ -74,8 +74,8 @@ class Database
 
     public function setWhereClause(string $column, string $operator = '=', $value)
     {
-        if (!is_null($column)) {
-            if (!is_null($value) || isset($value)) {
+        if (!empty($column)) {
+            if (!empty($value)) {
                 $subQuery                     = " WHERE {$column} {$operator} :$column";
                 $this->columnBind[":$column"] = $value;
                 $this->query                 .= $subQuery;
@@ -112,7 +112,7 @@ class Database
 
     public function setGroupBy(string $column)
     {
-        if (!is_null($column)) {
+        if (!empty($column)) {
             $subQuery     = " GROUP BY {$column}";
             $this->query .= $subQuery;
         }
@@ -136,6 +136,7 @@ class Database
             foreach ($this->columnBind as $key => $value) {
                 $execute->bindValue($key, $value);
             }
+
             $this->columnBind = [];
         }
 

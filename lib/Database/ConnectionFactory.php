@@ -20,7 +20,7 @@ use Lib\Database\Adapter\SQLiteAdapter;
 
 class ConnectionFactory
 {
-	public static function create(string $connectionType)
+	public static function create(string $connectionType = 'mysql')
 	{
 		switch ($connectionType) {
 			case 'mysql':

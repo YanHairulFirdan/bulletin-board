@@ -6,13 +6,12 @@ use PDO;
 
 class SQLiteAdapter extends BaseAdapter implements DBAdapterInterface
 {
-    private $directory;
+    private $directory = '/database/database.db';
 
     private function __construct()
     {
-        $configs            = db_default_config();
-        $this->directory    = $configs['db_configs'][$this->databaseType]['directory'];
-        $this->databaseName = $configs['db_configs'][$this->databaseType]['databaseName'];
+        $this->directory    = DATABASE_DIRECTORY ?: $this->directory;
+        $this->databaseName = DATABASE_NAME ?: $this->databaseName;
     }
 
     public function connect()

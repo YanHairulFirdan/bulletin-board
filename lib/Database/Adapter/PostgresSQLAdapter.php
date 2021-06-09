@@ -6,20 +6,6 @@ use PDO;
 
 class PostgresSQLAdapter extends BaseAdapter implements DBAdapterInterface
 {
-    private $connection;
-    private $dsn;
-    private $databaseType;
-    private $host;
-    private $databaseName;
-    private $username;
-    private $password;
-    private static $instance = null;
-
-    private function __construct()
-    {
-        parent::__construct();
-    }
-
     public function connect()
     {
         $this->dsn        = "{$this->databaseType}:host={$this->host};dbname={$this->databaseName}";
