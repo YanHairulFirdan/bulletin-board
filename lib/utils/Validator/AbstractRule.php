@@ -6,7 +6,7 @@ abstract class AbstractRule
 {
     protected $message;
 
-    public abstract function check($data);
+    public abstract function check($params);
 
     public function getMessage()
     {
