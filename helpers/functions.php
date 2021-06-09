@@ -22,10 +22,9 @@ function root_path()
     return str_replace('\\', '/', dirname(__DIR__));
 }
 
-function db_default_config()
+function redirect($url, $permanent = true)
 {
-    $rootPath  = root_path();
-    $configs   = include $rootPath . '/app/config/default_database.php';
+    header("Location: {$url}", true, $permanent ? 301 : 302);
 
-    return $configs;
+    exit;
 }

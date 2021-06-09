@@ -7,35 +7,39 @@ use Lib\Utils\Pagination;
 use Lib\Utils\Validation;
 
 $bulletin   = new Bulletin();
-$pagination = new Pagination($bulletin->numRows());
-$param      = (!empty($_GET)) ? $_GET : 1;
+try {
+    $pagination = new Pagination($bulletin->numRows());
+    $param      = (!empty($_GET)) ? $_GET : 1;
 
-$pagination->setCurrentPage($param);
+    $pagination->setCurrentPage($param);
 
-$pagination->paginator();
+    $pagination->paginator();
 
-$offset    = $pagination->currentPage;
-$bulletins = $bulletin->orderBy('created_at', 'DESC')->limit(10)->offset($offset)->get();
+    $offset    = $pagination->currentPage;
+    $bulletins = $bulletin->orderBy('created_at', 'DESC')->limit(10)->offset($offset)->get();
 
-if ($_POST) {
-    $rules      = [
-        'title' => 'required|length:10-180',
-        'body'  => 'required|length:10-220',
-    ];
-    $formData   = $_POST;
-    $validation = new Validation($rules);
+    if ($_POST) {
+        $rules      = [
+            'title' => 'required|length:10-180',
+            'body'  => 'required|length:10-220',
+        ];
+        $formData   = $_POST;
+        $validation = new Validation($rules);
 
-    $validation->validate($formData);
+        $validation->validate($formData);
 
-    $errorMessages = $validation->getErrorMessage();
+        $errorMessages = $validation->getErrorMessage();
 
-    if (!$errorMessages) {
-        $bulletin->create($formData);
+        if (!$errorMessages) {
+            $bulletin->create($formData);
 
-        header("Refresh:0");
+            redirect('index.php');
+        }
+
+        load_view('index', compact('bulletins', 'pagination', 'errorMessages'));
     }
 
-    load_view('index', compact('bulletins', 'pagination', 'errorMessages'));
+    load_view('index', compact('bulletins', 'pagination'));
+} catch (Exception $e) {
+    dump($e->getMessage());
 }
-
-load_view('index', compact('bulletins', 'pagination'));
