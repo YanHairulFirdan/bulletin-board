@@ -52,9 +52,9 @@
 
 <body style="width: 60%; margin: auto;">
     <div class="container">
-        <?php if (isset($viewVariables['errorMessages'])) : ?>
+        <?php if (isset($errorMessages)) : ?>
             <ul style="width: inherit; padding: 2em; color: #fff; background-color: red;">
-                <?php foreach ($viewVariables['errorMessages'] as $message) : ?>
+                <?php foreach ($errorMessages as $message) : ?>
                     <li>
                         <?= $message ?>
                     </li>
@@ -86,7 +86,7 @@
         </form>
     </div>
 
-    <?php foreach ($viewVariables['bulletins'] as $key => $bulletin) : ?>
+    <?php foreach ($bulletins as $key => $bulletin) : ?>
 
         <div class="board-wrapper" style="padding: 1em 2em; display: flex; justify-content: space-between; border-top: 1px solid #000; border-bottom: 1px solid #000;">
             <span class="board-title">
@@ -98,21 +98,20 @@
         </div>
     <?php endforeach ?>
 
-    <?php if (!($viewVariables['pagination']->currentPage > $viewVariables['pagination']->numberOfPager)) : ?>
+    <?php if (!($pagination->currentPage > $pagination->numberOfPager)) : ?>
         <div class="pagination" style="margin: 3em auto; width: 80%; display: flex; justify-content: space-between;">
 
-            <?php if ($viewVariables['pagination']->previousPage) : ?>
+            <?php if ($pagination->previousPage) : ?>
                 <span class="btn-page">
-                    <a href="?page=<?= $viewVariables['pagination']->previousPage ?>">&lt;</a>
+                    <a href="?page=<?= $pagination->previousPage ?>">&lt;</a>
                 </span>
-
             <?php endif ?>
 
-            <?php for ($page = $viewVariables['pagination']->startIndex; $page <= $viewVariables['pagination']->lastIndex; $page++) : ?>
+            <?php for ($page = $pagination->startIndex; $page <= $pagination->lastIndex; $page++) : ?>
 
-                <?php if (($viewVariables['pagination']->currentPage == $page)) : ?>
+                <?php if (($pagination->currentPage == $page)) : ?>
                     <span class="btn-page">
-                        <span><?= $viewVariables['pagination']->currentPage ?></span>
+                        <span><?= $pagination->currentPage ?></span>
                     </span>
                 <?php else : ?>
                     <span class="btn-page">
@@ -123,9 +122,9 @@
             <?php endfor ?>
 
 
-            <?php if ($viewVariables['pagination']->nextPage) : ?>
+            <?php if ($pagination->nextPage) : ?>
                 <span class="btn-page">
-                    <a href="?page=<?= $viewVariables['pagination']->nextPage ?>">&gt;</a>
+                    <a href="?page=<?= $pagination->nextPage ?>">&gt;</a>
                 </span>
             <?php endif ?>
 

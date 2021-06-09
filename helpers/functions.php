@@ -32,5 +32,5 @@ function redirect($url, $permanent = true)
 
 function old_input(string $key)
 {
-    return htmlspecialchars($_POST[$key]);
+    return isset($_POST[$key]) ? htmlspecialchars($_POST[$key]) : '';
 }
