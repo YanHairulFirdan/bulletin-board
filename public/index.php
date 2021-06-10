@@ -28,7 +28,7 @@ try {
 
         $validation->validate($formData);
 
-        $errors     = $validation->getErrorMessage();
+        $errors = $validation->getErrorMessage();
 
         if (!$errors) {
             $bulletin->create($formData);

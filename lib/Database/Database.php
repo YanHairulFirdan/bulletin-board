@@ -83,7 +83,7 @@ class Database
         }
     }
 
-    public function setOrderBy(string $column, string $orderType = '')
+    public function setOrderBy(string $column, string $orderType = 'ASC')
     {
         if (!is_null($column)) {
             $subQuery     = " ORDER BY {$column} {$orderType}";
