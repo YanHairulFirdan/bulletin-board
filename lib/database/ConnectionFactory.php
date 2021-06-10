@@ -7,7 +7,6 @@ use Lib\Database\Adapters\MysqlAdapter;
 use Lib\Database\Adapters\PostgresSQLAdapter;
 use Lib\Database\Adapters\SQLiteAdapter;
 
-
 /*
     |--------------------------------------------------------------------------
     | Factory connection
