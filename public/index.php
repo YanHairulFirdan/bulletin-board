@@ -6,10 +6,10 @@ use App\Models\Bulletin;
 use Lib\Utils\Pagination;
 use Lib\Utils\Validation;
 
-$bulletin   = new Bulletin();
 try {
+    $bulletin   = new Bulletin();
     $pagination = new Pagination($bulletin->numRows());
-    $param      = (!empty($_GET)) ? $_GET : 1;
+    $param      = $_GET ?: 1;
     $limit      = $pagination->dataPerPage;
 
     $pagination->setCurrentPage($param);
