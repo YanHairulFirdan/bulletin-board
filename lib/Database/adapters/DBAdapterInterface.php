@@ -1,6 +1,6 @@
 <?php
 
-namespace Lib\Database\Adapter;
+namespace Lib\Database\Adapters;
 
 interface DBAdapterInterface
 {

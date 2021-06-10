@@ -3,9 +3,9 @@
 namespace Lib\Database;
 
 use Exception;
-use Lib\Database\Adapter\MysqlAdapter;
-use Lib\Database\Adapter\PostgresSQLAdapter;
-use Lib\Database\Adapter\SQLiteAdapter;
+use Lib\Database\Adapters\MysqlAdapter;
+use Lib\Database\Adapters\PostgresSQLAdapter;
+use Lib\Database\Adapters\SQLiteAdapter;
 
 
 /*
