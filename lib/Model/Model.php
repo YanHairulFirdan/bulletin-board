@@ -28,6 +28,7 @@ abstract class Model
 
     public function findByID($id)
     {
+        // $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT)`;
         $this->database->setWhereClause('id', '=', $id);
 
         $record = $this->database->select();

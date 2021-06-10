@@ -140,6 +140,8 @@ class Database
             $this->columnBind = [];
         }
 
+
+
         $execute->execute();
 
         $results     = $execute->fetchAll();
@@ -223,8 +225,7 @@ class Database
         foreach ($dataUpdate as $field => $value) {
             $this->setColumnBind($field, $value);
 
-            $updateSubquery               .=  "`$field` = :{$field} ,";
-            $this->columnBind[":{$field}"] = $value;
+            $updateSubquery .=  "`$field` = :{$field} ,";
         }
 
         $updateSubquery = substr($updateSubquery, 0, -1);
@@ -254,7 +255,7 @@ class Database
     private function setColumnBind($field, $value)
     {
         $field                         = filter_var($field, FILTER_SANITIZE_STRING);
-        $field                         = filter_var($field, FILTER_SANITIZE_STRING);
+        $value                         = filter_var($value, FILTER_SANITIZE_STRING);
         $this->columnBind[":{$field}"] = $value;
     }
 }

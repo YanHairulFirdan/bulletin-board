@@ -36,10 +36,8 @@ class Pagination
             if ($this->data['currentPage'] - 2 >= 2) {
                 $this->data['startIndex'] = $this->data['currentPage'] - 2;
 
-                if ($this->data['currentPage'] == $this->data['numberOfPager']) {
-                    $this->data['startIndex'] = $this->data['currentPage'] - 4;
-                } elseif ($this->data['currentPage'] + 1 == $this->data['numberOfPager']) {
-                    $this->data['startIndex'] = $this->data['currentPage'] - 3;
+                if ($this->data['numberOfPager'] - $this->data['currentPage'] <= 1) {
+                    $this->data['startIndex'] = $this->data['numberOfPager'] - 4;
                 }
             }
         }
@@ -47,21 +45,7 @@ class Pagination
 
     private function setLastIndex()
     {
-        $this->data['lastIndex'] = $this->data['numberOfPager'];
-
-        if ($this->data['numberOfPager'] > 5) {
-            if ($this->data['currentPage'] <= 2) {
-                $this->data['lastIndex'] = 5;
-            }
-
-            if (
-                ($this->data['currentPage'] > 2)
-                &&
-                ($this->data['numberOfPager'] - $this->data['currentPage'] >= 2)
-            ) {
-                $this->data['lastIndex'] = $this->data['currentPage'] + 2;
-            }
-        }
+        $this->data['lastIndex'] = $this->data['numberOfPager'] <= 5 ?: $this->data['startIndex'] + 4;
     }
 
     public function paginator()
@@ -82,6 +66,7 @@ class Pagination
     public function setCurrentPage($currentPage)
     {
         $this->setNumberOfPager($this->data['dataPerPage']);
+
         $this->data['currentPage'] = (is_array($currentPage)) ? $this->sanitizeParam($currentPage) : $currentPage;
     }
 
@@ -90,13 +75,13 @@ class Pagination
         if (count($_GET) == 1) {
             $key   = array_key_first($_GET);
             $param = $_GET[$key];
-            $param = filter_var($_GET[$key], FILTER_SANITIZE_NUMBER_INT);
+            // $param = filter_var($_GET[$key], FILTER_SANITIZE_NUMBER_INT);
 
             if (!is_numeric($param)) {
-                return 1;
+                return $this->data['numberOfPager'] + 1;
             }
         }
-
+        dump($param);
         return $param;
     }
 }
