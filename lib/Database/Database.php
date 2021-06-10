@@ -142,8 +142,8 @@ class Database
 
         $execute->execute();
 
-        $results      = $execute->fetchAll();
-        $this->query  = '';
+        $results     = $execute->fetchAll();
+        $this->query = '';
 
         return $results;
     }
@@ -227,7 +227,7 @@ class Database
             $this->columnBind[":{$field}"] = $value;
         }
 
-        $updateSubquery  = substr($updateSubquery, 0, -1);
+        $updateSubquery = substr($updateSubquery, 0, -1);
 
         return $updateSubquery;
     }
@@ -244,10 +244,8 @@ class Database
             $columns       .= $key . ',';
         }
 
-        $columns        = substr($columns, 0, -1);
-        $preparedValue  = substr($preparedValue, 0, -1);
-        $preparedValue .= ")";
-        $columns       .= ")";
+        $preparedValue  = substr_replace($preparedValue, ')', strlen($preparedValue) - 1);
+        $columns        = substr_replace($columns, ')', strlen($columns) - 1);
         $insertSubquery =  "{$columns} VALUES {$preparedValue}";
 
         return $insertSubquery;
