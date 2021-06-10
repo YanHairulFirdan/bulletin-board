@@ -56,13 +56,6 @@ class Pagination
         $this->setLastIndex();
     }
 
-    public function __get($name)
-    {
-        if (key_exists($name, $this->data)) {
-            return $this->data[$name];
-        }
-    }
-
     public function setCurrentPage($currentPage)
     {
         $this->setNumberOfPager($this->data['dataPerPage']);
@@ -70,18 +63,24 @@ class Pagination
         $this->data['currentPage'] = (is_array($currentPage)) ? $this->sanitizeParam($currentPage) : $currentPage;
     }
 
+    public function __get($name)
+    {
+        if (key_exists($name, $this->data)) {
+            return $this->data[$name];
+        }
+    }
+
     private function sanitizeParam($param)
     {
         if (count($_GET) == 1) {
             $key   = array_key_first($_GET);
             $param = $_GET[$key];
-            // $param = filter_var($_GET[$key], FILTER_SANITIZE_NUMBER_INT);
 
             if (!is_numeric($param)) {
-                return $this->data['numberOfPager'] + 1;
+                return 1;
             }
         }
-        dump($param);
+
         return $param;
     }
 }
