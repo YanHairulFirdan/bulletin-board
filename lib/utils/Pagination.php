@@ -45,7 +45,7 @@ class Pagination
 
     private function setLastIndex()
     {
-        $this->data['lastIndex'] = $this->data['numberOfPager'] <= 5 ?: $this->data['startIndex'] + 4;
+        $this->data['lastIndex'] = $this->data['numberOfPager'] <= 5 ? $this->data['numberOfPager'] : $this->data['startIndex'] + 4;
     }
 
     public function paginator()
