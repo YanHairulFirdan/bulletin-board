@@ -9,8 +9,9 @@ pagination.txt
 crud.php
 edit.php
 delete.php
-Public/assets/views/crud.view.php
-Public/assets/views/edit.view.php
+public/assets/views/crud.view.php
+public/assets/views/edit.view.php
+config/database.php
 
 #/lib/utils/Validator/validator.php
 # /temp/
