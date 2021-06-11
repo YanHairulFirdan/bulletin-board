@@ -1,7 +1,6 @@
 <?php
 
-namespace Lib\Utils\Validator;
-
+namespace Lib\Utils\Validators;
 
 class Size extends AbstractRule
 {
