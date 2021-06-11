@@ -4,9 +4,6 @@
 			"Lib\\": "lib/",
 			"App\\": "app/"
 		},
-		"classmap": [
-			"lib/utils/Validator/"
-		],
 		"files": [
 			"helpers/functions.php",
 			"config/database.php",
