@@ -6,8 +6,7 @@
 		},
 		"files": [
 			"helpers/functions.php",
-			"config/database.php",
-			"config/paths.php"
+			"config/database.php"
 		]
 	},
 	"require": {
