@@ -3,13 +3,13 @@
 require_once('../vendor/autoload.php');
 
 use App\Models\Bulletin;
+use App\Validations\BulletinValidation;
 use Lib\Utils\Pagination;
-use Lib\Utils\Validation;
 
 try {
     $bulletin   = new Bulletin();
     $pagination = new Pagination($bulletin->numRows());
-    $page       = $_GET['page'] ?: 1;
+    $page       = isset($_GET['page']) ? $_GET['page'] : 1;
     $limit      = $pagination->dataPerPage;
 
     $pagination->setCurrentPage($page);
@@ -19,11 +19,8 @@ try {
     $bulletins = $bulletin->orderBy('created_at', 'DESC')->limit($limit)->offset($offset)->get();
 
     if ($formData = $_POST) {
-        $rules      = [
-            'title' => 'required|length:10-180',
-            'body'  => 'required|length:10-220',
-        ];
-        $validator = new Validation($rules);
+
+        $validator = new BulletinValidation();
         $validator->validate($formData);
 
         if (!$errors = $validator->getErrorMessage()) {

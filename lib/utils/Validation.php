@@ -6,15 +6,10 @@ use Lib\Utils\Validators\ValidatorFactory;
 
 class Validation
 {
-    private $rules;
-    private $validationParams;
-    private $validatorClass;
-    private $errorMessages;
-
-    public function __construct($rules)
-    {
-        $this->rules = $rules;
-    }
+    protected $rules;
+    protected $validationParams;
+    protected $validatorClass;
+    protected $errorMessages;
 
     public function validate($formData)
     {
@@ -43,7 +38,7 @@ class Validation
 
     public function getErrorMessage()
     {
-        return ($this->errorMessages) ? $this->errorMessages : null;
+        return $this->errorMessages ?: null;
     }
 
     private function setValidatorType($fieldRule, $field, $fieldValue)
@@ -53,7 +48,8 @@ class Validation
         $this->validationParams['fieldValue'] = $fieldValue;
 
         if (is_numeric(strpos($fieldRule, ':'))) {
-            $ruleContainValue                    = explode(':', $fieldRule);
+            $ruleContainValue = explode(':', $fieldRule);
+
             $this->validatorClass                = $ruleContainValue[0];
             $this->validationParams['requisite'] = $ruleContainValue[1];
         }

@@ -8,8 +8,7 @@ class Required extends AbstractRule
     {
         extract($params);
 
-        $field      = $field;
-        $fieldValue = $fieldValue;
+        $field = $field;
 
         if (is_array($fieldValue)) {
             if ($fieldValue['error'] === 4) {
@@ -18,6 +17,8 @@ class Required extends AbstractRule
 
             return;
         }
+
+        $fieldValue = filter_var(trim($fieldValue), FILTER_SANITIZE_STRING);
 
         $this->message = empty($fieldValue) ? "{$field} Must be fill in!" : null;
     }
