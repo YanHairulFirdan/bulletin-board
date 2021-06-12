@@ -6,8 +6,6 @@ use App\Models\Bulletin;
 use App\Validations\BulletinValidation;
 use Lib\Utils\Pagination;
 
-base_url();
-
 try {
     $bulletin   = new Bulletin();
     $pagination = new Pagination($bulletin->numRows(), 10, 7, 'page');
