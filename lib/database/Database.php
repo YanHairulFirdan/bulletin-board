@@ -243,9 +243,9 @@ class Database
 
         array_unshift($columnList, '');
 
-        $columns       = '(' . ltrim(implode(',', $columnList), ',') . ')';
-        $preparedValue = '(' . ltrim(implode(',:', $columnList), ',') . ')';
-        $insertSubquery =  "{$columns} VALUES {$preparedValue}";
+        $columns        = '(' . ltrim(implode(',', $columnList), ',') . ')';
+        $preparedValue  = '(' . ltrim(implode(',:', $columnList), ',') . ')';
+        $insertSubquery = "{$columns} VALUES {$preparedValue}";
 
         return $insertSubquery;
     }
