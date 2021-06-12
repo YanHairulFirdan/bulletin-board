@@ -1,4 +1,5 @@
 <?php
+
 define("DATABASE_TYPE", "mysql");
 define("HOST", "localhost");
 define("DATABASE_NAME", "bulletinboard");
