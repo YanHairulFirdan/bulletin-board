@@ -16,12 +16,10 @@ try {
 
     $pagination->setCurrentPage($page);
     $pagination->paginator();
-
     $offset    = $pagination->currentPage;
     $bulletins = $bulletin->orderBy('created_at', 'DESC')->limit($limit)->offset($offset)->get();
 
     if ($formData = $_POST) {
-
         $validator = new BulletinValidation();
         $validator->validate($formData);
 

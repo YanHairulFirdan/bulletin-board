@@ -54,9 +54,9 @@
     <div class="container">
         <?php if (isset($errors)) : ?>
             <ul style="width: inherit; padding: 2em; color: #fff; background-color: red;">
-                <?php foreach ($errors as $message) : ?>
+                <?php foreach ($errors as $error) : ?>
                     <li>
-                        <?= $message ?>
+                        <?= $error ?>
                     </li>
                 <?php endforeach; ?>
             </ul>
@@ -70,7 +70,7 @@
                     </label>
                 </div>
                 <div class="input-field">
-                    <input type="text" name="title" style="display: inline-block; width: 100%; height: 2em;" style id="title" value="<?= old_input('title') ? old_input('title') : '' ?>">
+                    <input type="text" name="title" style="display: inline-block; width: 100%; height: 2em;" style id="title" value="<?= old_input('title') ?>">
                 </div>
             </div>
             <div class="form-input" style="width: inherit;">
@@ -80,7 +80,7 @@
                     </label>
                 </div>
                 <div class="input-field">
-                    <textarea name="body" id="body" style="display: inline-block; width: 100%; height: 4em;" style><?= old_input('body') ? old_input('body') : '' ?></textarea>
+                    <textarea name="body" id="body" style="display: inline-block; width: 100%; height: 4em;" style><?= old_input('body') ?></textarea>
                 </div>
             </div>
             <button class="btn" type="submit" style="margin-top: 2em; display: inline-block; width: 100%; height: 3em;">Submit</button>
@@ -102,30 +102,27 @@
         <div class="pagination" style="margin: 3em auto; width: 80%; display: flex; justify-content: space-between;">
             <?php if ($pagination->previousPage) : ?>
                 <span class="btn-page">
-                    <a href="?page=<?= $pagination->previousPage ?>">&lt;</a>
+                    <a href=<?= $pagination->previousPageURL() ?>>&lt;</a>
                 </span>
             <?php endif ?>
 
             <?php for ($page = $pagination->startIndex; $page <= $pagination->lastIndex; $page++) : ?>
-
                 <?php if (($pagination->currentPage == $page)) : ?>
                     <span class="btn-page">
                         <span><?= $pagination->currentPage ?></span>
                     </span>
                 <?php else : ?>
                     <span class="btn-page">
-                        <a href="?page=<?= $page ?>"><?= $page ?> </a>
+                        <a href=<?= $pagination->genearetURL($page) ?>><?= $page ?> </a>
                     </span>
                 <?php endif ?>
-
             <?php endfor ?>
 
             <?php if ($pagination->nextPage) : ?>
                 <span class="btn-page">
-                    <a href="?page=<?= $pagination->nextPage ?>">&gt;</a>
+                    <a href=<?= $pagination->nextPageURL() ?>>&gt;</a>
                 </span>
             <?php endif ?>
-
         <?php endif ?>
         </div>
 </body>
