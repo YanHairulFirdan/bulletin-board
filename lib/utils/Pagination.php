@@ -6,10 +6,11 @@ class Pagination
 {
     private $data = [];
 
-    public function __construct($numberOfRecords, $dataPerPage = 10)
+    public function __construct($numberOfRecords, $dataPerPage, $numberOfButtons)
     {
         $this->data['numberOfRecords'] = $numberOfRecords;
         $this->data['dataPerPage']     = $dataPerPage;
+        $this->data['numberOfButtons'] = $numberOfButtons;
     }
 
     private function setNumberOfPager()
@@ -31,12 +32,14 @@ class Pagination
     {
         $this->data['startIndex'] = 1;
 
-        if ($this->data['numberOfPager'] > 5) {
-            if ($this->data['currentPage'] - 2 >= 2) {
-                $this->data['startIndex'] = $this->data['currentPage'] - 2;
+        $leftButtons = floor($this->data['numberOfButtons'] / 2);
+
+        if ($this->data['numberOfPager'] > $this->data['numberOfButtons']) {
+            if ($this->data['currentPage'] - $leftButtons >= $leftButtons) {
+                $this->data['startIndex'] = $this->data['currentPage'] - $leftButtons;
 
                 if ($this->data['numberOfPager'] - $this->data['currentPage'] <= 1) {
-                    $this->data['startIndex'] = $this->data['numberOfPager'] - 4;
+                    $this->data['startIndex'] = $this->data['numberOfPager'] - ($this->data['numberOfButtons'] - 1);
                 }
             }
         }
@@ -44,7 +47,7 @@ class Pagination
 
     private function setLastIndex()
     {
-        $this->data['lastIndex'] = ($this->data['numberOfPager'] <= 5) ? $this->data['numberOfPager'] : $this->data['startIndex'] + 4;
+        $this->data['lastIndex'] = $this->data['startIndex'] + ($this->data['numberOfButtons'] - 1);
     }
 
     public function paginator()
@@ -53,6 +56,7 @@ class Pagination
         $this->setPreviousPage();
         $this->setNextPage();
         $this->setLastIndex();
+        dump($this->data);
     }
 
     public function setCurrentPage($currentPage)

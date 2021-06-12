@@ -6,9 +6,10 @@ use App\Models\Bulletin;
 use App\Validations\BulletinValidation;
 use Lib\Utils\Pagination;
 
+dump(floor(5 / 2));
 try {
     $bulletin   = new Bulletin();
-    $pagination = new Pagination($bulletin->numRows());
+    $pagination = new Pagination($bulletin->numRows(), 10, 7);
     $page       = isset($_GET['page']) ? $_GET['page'] : 1;
     $limit      = $pagination->dataPerPage;
 
