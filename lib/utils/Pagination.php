@@ -6,11 +6,12 @@ class Pagination
 {
     private $data = [];
 
-    public function __construct($numberOfRecords, $dataPerPage, $numberOfButtons)
+    public function __construct($numberOfRecords, $dataPerPage, $numberOfButtons, $index)
     {
         $this->data['numberOfRecords'] = $numberOfRecords;
         $this->data['dataPerPage']     = $dataPerPage;
         $this->data['numberOfButtons'] = $numberOfButtons;
+        $this->data['index'] = $numberOfButtons;
     }
 
     private function setNumberOfPager()
@@ -65,6 +66,8 @@ class Pagination
 
         $this->data['currentPage'] = (is_array($currentPage)) ? $this->sanitizeParam($currentPage) : $currentPage;
     }
+
+
 
     public function __get($name)
     {
