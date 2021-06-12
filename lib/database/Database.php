@@ -154,7 +154,7 @@ class Database
     {
         $this->setConnection();
 
-        $insertSubquery = $this->extractData($dataInsert);
+        $insertSubquery = $this->createInsertQuery($dataInsert);
 
         $this->query = "INSERT INTO {$this->tableName} {$insertSubquery}";
 
@@ -181,8 +181,10 @@ class Database
 
         $prepare->bindValue(":{$column}", $value);
 
-        foreach ($this->columnBind as $field => $value) {
-            $prepare->bindValue($field, $value);
+        foreach ($dataUpdate as $column => $value) {
+            $column = ":{$column}";
+
+            $prepare->bindValue($column, $value);
         }
 
         $updateResult     = $prepare->execute();
@@ -224,12 +226,9 @@ class Database
     private function updateQuery(array $dataUpdate)
     {
         $updateSubquery = '';
-        $columnList = array_keys($dataUpdate);
 
-        foreach ($dataUpdate as $field => $value) {
-            $this->setColumnBind($field, $value);
-
-            $updateSubquery .=  "`$field` = :{$field} ,";
+        foreach ($dataUpdate as $column => $value) {
+            $updateSubquery .=  "`$column` = :{$column} ,";
         }
 
         $updateSubquery = substr($updateSubquery, 0, -1);
@@ -237,7 +236,7 @@ class Database
         return $updateSubquery;
     }
 
-    private function extractData(array $dataInsert)
+    private function createInsertQuery(array $dataInsert)
     {
         $columnList = array_keys($dataInsert);
 
