@@ -9,11 +9,10 @@ use Lib\Utils\Validation;
 try {
     $bulletin   = new Bulletin();
     $pagination = new Pagination($bulletin->numRows());
-    $param      = $_GET ?: 1;
+    $page       = $_GET['page'] ?: 1;
     $limit      = $pagination->dataPerPage;
 
-    $pagination->setCurrentPage($param);
-
+    $pagination->setCurrentPage($page);
     $pagination->paginator();
 
     $offset    = $pagination->currentPage;
@@ -24,13 +23,10 @@ try {
             'title' => 'required|length:10-180',
             'body'  => 'required|length:10-220',
         ];
-        $validation = new Validation($rules);
+        $validator = new Validation($rules);
+        $validator->validate($formData);
 
-        $validation->validate($formData);
-
-        $errors = $validation->getErrorMessage();
-
-        if (!$errors) {
+        if (!$errors = $validator->getErrorMessage()) {
             $bulletin->create($formData);
 
             redirect('index.php');
