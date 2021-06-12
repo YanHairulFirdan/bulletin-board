@@ -130,11 +130,11 @@ class Database
             $this->query = "SELECT * FROM {$this->tableName}";
         }
 
-        $execute = $this->pdo->prepare($this->query);
+        $prepare = $this->pdo->prepare($this->query);
 
         if ($this->columnBind) {
             foreach ($this->columnBind as $key => $value) {
-                $execute->bindValue($key, $value);
+                $prepare->bindValue($key, $value);
             }
 
             $this->columnBind = [];
@@ -142,9 +142,9 @@ class Database
 
 
 
-        $execute->execute();
+        $prepare->execute();
 
-        $results     = $execute->fetchAll();
+        $results     = $prepare->fetchAll();
         $this->query = '';
 
         return $results;
@@ -155,17 +155,20 @@ class Database
         $this->setConnection();
 
         $insertSubquery = $this->extractData($dataInsert);
-        $this->query    = "INSERT INTO {$this->tableName} {$insertSubquery}";
-        $execute        = $this->pdo->prepare($this->query);
 
-        foreach ($this->columnBind as $field => $value) {
-            $execute->bindValue($field, $value);
+        $this->query = "INSERT INTO {$this->tableName} {$insertSubquery}";
+
+        $prepare = $this->pdo->prepare($this->query);
+
+        foreach ($dataInsert as $column => $value) {
+            $column = ":{$column}";
+
+            $prepare->bindValue($column, $value);
         }
 
-        $execute->execute();
+        $prepare->execute();
 
-        $this->columnBind = [];
-        $this->query      = '';
+        $this->query = '';
     }
 
     public function update(string $column, $value, array $dataUpdate)
@@ -174,15 +177,15 @@ class Database
 
         $updateStatement = $this->updateQuery($dataUpdate);
         $this->query     = "UPDATE $this->tableName SET {$updateStatement} WHERE {$column} = :{$column}";
-        $execute         = $this->pdo->prepare($this->query);
+        $prepare         = $this->pdo->prepare($this->query);
 
-        $execute->bindValue(":{$column}", $value);
+        $prepare->bindValue(":{$column}", $value);
 
         foreach ($this->columnBind as $field => $value) {
-            $execute->bindValue($field, $value);
+            $prepare->bindValue($field, $value);
         }
 
-        $updateResult     = $execute->execute();
+        $updateResult     = $prepare->execute();
         $this->columnBind = [];
         $this->query      = '';
 
@@ -194,11 +197,11 @@ class Database
         $this->setConnection();
 
         $this->query = "DELETE FROM {$this->tableName} WHERE {$column} = :{$column}";
-        $execute     = $this->pdo->prepare($this->query);
+        $prepare     = $this->pdo->prepare($this->query);
 
-        $execute->bindValue(":{$column}", $value);
+        $prepare->bindValue(":{$column}", $value);
 
-        $deleteResult = $execute->execute();
+        $deleteResult = $prepare->execute();
 
         return $deleteResult;
     }
@@ -208,11 +211,11 @@ class Database
         $this->setConnection();
 
         $this->query = "SELECT COUNT(*) FROM {$this->tableName}";
-        $execute     = $this->pdo->prepare($this->query);
+        $prepare     = $this->pdo->prepare($this->query);
 
-        $execute->execute();
+        $prepare->execute();
 
-        $numRows     = $execute->fetchColumn();
+        $numRows     = $prepare->fetchColumn();
         $this->query = '';
 
         return $numRows;
@@ -221,6 +224,7 @@ class Database
     private function updateQuery(array $dataUpdate)
     {
         $updateSubquery = '';
+        $columnList = array_keys($dataUpdate);
 
         foreach ($dataUpdate as $field => $value) {
             $this->setColumnBind($field, $value);
@@ -235,18 +239,12 @@ class Database
 
     private function extractData(array $dataInsert)
     {
-        $preparedValue = "(";
-        $columns       = "(";
+        $columnList = array_keys($dataInsert);
 
-        foreach ($dataInsert as $key => $field) {
-            $this->setColumnBind($key, $field);
+        array_unshift($columnList, '');
 
-            $preparedValue .= ":{$key},";
-            $columns       .= $key . ',';
-        }
-
-        $preparedValue  = substr_replace($preparedValue, ')', strlen($preparedValue) - 1);
-        $columns        = substr_replace($columns, ')', strlen($columns) - 1);
+        $columns       = '(' . ltrim(implode(',', $columnList), ',') . ')';
+        $preparedValue = '(' . ltrim(implode(',:', $columnList), ',') . ')';
         $insertSubquery =  "{$columns} VALUES {$preparedValue}";
 
         return $insertSubquery;
