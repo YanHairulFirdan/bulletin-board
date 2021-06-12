@@ -6,9 +6,9 @@ function dump($data)
     echo "</pre>";
 }
 
-function redirect($url, $permanent = true)
+function redirect($url, $code = 302)
 {
-    header("Location: {$url}", true, $permanent ? 301 : 302);
+    header("Location: {$url}", true, $code);
 
     exit;
 }
