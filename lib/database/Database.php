@@ -78,18 +78,19 @@ class Database
             if (!empty($value)) {
                 $subQuery = " WHERE {$column} {$operator} :$column";
 
-                $this->setColumnBind($column, $value);
                 $this->query .= $subQuery;
+                $this->setColumnBind($column, $value);
             }
         }
 
-        return $this;
+        // return $this;
     }
 
     public function setOrderBy(string $column, string $orderType = 'ASC')
     {
         if (!is_null($column)) {
-            $subQuery     = " ORDER BY {$column} {$orderType}";
+            $subQuery = " ORDER BY {$column} {$orderType}";
+
             $this->query .= $subQuery;
         }
     }
@@ -97,8 +98,10 @@ class Database
     public function setLimit(int $limit)
     {
         if ($limit > 0) {
-            $this->limit  = $limit;
-            $subQuery     = " LIMIT {$limit}";
+            $this->limit = $limit;
+
+            $subQuery = " LIMIT {$limit}";
+
             $this->query .= $subQuery;
         }
     }
@@ -107,8 +110,9 @@ class Database
     {
         if ($offset > 1) {
             $offset--;
-            $offset      *= $this->limit;
-            $subQuery     = " OFFSET {$offset}";
+            $offset  *= $this->limit;
+            $subQuery = " OFFSET {$offset}";
+
             $this->query .= $subQuery;
         }
     }
@@ -116,9 +120,12 @@ class Database
     public function setGroupBy(string $column)
     {
         if (!empty($column)) {
-            $subQuery     = " GROUP BY {$column}";
+            $subQuery = " GROUP BY {$column}";
+
             $this->query .= $subQuery;
         }
+
+        return $this;
     }
 
     public function select()
@@ -133,24 +140,6 @@ class Database
             $this->query = "SELECT * FROM {$this->tableName}";
         }
 
-        // $prepare = $this->pdo->prepare($this->query);
-
-        // if ($this->columnBind) {
-        //     foreach ($this->columnBind as $key => $value) {
-        //         $prepare->bindValue($key, $value);
-        //     }
-
-        //     $this->columnBind = [];
-        // }
-
-
-
-        // $prepare->execute();
-
-        // $results     = $prepare->fetchAll();
-        // $this->query = '';
-
-        // return $results;
         return $this;
     }
 
@@ -161,8 +150,6 @@ class Database
         $insertSubquery = $this->createInsertQuery($dataInsert);
 
         $this->query = "INSERT INTO {$this->tableName} {$insertSubquery}";
-
-        $prepare = $this->pdo->prepare($this->query);
 
         foreach ($dataInsert as $column => $value) {
             $this->setColumnBind($column, $value);
@@ -179,19 +166,10 @@ class Database
 
         $this->query = "UPDATE $this->tableName SET {$updateStatement}";
 
-        $prepare = $this->pdo->prepare($this->query);
-        // $prepare->bindValue(":{$column}", $value);
-
         foreach ($dataUpdate as $column => $value) {
-            $column = ":{$column}";
-            $prepare->bindValue($column, $value);
+            $this->setColumnBind($column, $value);
         }
 
-        $updateResult = $prepare->execute();
-
-        $this->query = '';
-
-        // return $updateResult;
         return $this;
     }
 
@@ -200,13 +178,14 @@ class Database
         $this->setConnection();
 
         $this->query = "DELETE FROM {$this->tableName} WHERE {$column} = :{$column}";
-        $prepare     = $this->pdo->prepare($this->query);
 
-        $prepare->bindValue(":{$column}", $value);
+        // $prepare = $this->pdo->prepare($this->query);
 
-        $deleteResult = $prepare->execute();
+        // $prepare->bindValue(":{$column}", $value);
 
-        return $deleteResult;
+        // $deleteResult = $prepare->execute();
+
+        // return $deleteResult;
     }
 
     public function numrows()
@@ -252,8 +231,6 @@ class Database
 
     public function execute()
     {
-        dump($this->query);
-
         $prepare = $this->pdo->prepare($this->query);
 
         if ($this->columnBind) {
@@ -273,8 +250,9 @@ class Database
 
     private function setColumnBind($field, $value)
     {
-        $field                         = filter_var($field, FILTER_SANITIZE_STRING);
-        $value                         = filter_var($value, FILTER_SANITIZE_STRING);
+        $field = filter_var($field, FILTER_SANITIZE_STRING);
+        $value = filter_var($value, FILTER_SANITIZE_STRING);
+
         $this->columnBind[":{$field}"] = $value;
     }
 }

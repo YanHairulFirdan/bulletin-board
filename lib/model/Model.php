@@ -32,8 +32,8 @@ abstract class Model
     public function findByID($id)
     {
         // $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT)`;
-
-        $record = $this->database->select()->setWhereClause('id', '=', $id)->execute();
+        $this->database->setWhereClause('id', '=', $id);
+        $record = $this->database->select()->execute();
 
         return $record;
     }
@@ -85,8 +85,9 @@ abstract class Model
         return $this;
     }
 
-    public function edit(string $column, $columnValue, array $dataEdit)
+    public function update(array $dataEdit)
     {
+        // $this->database->setWhereClause('id', '=', $id);
         $this->database->update($dataEdit);
 
         return $this;
@@ -95,5 +96,10 @@ abstract class Model
     public function delete(string $column, $value)
     {
         $this->database->delete($column, $value);
+    }
+
+    public function execute()
+    {
+        return $this->database->execute();
     }
 }
