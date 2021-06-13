@@ -16,9 +16,7 @@ abstract class Model
 
     public function get()
     {
-        $records = $this->database->select();
-
-        return $records;
+        return $this->database->select()->execute();
     }
 
     public function create(array $data)
@@ -85,7 +83,9 @@ abstract class Model
 
     public function edit(string $column, $columnValue, array $dataEdit)
     {
-        $this->database->update($column, $columnValue, $dataEdit);
+        $this->database->update($dataEdit);
+
+        return $this;
     }
 
     public function delete(string $column, $value)

@@ -58,7 +58,6 @@ class Pagination
         $this->setPreviousPage();
         $this->setNextPage();
         $this->setLastIndex();
-        dump($this->data);
     }
 
     public function setCurrentPage($currentPage)

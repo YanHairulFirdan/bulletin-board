@@ -130,24 +130,25 @@ class Database
             $this->query = "SELECT * FROM {$this->tableName}";
         }
 
-        $prepare = $this->pdo->prepare($this->query);
+        // $prepare = $this->pdo->prepare($this->query);
 
-        if ($this->columnBind) {
-            foreach ($this->columnBind as $key => $value) {
-                $prepare->bindValue($key, $value);
-            }
+        // if ($this->columnBind) {
+        //     foreach ($this->columnBind as $key => $value) {
+        //         $prepare->bindValue($key, $value);
+        //     }
 
-            $this->columnBind = [];
-        }
+        //     $this->columnBind = [];
+        // }
 
 
 
-        $prepare->execute();
+        // $prepare->execute();
 
-        $results     = $prepare->fetchAll();
-        $this->query = '';
+        // $results     = $prepare->fetchAll();
+        // $this->query = '';
 
-        return $results;
+        // return $results;
+        return $this;
     }
 
     public function insert(array $dataInsert)
@@ -171,27 +172,28 @@ class Database
         $this->query = '';
     }
 
-    public function update(string $column, $value, array $dataUpdate)
+    public function update(array $dataUpdate)
     {
         $this->setConnection();
 
         $updateStatement = $this->updateQuery($dataUpdate);
-        $this->query     = "UPDATE $this->tableName SET {$updateStatement} WHERE {$column} = :{$column}";
-        $prepare         = $this->pdo->prepare($this->query);
 
-        $prepare->bindValue(":{$column}", $value);
+        $this->query = "UPDATE $this->tableName SET {$updateStatement}";
+
+        $prepare = $this->pdo->prepare($this->query);
+        // $prepare->bindValue(":{$column}", $value);
 
         foreach ($dataUpdate as $column => $value) {
             $column = ":{$column}";
-
             $prepare->bindValue($column, $value);
         }
 
-        $updateResult     = $prepare->execute();
-        $this->columnBind = [];
-        $this->query      = '';
+        $updateResult = $prepare->execute();
 
-        return $updateResult;
+        $this->query = '';
+
+        // return $updateResult;
+        return $this;
     }
 
     public function delete(string $column, $value)
@@ -247,6 +249,25 @@ class Database
         $insertSubquery = "{$columns} VALUES {$preparedValue}";
 
         return $insertSubquery;
+    }
+
+    public function execute()
+    {
+        $prepare = $this->pdo->prepare($this->query);
+
+        if ($this->columnBind) {
+            foreach ($this->columnBind as $key => $value) {
+                $prepare->bindValue($key, $value);
+            }
+
+            $this->columnBind = [];
+        }
+
+        $prepare->execute();
+
+        $this->query = '';
+
+        return $prepare->fetchAll();
     }
 
     private function setColumnBind($field, $value)

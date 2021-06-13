@@ -9,11 +9,13 @@ use Lib\Utils\Pagination;
 try {
     $bulletin   = new Bulletin();
     $pagination = new Pagination($bulletin->numRows(), 10, 7, 'page');
-    $page       = isset($_GET['page']) ? $_GET['page'] : 1;
-    $limit      = $pagination->dataPerPage;
+
+    $page  = isset($_GET['page']) ? $_GET['page'] : 1;
+    $limit = $pagination->dataPerPage;
 
     $pagination->setCurrentPage($page);
     $pagination->paginator();
+
     $offset    = $pagination->currentPage;
     $bulletins = $bulletin->orderBy('created_at', 'DESC')->limit($limit)->offset($offset)->get();
 
