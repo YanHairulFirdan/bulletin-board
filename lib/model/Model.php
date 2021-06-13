@@ -54,7 +54,9 @@ abstract class Model
 
     public function numRows()
     {
-        return $this->database->numrows();
+        $numRows = $this->database->numrows()->execute();
+
+        return $numRows[0][0];
     }
 
     public function orderBy(string $column, string $orderType = 'ASC')

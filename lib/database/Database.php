@@ -82,8 +82,6 @@ class Database
                 $this->setColumnBind($column, $value);
             }
         }
-
-        // return $this;
     }
 
     public function setOrderBy(string $column, string $orderType = 'ASC')
@@ -130,8 +128,6 @@ class Database
 
     public function select()
     {
-        $this->setConnection();
-
         if (!empty($this->query)) {
             if (strpos($this->query, 'SELECT') === false) {
                 $this->query = "SELECT * FROM {$this->tableName} {$this->query}";
@@ -145,8 +141,6 @@ class Database
 
     public function insert(array $dataInsert)
     {
-        $this->setConnection();
-
         $insertSubquery = $this->createInsertQuery($dataInsert);
 
         $this->query = "INSERT INTO {$this->tableName} {$insertSubquery}";
@@ -160,8 +154,6 @@ class Database
 
     public function update(array $dataUpdate)
     {
-        $this->setConnection();
-
         $updateStatement = $this->updateQuery($dataUpdate);
 
         $this->query = "UPDATE $this->tableName SET {$updateStatement}";
@@ -175,32 +167,16 @@ class Database
 
     public function delete(string $column, $value)
     {
-        $this->setConnection();
-
         $this->query = "DELETE FROM {$this->tableName} WHERE {$column} = :{$column}";
 
-        // $prepare = $this->pdo->prepare($this->query);
-
-        // $prepare->bindValue(":{$column}", $value);
-
-        // $deleteResult = $prepare->execute();
-
-        // return $deleteResult;
+        return $this;
     }
 
     public function numrows()
     {
-        $this->setConnection();
-
         $this->query = "SELECT COUNT(*) FROM {$this->tableName}";
-        $prepare     = $this->pdo->prepare($this->query);
 
-        $prepare->execute();
-
-        $numRows     = $prepare->fetchColumn();
-        $this->query = '';
-
-        return $numRows;
+        return $this;
     }
 
     private function updateQuery(array $dataUpdate)
@@ -231,6 +207,8 @@ class Database
 
     public function execute()
     {
+        $this->setConnection();
+
         $prepare = $this->pdo->prepare($this->query);
 
         if ($this->columnBind) {
