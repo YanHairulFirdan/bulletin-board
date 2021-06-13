@@ -6,6 +6,7 @@
 		},
 		"files": [
 			"helpers/functions.php",
+			"config/app.php",
 			"config/database.php"
 		]
 	},
