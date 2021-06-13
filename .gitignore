@@ -12,6 +12,7 @@ delete.php
 public/assets/views/crud.view.php
 public/assets/views/edit.view.php
 config/database.php
+/log
 
 #/lib/utils/Validator/validator.php
 # /temp/
