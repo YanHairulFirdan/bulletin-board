@@ -21,15 +21,19 @@ abstract class Model
 
     public function create(array $data)
     {
-        $this->database->insert($data);
+        try {
+            dump($this->database->insert($data)->execute());
+        } catch (\Throwable $th) {
+            dump($th->getMessage());
+            die;
+        }
     }
 
     public function findByID($id)
     {
         // $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT)`;
-        $this->database->setWhereClause('id', '=', $id);
 
-        $record = $this->database->select();
+        $record = $this->database->select()->setWhereClause('id', '=', $id)->execute();
 
         return $record;
     }

@@ -76,11 +76,14 @@ class Database
     {
         if (!empty($column)) {
             if (!empty($value)) {
-                $subQuery                     = " WHERE {$column} {$operator} :$column";
-                $this->columnBind[":$column"] = $value;
-                $this->query                 .= $subQuery;
+                $subQuery = " WHERE {$column} {$operator} :$column";
+
+                $this->setColumnBind($column, $value);
+                $this->query .= $subQuery;
             }
         }
+
+        return $this;
     }
 
     public function setOrderBy(string $column, string $orderType = 'ASC')
@@ -162,14 +165,10 @@ class Database
         $prepare = $this->pdo->prepare($this->query);
 
         foreach ($dataInsert as $column => $value) {
-            $column = ":{$column}";
-
-            $prepare->bindValue($column, $value);
+            $this->setColumnBind($column, $value);
         }
 
-        $prepare->execute();
-
-        $this->query = '';
+        return $this;
     }
 
     public function update(array $dataUpdate)
@@ -253,6 +252,8 @@ class Database
 
     public function execute()
     {
+        dump($this->query);
+
         $prepare = $this->pdo->prepare($this->query);
 
         if ($this->columnBind) {
