@@ -31,7 +31,6 @@ abstract class Model
 
     public function findByID($id)
     {
-        // $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT)`;
         $this->database->setWhereClause('id', '=', $id);
         $record = $this->database->select()->execute();
 
@@ -45,7 +44,7 @@ abstract class Model
         return $this;
     }
 
-    public function columns(array $columns)
+    public function columns(...$columns)
     {
         $this->database->setColumn($columns);
 
