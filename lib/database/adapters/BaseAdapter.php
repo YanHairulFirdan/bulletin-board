@@ -7,7 +7,7 @@ use PDO;
 
 abstract class BaseAdapter
 {
-    protected $connection;
+    protected $pdo;
     protected $dsn;
     protected $databaseType    = 'mysql';
     protected $host            = 'localhost';
@@ -28,17 +28,17 @@ abstract class BaseAdapter
     public function connect()
     {
         $this->setDNS();
-        $this->connection = new PDO($this->dsn, $this->username, $this->password);
+        $this->pdo = new PDO($this->dsn, $this->username, $this->password);
         $this->setPDOAttributes();
 
-        return $this->connection;
+        return $this->pdo;
     }
 
     protected function setPDOAttributes()
     {
-        $this->connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-        $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+        $this->pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
     }
 
     public function setDNS()
