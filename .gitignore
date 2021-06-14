@@ -1,18 +1,10 @@
-lib/utils/validator/validator.php
-Database/DatabaseConnection.php
-insert_dummy.php
-/vendor
-/Models/User.php
-/playground
-/config/config.php
-pagination.txt
 crud.php
-edit.php
-delete.php
-public/assets/views/crud.view.php
-public/assets/views/edit.view.php
 config/database.php
+delete.php
+edit.php
 /log
+/playground
+/vendor
 
 #/lib/utils/Validator/validator.php
 # /temp/
