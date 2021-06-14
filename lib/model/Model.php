@@ -21,12 +21,7 @@ abstract class Model
 
     public function create(array $data)
     {
-        try {
-            dump($this->database->insert($data)->execute());
-        } catch (\Throwable $th) {
-            dump($th->getMessage());
-            die;
-        }
+        $this->database->insert($data)->execute();
     }
 
     public function findByID($id)
@@ -35,6 +30,25 @@ abstract class Model
         $record = $this->database->select()->execute();
 
         return $record;
+    }
+
+    public function update(array $dataEdit)
+    {
+        $this->database->update($dataEdit);
+
+        return $this;
+    }
+
+    public function delete(string $column, $value)
+    {
+        $this->database->delete($column, $value)->execute();
+    }
+
+    public function numRows()
+    {
+        $numRows = $this->database->numrows()->execute();
+
+        return $numRows[0][0];
     }
 
     public function limit(int $limit)
@@ -49,13 +63,6 @@ abstract class Model
         $this->database->setColumn($columns);
 
         return $this;
-    }
-
-    public function numRows()
-    {
-        $numRows = $this->database->numrows()->execute();
-
-        return $numRows[0][0];
     }
 
     public function orderBy(string $column, string $orderType = 'ASC')
@@ -84,18 +91,6 @@ abstract class Model
         $this->database->setOffset($offset);
 
         return $this;
-    }
-
-    public function update(array $dataEdit)
-    {
-        $this->database->update($dataEdit);
-
-        return $this;
-    }
-
-    public function delete(string $column, $value)
-    {
-        $this->database->delete($column, $value)->execute();
     }
 
     public function execute()
