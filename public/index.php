@@ -8,7 +8,6 @@ use Lib\Utils\Logger;
 use Lib\Utils\Pagination;
 
 try {
-    Logger::write('ok');
     $bulletin   = new Bulletin();
     $pagination = new Pagination($bulletin->numRows(), 10, 7, 'page');
 
@@ -36,4 +35,5 @@ try {
 } catch (Exception $e) {
     dump($e->getMessage());
     Logger::write($e->getMessage());
+    redirect('error.php');
 }
