@@ -1,6 +1,14 @@
 {
-	"autoloads":{
-		"files":["FirstClass.php", "SecondClass.php"]
+	"autoload": {
+		"psr-4": {
+			"Lib\\": "lib/",
+			"App\\": "app/"
+		},
+		"files": [
+			"helpers/functions.php",
+			"config/app.php",
+			"config/database.php"
+		]
 	},
 	"require": {
 		"fzaninotto/faker": "^1.9"

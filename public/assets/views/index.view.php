@@ -1,29 +1,3 @@
-<?php
-require_once('config/database_connection.php');
-require_once('helpers/pagination.php');
-require_once('helpers/debug.php');
-session_start();
-
-list($result, $numberOfPager) = pagination();
-
-$currentPage =  (isset($_REQUEST['page'])) ? intval($_REQUEST['page']) : 1;
-
-if ($numberOfPager <= 5) {
-    $startIndex = 1;
-    $pager = $numberOfPager;
-} else if ($numberOfPager > 5) {
-    $pager = 5;
-    $difference = $numberOfPager - $pager;
-    $startIndex = ($currentPage < $difference + 1) ? $currentPage : $difference + 1;
-
-    if ($startIndex == 5) {
-        $startIndex = 3;
-    }
-}
-
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,7 +17,6 @@ if ($numberOfPager <= 5) {
             display: inline-block;
             height: inherit;
             width: inherit;
-            /* padding: 1em; */
             text-align: center;
 
         }
@@ -61,10 +34,16 @@ if ($numberOfPager <= 5) {
             opacity: .8;
         }
 
+        .error {
+            background-color: red;
+        }
+
+        .success {
+            background-color: green;
+        }
+
         .btn-page span {
             text-align: center;
-            /* background-color: gray; */
-            /* color: #fff; */
             align-items: center;
 
         }
@@ -73,17 +52,17 @@ if ($numberOfPager <= 5) {
 
 <body style="width: 60%; margin: auto;">
     <div class="container">
-        <?php if (isset($_SESSION) && count($_SESSION) > 0) : ?>
+        <?php if (isset($errors)) : ?>
             <ul style="width: inherit; padding: 2em; color: #fff; background-color: red;">
-                <?php foreach ($_SESSION as $key => $data) : ?>
+                <?php foreach ($errors as $error) : ?>
                     <li>
-                        <?= $data ?>
+                        <?= $error ?>
                     </li>
-                <?php endforeach;
-                session_destroy(); ?>
+                <?php endforeach; ?>
             </ul>
         <?php endif; ?>
-        <form action="save.php" method="POST" style="padding: 2em;">
+
+        <form action="" method="POST" style="padding: 2em;">
             <div class="form-input" style="width: inherit;">
                 <div class="input-title" style="margin: 2em 0;">
                     <label for="title">
@@ -91,7 +70,7 @@ if ($numberOfPager <= 5) {
                     </label>
                 </div>
                 <div class="input-field">
-                    <input type="text" name="title" style="display: inline-block; width: 100%; height: 2em;" style id="title">
+                    <input type="text" name="title" style="display: inline-block; width: 100%; height: 2em;" style id="title" value="<?= old_input('title') ?>">
                 </div>
             </div>
             <div class="form-input" style="width: inherit;">
@@ -101,15 +80,14 @@ if ($numberOfPager <= 5) {
                     </label>
                 </div>
                 <div class="input-field">
-                    <textarea name="body" id="body" style="display: inline-block; width: 100%; height: 4em;" style></textarea>
+                    <textarea name="body" id="body" style="display: inline-block; width: 100%; height: 4em;" style><?= old_input('body') ?></textarea>
                 </div>
             </div>
             <button class="btn" type="submit" style="margin-top: 2em; display: inline-block; width: 100%; height: 3em;">Submit</button>
         </form>
     </div>
 
-
-    <?php while ($bulletin = mysqli_fetch_assoc($result)) : ?>
+    <?php foreach ($bulletins as $key => $bulletin) : ?>
         <div class="board-wrapper" style="padding: 1em 2em; display: flex; justify-content: space-between; border-top: 1px solid #000; border-bottom: 1px solid #000;">
             <span class="board-title">
                 <?= $bulletin['title'] ?>
@@ -118,34 +96,35 @@ if ($numberOfPager <= 5) {
                 <?= $bulletin['created_at'] ?>
             </span>
         </div>
-    <?php endwhile ?>
+    <?php endforeach ?>
 
-
-    <div class="pagination" style="margin: 3em auto; width: 80%; display: flex; justify-content: space-between;">
-        <?php if ($currentPage > 1) : ?>
-            <span class="btn-page">
-                <a href="?page=<?= $currentPage - 1 ?>">&lt;</a>
-            </span>
-        <?php endif ?>
-
-        <?php for ($index = 0; $index < $pager; $index++) : ?>
-            <?php if (($currentPage == $index + $startIndex)) : ?>
+    <?php if (!($pagination->currentPage > $pagination->numberOfPager)) : ?>
+        <div class="pagination" style="margin: 3em auto; width: 80%; display: flex; justify-content: space-between;">
+            <?php if ($pagination->previousPage) : ?>
                 <span class="btn-page">
-                    <span><?= $index + $startIndex ?></span>
-                </span>
-            <?php else : ?>
-                <span class="btn-page">
-                    <a href="?page=<?= $startIndex + $index ?>"><?= $index + $startIndex ?></a>
+                    <a href=<?= $pagination->previousPageURL() ?>>&lt;</a>
                 </span>
             <?php endif ?>
-        <?php endfor ?>
 
-        <?php if ($currentPage < $numberOfPager) : ?>
-            <span class="btn-page">
-                <a href="?page=<?= $currentPage + 1 ?>">&gt;</a>
-            </span>
+            <?php for ($page = $pagination->startIndex; $page <= $pagination->lastIndex; $page++) : ?>
+                <?php if (($pagination->currentPage == $page)) : ?>
+                    <span class="btn-page">
+                        <span><?= $pagination->currentPage ?></span>
+                    </span>
+                <?php else : ?>
+                    <span class="btn-page">
+                        <a href=<?= $pagination->genearetURL($page) ?>><?= $page ?> </a>
+                    </span>
+                <?php endif ?>
+            <?php endfor ?>
+
+            <?php if ($pagination->nextPage) : ?>
+                <span class="btn-page">
+                    <a href=<?= $pagination->nextPageURL() ?>>&gt;</a>
+                </span>
+            <?php endif ?>
         <?php endif ?>
-    </div>
+        </div>
 </body>
 
 </html>
