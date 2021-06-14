@@ -89,7 +89,6 @@ abstract class Model
 
     public function update(array $dataEdit)
     {
-        // $this->database->setWhereClause('id', '=', $id);
         $this->database->update($dataEdit);
 
         return $this;
@@ -97,7 +96,7 @@ abstract class Model
 
     public function delete(string $column, $value)
     {
-        $this->database->delete($column, $value);
+        $this->database->delete($column, $value)->execute();
     }
 
     public function execute()
