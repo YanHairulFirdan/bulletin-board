@@ -17,3 +17,8 @@ function old_input(string $key)
 {
     return isset($_POST[$key]) ? htmlspecialchars($_POST[$key]) : '';
 }
+
+function sanitize_string(string $value)
+{
+    return filter_var(trim($value), FILTER_SANITIZE_STRING);
+}

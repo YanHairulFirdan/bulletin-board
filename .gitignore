@@ -2,7 +2,7 @@ crud.php
 config/database.php
 delete.php
 edit.php
-/log
+public/error.php
 /logs
 /playground
 /vendor
