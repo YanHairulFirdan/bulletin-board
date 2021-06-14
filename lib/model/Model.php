@@ -32,11 +32,10 @@ abstract class Model
         return $record;
     }
 
-    public function update(array $dataEdit)
+    public function update(array $dataEdit, $columnn, $value)
     {
-        $this->database->update($dataEdit);
-
-        return $this;
+        $this->database->setWhereClause($columnn, '=', $value);
+        $this->database->update($dataEdit)->execute();
     }
 
     public function delete(string $column, $value)
@@ -91,10 +90,5 @@ abstract class Model
         $this->database->setOffset($offset);
 
         return $this;
-    }
-
-    public function execute()
-    {
-        return $this->database->execute();
     }
 }
