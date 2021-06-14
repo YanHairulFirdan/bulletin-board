@@ -1,8 +1,9 @@
 <?php
 
 if (!file_exists(ROOT . '\logs\\error.log')) {
+    dump('not exist');
     mkdir(ROOT . '\logs');
-    touch('error.log');
+    touch(ROOT . '\logs\\error.log');
 }
 
 error_reporting(DEBUG === 'off' ? 0 : E_ALL);
