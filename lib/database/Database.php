@@ -61,12 +61,7 @@ class Database
     public function setConnection()
     {
         if (!$this->pdo) {
-            try {
-                $this->pdo = $this->dbAdapter->connect();
-            } catch (\Throwable $th) {
-                Logger::write($th->getMessage());
-                throw $th;
-            }
+            $this->pdo = $this->dbAdapter->connect();
         }
     }
 

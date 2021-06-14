@@ -1,6 +1,6 @@
 <?php
 
-define("DATABASE_TYPE", "mysqlaa");
+define("DATABASE_TYPE", "mysql");
 define("HOST", "localhost");
 define("DATABASE_NAME", "bulletinboard");
 define("USERNAME", "root");

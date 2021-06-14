@@ -33,6 +33,6 @@ try {
 
     require_once "assets/views/index.view.php";
 } catch (\Throwable $e) {
-    throw $e;
     Logger::write($e->getMessage());
+    throw $e;
 }
