@@ -32,8 +32,7 @@ try {
     }
 
     require_once "assets/views/index.view.php";
-} catch (Exception $e) {
-    dump($e->getMessage());
+} catch (\Throwable $e) {
+    throw $e;
     Logger::write($e->getMessage());
-    redirect('error.php');
 }

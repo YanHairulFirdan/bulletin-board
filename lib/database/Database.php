@@ -2,6 +2,8 @@
 
 namespace Lib\Database;
 
+use Lib\Utils\Logger;
+
 /*
     |--------------------------------------------------------------------------
     | Database
@@ -50,7 +52,6 @@ class Database
     private $columnBind;
     private $limit;
 
-
     public function __construct(string $tableName)
     {
         $this->tableName = $tableName;
@@ -60,7 +61,12 @@ class Database
     public function setConnection()
     {
         if (!$this->pdo) {
-            $this->pdo = $this->dbAdapter->connect();
+            try {
+                $this->pdo = $this->dbAdapter->connect();
+            } catch (\Throwable $th) {
+                Logger::write($th->getMessage());
+                throw $th;
+            }
         }
     }
 
