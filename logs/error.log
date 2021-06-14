@@ -1,9 +1,0 @@
-[14-Jun-2021 08:52:39 Europe/Berlin] Hello, errors!
-[14-Jun-2021 08:53:42 Europe/Berlin] Hello, errors!
-[14-Jun-2021 08:53:42 Europe/Berlin] Class 'App\Mode\Bulletin' not found
-[14-Jun-2021 08:54:24 Europe/Berlin] Hello, errors!
-[14-Jun-2021 08:54:24 Europe/Berlin] Class 'App\Mode\Bulletin' not found
-[14-Jun-2021 08:54:58 Europe/Berlin] Hello, errors!
-[14-Jun-2021 08:55:47 Europe/Berlin] SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
-
-[14-Jun-2021 08:57:05 Europe/Berlin] SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo failed: No such host is known. 
