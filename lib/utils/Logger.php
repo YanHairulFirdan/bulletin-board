@@ -6,18 +6,14 @@ use Faker\Provider\DateTime;
 
 class Logger
 {
-    private static $filePath = "E:/xampp/htdocs/BulletinBoard/log/errors.txt";
+    private static $filePath = ROOT . "\log\\errors.txt";
 
     private static function createFile()
     {
         if (!file_exists(self::$filePath)) {
-            // dump('does not exist');
+            mkdir(ROOT . "\log");
+
             touch(self::$filePath);
-            // mkdir(self::$filePath);
-            die;
-        } else {
-            // dump('exist');
-            // die;
         }
     }
 
@@ -25,9 +21,9 @@ class Logger
     {
         self::createFile();
 
-        $file = fopen(self::$filePath, 'a+');
+        $file    = fopen(self::$filePath, 'a+');
+        $message = '[' . date('H:i:s d-m-Y') . '] ' . $message;
 
-        $message = '[' . DateTime::date('H:i:s d-m-Y') . '] ' . $message;
         fwrite($file, $message . PHP_EOL);
         fclose($file);
     }

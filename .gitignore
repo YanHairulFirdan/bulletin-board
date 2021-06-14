@@ -3,6 +3,7 @@ config/database.php
 delete.php
 edit.php
 /log
+/logs
 /playground
 /vendor
 

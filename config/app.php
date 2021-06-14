@@ -1,3 +1,3 @@
 <?php
-
-define("MODE", "production");
+define("DEBUG", "off");
+define("ROOT", dirname(__DIR__));

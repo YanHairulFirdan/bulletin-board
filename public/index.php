@@ -34,5 +34,6 @@ try {
     require_once "assets/views/index.view.php";
 } catch (\Throwable $e) {
     Logger::write($e->getMessage());
+    error_log($e->getMessage());
     throw $e;
 }
