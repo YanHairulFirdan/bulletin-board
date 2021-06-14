@@ -4,9 +4,11 @@ require_once('../app/core/bootstrap.php');
 
 use App\Models\Bulletin;
 use App\Validations\BulletinValidation;
+use Lib\Utils\Logger;
 use Lib\Utils\Pagination;
 
 try {
+    Logger::write('ok');
     $bulletin   = new Bulletin();
     $pagination = new Pagination($bulletin->numRows(), 10, 7, 'page');
 
@@ -33,4 +35,5 @@ try {
     require_once "assets/views/index.view.php";
 } catch (Exception $e) {
     dump($e->getMessage());
+    Logger::write($e->getMessage());
 }

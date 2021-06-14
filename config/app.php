@@ -1,3 +1,3 @@
 <?php
 
-define("MODE", "production");
+define("MODE", "staging");
