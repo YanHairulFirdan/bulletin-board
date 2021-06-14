@@ -18,7 +18,7 @@ class Required extends AbstractRule
             return;
         }
 
-        $fieldValue = filter_var(trim($fieldValue), FILTER_SANITIZE_STRING);
+        $fieldValue = sanitize_string($fieldValue);
 
         $this->message = empty($fieldValue) ? "{$field} Must be fill in!" : null;
     }
