@@ -1,7 +1,6 @@
 <?php
 
 if (!file_exists(ROOT . '\logs\\error.log')) {
-    dump('not exist');
     mkdir(ROOT . '\logs');
     touch(ROOT . '\logs\\error.log');
 }
