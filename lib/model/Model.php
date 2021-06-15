@@ -32,9 +32,9 @@ abstract class Model
         return $record;
     }
 
-    public function update(array $dataEdit, $columnn, $value)
+    public function update(array $dataEdit, string $column, $value)
     {
-        $this->database->setWhereClause($columnn, '=', $value);
+        $this->database->setWhereClause($column, '=', $value);
         $this->database->update($dataEdit)->execute();
     }
 
