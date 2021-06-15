@@ -90,7 +90,6 @@
     <?php foreach ($bulletins as $key => $bulletin) : ?>
         <div class="board-wrapper" style="padding: 1em 2em; display: flex; justify-content: space-between; border-top: 1px solid #000; border-bottom: 1px solid #000;">
             <span class="board-title">
-                <?= $bulletin['id'] ?>
                 <?= $bulletin['title'] ?>
             </span>
             <span class="date">
