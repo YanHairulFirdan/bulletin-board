@@ -1,8 +1,0 @@
-catatan dari buku clean architecture
-Bab ii
-terdapat 3 paradigma pemrograman
-paradigma pemrograman merupakan cara men-strukturkan kode program
-
-1. structure paradigm
-   - statement goto berbahaya jika dilakukan pada paradigma ini
-   - tetapi digantikan oleh if/while dll
