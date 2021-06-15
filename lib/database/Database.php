@@ -78,7 +78,7 @@ class Database
     {
         if (!empty($column)) {
             if (!empty($value)) {
-                $subQuery = " WHERE {$column} {$operator} :$column";
+                $subQuery = "WHERE {$column} {$operator} :$column";
 
                 $this->query .= $subQuery;
                 $this->setColumnBind($column, $value);
@@ -158,7 +158,7 @@ class Database
     {
         $updateStatement = $this->updateQuery($dataUpdate);
 
-        $this->query = "UPDATE $this->tableName SET {$updateStatement}";
+        $this->query = "UPDATE $this->tableName SET {$updateStatement} {$this->query}";
 
         foreach ($dataUpdate as $column => $value) {
             $this->setColumnBind($column, $value);
