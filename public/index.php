@@ -4,7 +4,6 @@ require_once('../app/core/bootstrap.php');
 
 use App\Models\Bulletin;
 use App\Validations\BulletinValidation;
-use Lib\Utils\Logger;
 use Lib\Utils\Pagination;
 
 try {
