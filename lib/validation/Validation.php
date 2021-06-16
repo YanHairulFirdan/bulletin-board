@@ -2,7 +2,7 @@
 
 namespace Lib\Validation;
 
-use Lib\Utils\Validators\ValidatorFactory;
+use Lib\Validation\Validators\ValidatorFactory;
 
 class Validation
 {

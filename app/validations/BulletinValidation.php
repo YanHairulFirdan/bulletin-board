@@ -2,9 +2,9 @@
 
 namespace App\Validations;
 
-use Lib\Utils\Validation;
+use Lib\Validation\Validation as Validator;
 
-class BulletinValidation extends Validation
+class BulletinValidation extends Validator
 {
     protected $rules = [
         'title' => 'required|length:10-180',
