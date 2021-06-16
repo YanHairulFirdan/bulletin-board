@@ -8,11 +8,6 @@ use Lib\Logger\ErrorLog;
 use Lib\Pagination\Paginator;
 
 try {
-    dump(E_ALL);
-    dump(E_PARSE);
-    dump(E_WARNING);
-    dump(E_NOTICE);
-
     $bulletin   = new Bulletin();
     $pagination = new Paginator(100, 10, 7);
 
