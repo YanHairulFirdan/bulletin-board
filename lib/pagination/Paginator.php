@@ -16,7 +16,6 @@ class Paginator
     private function setNumberOfPager()
     {
         $this->data['numberOfPager'] = ceil($this->data['numberOfRecords'] / $this->data['dataPerPage']);
-        dump($this->data['numberOfPager']);
     }
 
     private function setNumberOfButtons()
@@ -64,7 +63,6 @@ class Paginator
         $this->setPreviousPage();
         $this->setNextPage();
         $this->setLastIndex();
-        dump($this->data);
     }
 
     public function setCurrentPage($currentPage)

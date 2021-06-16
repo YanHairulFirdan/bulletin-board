@@ -4,9 +4,15 @@ require_once('../core/autoload.php');
 
 use App\Models\Bulletin;
 use App\Validations\BulletinValidation;
+use Lib\Logger\ErrorLog;
 use Lib\Pagination\Paginator;
 
 try {
+    dump(E_ALL);
+    dump(E_PARSE);
+    dump(E_WARNING);
+    dump(E_NOTICE);
+
     $bulletin   = new Bulletin();
     $pagination = new Paginator(100, 10, 7);
 
@@ -32,7 +38,7 @@ try {
 
     require_once "assets/views/index.view.php";
 } catch (\Throwable $e) {
-    error_log($e->getMessage());
+    ErrorLog::logMessage($e->getMessage());
 
-    throw $e;
+    redirect('error.php');
 }
