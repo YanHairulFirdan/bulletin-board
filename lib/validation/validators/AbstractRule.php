@@ -1,6 +1,6 @@
 <?php
 
-namespace Lib\Utils\Validators;
+namespace Lib\Validation\Validators;
 
 abstract class AbstractRule
 {
