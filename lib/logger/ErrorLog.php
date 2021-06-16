@@ -4,7 +4,7 @@ namespace Lib\Logger;
 
 class ErrorLog implements LoggerInterface
 {
-    public function createLogFile()
+    public static function createLogFile()
     {
         if (!file_exists(ROOT . '\logs\\error.log')) {
             mkdir(ROOT . '\logs');
@@ -12,9 +12,9 @@ class ErrorLog implements LoggerInterface
         }
     }
 
-    public function logMessage(string $message)
+    public static function logMessage(string $message)
     {
-        $this->createLogFile();
+        self::createLogFile();
         error_log($message);
     }
 }
