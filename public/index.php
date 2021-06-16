@@ -1,14 +1,14 @@
 <?php
 
-require_once('../app/core/bootstrap.php');
+require_once('../core/autoload.php');
 
 use App\Models\Bulletin;
 use App\Validations\BulletinValidation;
-use Lib\Utils\Pagination;
+use Lib\Pagination\Paginator;
 
 try {
     $bulletin   = new Bulletin();
-    $pagination = new Pagination($bulletin->numRows(), 10, 7, 'page');
+    $pagination = new Paginator($bulletin->numRows(), 10, 7, 'page');
 
     $page  = isset($_GET['page']) ? $_GET['page'] : 1;
     $limit = $pagination->dataPerPage;
