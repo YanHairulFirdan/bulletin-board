@@ -6,17 +6,22 @@ class Paginator
 {
     private $data = [];
 
-    public function __construct($numberOfRecords, $dataPerPage, $numberOfButtons, $index)
+    public function __construct($numberOfRecords, $dataPerPage, $numberOfButtons)
     {
         $this->data['numberOfRecords'] = $numberOfRecords;
         $this->data['dataPerPage']     = $dataPerPage;
         $this->data['numberOfButtons'] = $numberOfButtons;
-        $this->data['url'] = '?' . $index . '=';
     }
 
     private function setNumberOfPager()
     {
-        $this->data['numberOfPager']  = ceil($this->data['numberOfRecords'] / $this->data['dataPerPage']);
+        $this->data['numberOfPager'] = ceil($this->data['numberOfRecords'] / $this->data['dataPerPage']);
+        dump($this->data['numberOfPager']);
+    }
+
+    private function setNumberOfButtons()
+    {
+        $this->data['numberOfButtons']  = ($this->data['numberOfPager'] >= $this->data['numberOfButtons']) ? $this->data['numberOfButtons'] : $this->data['numberOfPager'];
     }
 
     private function setNextPage()
@@ -54,10 +59,12 @@ class Paginator
 
     public function paginator()
     {
+        $this->setNumberOfButtons();
         $this->setStartIndex();
         $this->setPreviousPage();
         $this->setNextPage();
         $this->setLastIndex();
+        dump($this->data);
     }
 
     public function setCurrentPage($currentPage)
@@ -69,20 +76,18 @@ class Paginator
 
     public function previousPageURL()
     {
-        return $this->data['url'] . $this->data['previousPage'];
+        return '?page=' . $this->data['previousPage'];
     }
 
     public function nextPageURL()
     {
-        return $this->data['url'] . $this->data['nextPage'];
+        return '?page=' . $this->data['nextPage'];
     }
 
     public function genearetURL($index)
     {
-        return $this->data['url'] . $index;
+        return '?page=' . $index;
     }
-
-
 
     public function __get($name)
     {
