@@ -1,6 +1,6 @@
 <?php
 
-namespace Lib\Utils;
+namespace Lib\Validation;
 
 use Lib\Utils\Validators\ValidatorFactory;
 
