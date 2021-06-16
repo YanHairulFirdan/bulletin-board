@@ -4,6 +4,6 @@ namespace Lib\Logger;
 
 interface LoggerInterface
 {
-    public function createFile();
-    public function logMessage();
+    public function createLogFile();
+    public function logMessage(string $message);
 }
