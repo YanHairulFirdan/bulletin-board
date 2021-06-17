@@ -39,13 +39,17 @@ class Pagination
 
         $leftButtons = floor($this->data['numberOfButtons'] / 2);
 
-        if ($this->data['numberOfPager'] > $this->data['numberOfButtons']) {
+        if ($this->data['numberOfPager'] >= $this->data['numberOfButtons']) {
 
-            if ($this->data['currentPage'] - $leftButtons > 1) {
+            if (($this->data['currentPage'] - $leftButtons) > 1) {
                 $this->data['startIndex'] = $this->data['currentPage'] - $leftButtons;
 
                 if ($this->data['numberOfPager'] - $this->data['currentPage'] <= $leftButtons - 1) {
                     $this->data['startIndex'] = $this->data['numberOfPager'] - ($this->data['numberOfButtons'] - 1);
+                }
+            } else {
+                if ($this->data['currentPage'] == $this->data['numberOfButtons']) {
+                    $this->data['startIndex'] = $this->data['currentPage'];
                 }
             }
         }
