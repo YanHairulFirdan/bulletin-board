@@ -2,7 +2,7 @@
 
 namespace Lib\Pagination;
 
-class Paginator
+class Pagination
 {
     private $data = [];
 

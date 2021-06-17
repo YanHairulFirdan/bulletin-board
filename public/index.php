@@ -5,11 +5,11 @@ require_once('../config/autoload.php');
 use App\Models\Bulletin;
 use App\Validations\BulletinValidation;
 use Lib\Logger\ErrorLog;
-use Lib\Pagination\Paginator;
+use Lib\Pagination\Pagination;
 
 try {
     $bulletin   = new Bulletin();
-    $pagination = new Paginator(40, 10, 7);
+    $pagination = new Pagination(40, 10, 7);
 
     $page  = (isset($_GET['page']) && !empty($_GET['page'])) ? $_GET['page'] : 1;
     $limit = $pagination->dataPerPage;
