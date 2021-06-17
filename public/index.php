@@ -9,7 +9,7 @@ use Lib\Pagination\Paginator;
 
 try {
     $bulletin   = new Bulletin();
-    $pagination = new Paginator(100, 10, 7);
+    $pagination = new Paginator(40, 10, 7);
 
     $page  = (isset($_GET['page']) && !empty($_GET['page'])) ? $_GET['page'] : 1;
     $limit = $pagination->dataPerPage;
