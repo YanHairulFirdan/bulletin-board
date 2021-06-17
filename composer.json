@@ -7,8 +7,7 @@
 		"files": [
 			"helpers/functions.php",
 			"config/app.php",
-			"config/database.php",
-			"core/autoload.php"
+			"config/database.php"
 		]
 	},
 	"require": {

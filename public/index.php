@@ -1,6 +1,6 @@
 <?php
 
-require_once('../core/autoload.php');
+require_once('../config/autoload.php');
 
 use App\Models\Bulletin;
 use App\Validations\BulletinValidation;
