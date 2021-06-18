@@ -2,7 +2,7 @@
 
 namespace Lib\Logger;
 
-class ErrorLog implements LoggerInterface
+class ErrorLogger implements LoggerInterface
 {
     public static function createLogFile()
     {
