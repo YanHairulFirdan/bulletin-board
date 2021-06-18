@@ -15,7 +15,7 @@ class ErrorLogger implements LoggerInterface
     public static function logMessage(string $message)
     {
         self::createLogFile();
-        dump('called');
+        
         error_log($message);
     }
 }
