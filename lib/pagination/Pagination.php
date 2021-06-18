@@ -47,7 +47,7 @@ class Pagination
                     $this->data['startIndex'] = $this->data['numberOfPager'] - ($this->data['numberOfButtons'] - 1);
                 }
             } else {
-                if ($this->data['currentPage'] == $this->data['numberOfButtons']) {
+                if ($this->data['currentPage'] == $this->data['numberOfButtons'] && $this->data['currentPage'] < $this->data['numberOfPager']) {
                     $this->data['startIndex'] = $this->data['currentPage'];
                 }
             }
