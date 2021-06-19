@@ -1,5 +1,6 @@
 <?php
 define("DEBUG", 1);
+define("MODE", "Development");
 define("TIME_ZONE", "Asia/Makassar");
 define("ROOT", dirname(__DIR__));
 
