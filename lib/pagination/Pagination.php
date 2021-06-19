@@ -36,6 +36,18 @@ class Pagination
         $this->numberOfButtons  = ($this->numberOfPager >= $this->numberOfButtons) ? $this->numberOfButtons : $this->numberOfPager;
     }
 
+    public function setCurrentPage($currentPage)
+    {
+        $this->setNumberOfPager($this->dataPerPage);
+        
+        $this->currentPage = (is_array($currentPage)) ? $this->sanitizeParam($currentPage) : $currentPage;
+    }
+    
+    public function getCurrentPage()
+    {
+        return $this->currentPage;
+    }
+
     private function setNextPage()
     {
         $this->nextPage = ($this->currentPage != $this->numberOfPager) ? $this->currentPage + 1 : 0;
@@ -92,18 +104,6 @@ class Pagination
         return $this->lastIndex;
     }
     
-    public function setCurrentPage($currentPage)
-    {
-        $this->setNumberOfPager($this->dataPerPage);
-        
-        $this->currentPage = (is_array($currentPage)) ? $this->sanitizeParam($currentPage) : $currentPage;
-    }
-    
-    public function getCurrentPage()
-    {
-        return $this->currentPage;
-    }
-
     public function getDataPerPage()
     {
         return $this->dataPerPage;
