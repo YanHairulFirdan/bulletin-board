@@ -4,11 +4,9 @@ namespace Lib\Validation\Validators;
 
 class Type extends AbstractRule
 {
-    public function check($params)
+    public function check($validationParams)
     {
-        extract($params);
-
-        $allowedTypes = explode(',', $requisite);
+        $allowedTypes = explode(',', $validationParams['requisite']);
         $currentType  = explode('/', $_FILES[$field]['type']);
 
         if (!in_array($currentType[1], $allowedTypes)) {

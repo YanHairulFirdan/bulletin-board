@@ -4,12 +4,11 @@ namespace Lib\Validation\Validators;
 
 class Required extends AbstractRule
 {
-    public function check($params)
+    public function check(array $validationParams)
     {
-        extract($params);
-
-        $field = $field;
-
+        $field      = $validationParams['field'];
+        $fieldValue = $validationParams['fieldValue'];
+        
         if (is_array($fieldValue)) {
             if ($fieldValue['error'] === 4) {
                 $this->message = "{$field} is required!";

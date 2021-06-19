@@ -6,11 +6,9 @@ class Size extends AbstractRule
 {
     private $unit = 1000;
 
-    public function check($params)
+    public function check($validationParams)
     {
-        extract($params);
-
-        $maxSize = $requisite;
+        $maxSize = $validationParams['requisite'];
         $size    = $_FILES[$field]['size']  / $this->unit;
 
         if ($size > $maxSize) {
