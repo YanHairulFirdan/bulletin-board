@@ -118,9 +118,9 @@
                 <?php endif ?>
             <?php endfor ?>
 
-            <?php if ($pagination->getnextPage()) : ?>
+            <?php if ($pagination->getnextPage()>0) : ?>
                 <span class="btn-page">
-                    <a href="?page=<?= $pagination->nextPageURL() ?>">&gt;</a>
+                    <a href="?page=<?= $pagination->getnextPage() ?>">&gt;</a>
                 </span>
             <?php endif ?>
         <?php endif ?>

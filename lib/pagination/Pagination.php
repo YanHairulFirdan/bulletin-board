@@ -4,7 +4,6 @@ namespace Lib\Pagination;
 
 class Pagination
 {
-    private $data = [];
     private $currentPage;
     private $numberOfRecords;
     private $numberOfButtons;
@@ -38,7 +37,7 @@ class Pagination
 
     public function setCurrentPage($currentPage)
     {
-        $this->setNumberOfPager($this->dataPerPage);
+        $this->setNumberOfPager();
         
         $this->currentPage = (is_array($currentPage)) ? $this->sanitizeParam($currentPage) : $currentPage;
     }

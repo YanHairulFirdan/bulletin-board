@@ -17,7 +17,8 @@ try {
     $pagination->setCurrentPage($page);
     $pagination->paginator();
 
-    $offset    = $pagination->getCurrentPage();
+    $offset = $pagination->getCurrentPage();
+    
     $bulletins = $bulletin->orderBy('created_at', 'DESC')->limit($limit)->offset($offset)->get();
 
     if ($formData = $_POST) {
