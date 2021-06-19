@@ -9,6 +9,9 @@ define("ROOT", dirname(__DIR__));
 // ini_set('display_errors', DEBUG);
 // ini_set('display_startup_errors', DEBUG);
 // ini_set('error_log', ROOT . '\logs\\error.log');
+dump(MODE);
+
+set_error_handler(['Lib\Handler\ExceptionHandler', 'handle']);
 switch (MODE) {
     case 'development':
         ini_set('display_errors', 1);
