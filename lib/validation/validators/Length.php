@@ -17,5 +17,6 @@ class Length extends AbstractRule
         if (strlen($fieldValue) < $min || strlen($fieldValue) > $max) {
             $this->message = "Your {$field} must be {$min} to {$max} characters long";
         }
+        
     }
 }
