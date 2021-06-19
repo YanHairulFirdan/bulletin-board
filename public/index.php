@@ -12,12 +12,12 @@ try {
     $pagination = new Pagination(15, 10, 2);
 
     $page  = (isset($_GET['page']) && !empty($_GET['page'])) ? $_GET['page'] : 1;
-    $limit = $pagination->dataPerPage;
+    $limit = $pagination->getDataPerPage();
 
     $pagination->setCurrentPage($page);
     $pagination->paginator();
 
-    $offset    = $pagination->currentPage;
+    $offset    = $pagination->getCurrentPage();
     $bulletins = $bulletin->orderBy('created_at', 'DESC')->limit($limit)->offset($offset)->get();
 
     if ($formData = $_POST) {
@@ -35,5 +35,6 @@ try {
 } catch (\Throwable $e) {
     ErrorLogger::logMessage($e->getMessage());
 
-    redirect('error.php');
+    dump($e->getMessage());
+    // redirect('error.php');
 }

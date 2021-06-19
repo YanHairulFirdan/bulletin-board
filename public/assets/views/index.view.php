@@ -98,29 +98,29 @@
         </div>
     <?php endforeach ?>
 
-    <?php if (!($pagination->currentPage > $pagination->numberOfPager)) : ?>
+    <?php if (!($pagination->getCurrentPage() > $pagination->getNumberOfPager())) : ?>
         <div class="pagination" style="margin: 3em auto; width: 80%; display: flex; justify-content: space-between;">
-            <?php if ($pagination->previousPage) : ?>
+            <?php if ($pagination->getPreviousPage()) : ?>
                 <span class="btn-page">
-                    <a href=<?= $pagination->previousPageURL() ?>>&lt;</a>
+                    <a href="?page=<?= $pagination->previousPageURL() ?>">&lt;</a>
                 </span>
             <?php endif ?>
 
-            <?php for ($page = $pagination->startIndex; $page <= $pagination->lastIndex; $page++) : ?>
-                <?php if (($pagination->currentPage == $page)) : ?>
+            <?php for ($page = $pagination->getStartIndex(); $page <= $pagination->getLastIndex(); $page++) : ?>
+                <?php if (($pagination->getCurrentPage() == $page)) : ?>
                     <span class="btn-page">
-                        <span><?= $pagination->currentPage ?></span>
+                        <span><?= $pagination->getCurrentPage() ?></span>
                     </span>
                 <?php else : ?>
                     <span class="btn-page">
-                        <a href=<?= $pagination->genearetURL($page) ?>><?= $page ?> </a>
+                        <a href="?page=<?= $page ?>"><?= $page ?> </a>
                     </span>
                 <?php endif ?>
             <?php endfor ?>
 
-            <?php if ($pagination->nextPage) : ?>
+            <?php if ($pagination->getnextPage()) : ?>
                 <span class="btn-page">
-                    <a href=<?= $pagination->nextPageURL() ?>>&gt;</a>
+                    <a href="?page=<?= $pagination->nextPageURL() ?>">&gt;</a>
                 </span>
             <?php endif ?>
         <?php endif ?>

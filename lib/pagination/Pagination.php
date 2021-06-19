@@ -5,60 +5,109 @@ namespace Lib\Pagination;
 class Pagination
 {
     private $data = [];
+    private $currentPage;
+    private $numberOfRecords;
+    private $numberOfButtons;
+    private $dataPerPage;
+    private $nextPage;
+    private $previousPage;
+    private $startIndex;
+    private $lastIndex;
 
     public function __construct($numberOfRecords, $dataPerPage, $numberOfButtons)
     {
-        $this->data['numberOfRecords'] = $numberOfRecords;
-        $this->data['dataPerPage']     = $dataPerPage;
-        $this->data['numberOfButtons'] = $numberOfButtons;
+        $this->numberOfRecords = $numberOfRecords;
+        $this->dataPerPage     = $dataPerPage;
+        $this->numberOfButtons = $numberOfButtons;
     }
 
     private function setNumberOfPager()
     {
-        $this->data['numberOfPager'] = ceil($this->data['numberOfRecords'] / $this->data['dataPerPage']);
+        $this->numberOfPager = ceil($this->numberOfRecords / $this->dataPerPage);
+    }
+    
+    public function getNumberOfPager()
+    {
+        return $this->numberOfPager;
     }
 
     private function setNumberOfButtons()
     {
-        $this->data['numberOfButtons']  = ($this->data['numberOfPager'] >= $this->data['numberOfButtons']) ? $this->data['numberOfButtons'] : $this->data['numberOfPager'];
+        $this->numberOfButtons  = ($this->numberOfPager >= $this->numberOfButtons) ? $this->numberOfButtons : $this->numberOfPager;
     }
 
     private function setNextPage()
     {
-        $this->data['nextPage'] = ($this->data['currentPage'] != $this->data['numberOfPager']) ? $this->data['currentPage'] + 1 : 0;
+        $this->nextPage = ($this->currentPage != $this->numberOfPager) ? $this->currentPage + 1 : 0;
+    }
+    
+    public function getNextPage()
+    {
+        return $this->nextPage;
     }
 
     private function setPreviousPage()
     {
-        $this->data['previousPage'] = ($this->data['currentPage'] > 1) ? $this->data['currentPage'] - 1 : 0;
+        $this->previousPage = ($this->currentPage > 1) ? $this->currentPage - 1 : 0;
+    }
+    
+    public function getPreviousPage()
+    {
+        return $this->previousPage;
     }
 
     private function setStartIndex()
     {
-        $this->data['startIndex'] = 1;
+        $this->startIndex = 1;
 
-        $leftButtons = floor($this->data['numberOfButtons'] / 2);
+        $leftButtons = floor($this->numberOfButtons / 2);
 
-        if ($this->data['numberOfPager'] >= $this->data['numberOfButtons']) {
-            if (($this->data['currentPage'] - $leftButtons) > 1) {
-                $this->data['startIndex'] = $this->data['currentPage'] - $leftButtons;
+        if ($this->numberOfPager >= $this->numberOfButtons) {
+            if (($this->currentPage - $leftButtons) > 1) {
+                $this->startIndex = $this->currentPage - $leftButtons;
 
-                if ($this->data['numberOfPager'] - $this->data['currentPage'] <= $leftButtons - 1) {
-                    $this->data['startIndex'] = $this->data['numberOfPager'] - ($this->data['numberOfButtons'] - 1);
+                if ($this->numberOfPager - $this->currentPage <= $leftButtons - 1) {
+                    $this->startIndex = $this->numberOfPager - ($this->numberOfButtons - 1);
                 }
             } else {
-                if ($this->data['currentPage'] == $this->data['numberOfButtons'] && $this->data['currentPage'] < $this->data['numberOfPager']) {
-                    $this->data['startIndex'] = $this->data['currentPage'];
+                if ($this->currentPage == $this->numberOfButtons && $this->currentPage < $this->numberOfPager) {
+                    $this->startIndex = $this->currentPage;
                 }
             }
         }
     }
 
-    private function setLastIndex()
+    public function getStartIndex()
     {
-        $this->data['lastIndex'] = $this->data['startIndex'] + ($this->data['numberOfButtons'] - 1);
+        return $this->startIndex;
     }
 
+    private function setLastIndex()
+    {
+        $this->lastIndex = $this->startIndex + ($this->numberOfButtons - 1);
+    }
+    
+    public function getLastIndex()
+    {
+        return $this->lastIndex;
+    }
+    
+    public function setCurrentPage($currentPage)
+    {
+        $this->setNumberOfPager($this->dataPerPage);
+        
+        $this->currentPage = (is_array($currentPage)) ? $this->sanitizeParam($currentPage) : $currentPage;
+    }
+    
+    public function getCurrentPage()
+    {
+        return $this->currentPage;
+    }
+
+    public function getDataPerPage()
+    {
+        return $this->dataPerPage;
+    }
     public function paginator()
     {
         $this->setNumberOfButtons();
@@ -66,35 +115,6 @@ class Pagination
         $this->setPreviousPage();
         $this->setNextPage();
         $this->setLastIndex();
-    }
-
-    public function setCurrentPage($currentPage)
-    {
-        $this->setNumberOfPager($this->data['dataPerPage']);
-
-        $this->data['currentPage'] = (is_array($currentPage)) ? $this->sanitizeParam($currentPage) : $currentPage;
-    }
-
-    public function previousPageURL()
-    {
-        return '?page=' . $this->data['previousPage'];
-    }
-
-    public function nextPageURL()
-    {
-        return '?page=' . $this->data['nextPage'];
-    }
-
-    public function genearetURL($index)
-    {
-        return '?page=' . $index;
-    }
-
-    public function __get($name)
-    {
-        if (key_exists($name, $this->data)) {
-            return $this->data[$name];
-        }
     }
 
     private function sanitizeParam($param)
