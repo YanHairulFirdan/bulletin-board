@@ -18,8 +18,9 @@ class Required extends AbstractRule
         }
 
         $fieldValue = sanitize_string($fieldValue);
+        dump(strlen($fieldValue));
         
-        $this->message = empty($fieldValue) ? "{$field} Must be fill in!" : null;
+        $this->message = is_empty($fieldValue) ? "{$field} Must be fill in!" : null;
         // $this->message = strlen($fieldValue) === 0 ? "{$field} Must be fill in!" : null;
     }
 }

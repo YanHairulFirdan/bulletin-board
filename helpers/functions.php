@@ -22,3 +22,9 @@ function sanitize_string(string $value)
 {
     return filter_var(trim($value), FILTER_SANITIZE_STRING);
 }
+
+function is_empty($value)
+{
+    $badValues = ['', '0'];
+    return $value == ''||empty($value)? true: false;   
+}
