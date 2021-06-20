@@ -78,7 +78,7 @@ class Database
     {
         if (!empty($column)) {
             if (!empty($value)) {
-                $subQuery = "WHERE {$column} {$operator} :$column";
+                $subQuery = " WHERE {$column} {$operator} :$column";
 
                 $this->query .= $subQuery;
                 $this->setColumnBind($column, $value);
@@ -210,7 +210,7 @@ class Database
     public function execute()
     {
         $this->setConnection();
-
+        
         $prepare = $this->pdo->prepare($this->query);
 
         if ($this->columnBind) {

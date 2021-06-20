@@ -26,16 +26,16 @@ abstract class Model
 
     public function findByID($id)
     {
-        $this->database->setWhereClause('id', '=', $id);
-        $record = $this->database->select()->execute();
+        $this->database->select()->setWhereClause('id', '=', $id);
+        $record = $this->database->execute();
 
-        return $record;
+        return $record[0];
     }
 
     public function update(array $dataEdit, string $column, $value)
     {
-        $this->database->setWhereClause($column, '=', $value);
-        $this->database->update($dataEdit)->execute();
+        $this->database->update($dataEdit)->setWhereClause($column, '=', $value);
+        $this->database->execute();
     }
 
     public function delete(string $column, $value)
