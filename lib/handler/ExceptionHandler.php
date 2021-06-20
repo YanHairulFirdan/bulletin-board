@@ -6,14 +6,16 @@ use Lib\Logger\ErrorLogger;
 
 class ExceptionHandler  
 {
-    public static function handle(\Throwable $th)
+    public static function handle(\Exception $e)
     {
+        $message = $e->getCode() . ' : '.$e->getMessage().' in line '.$e->getLine().' inside file '. $e->getFile();
+
         if (MODE == 'production') {
-            ErrorLogger::logMessage($th->getMessage());
-            echo 'called';
+            ErrorLogger::logMessage($message);
+            
             redirect('error.php');
         }else {
-            dump($th->getMessage());
+            dump($message);
         }
     }
 }

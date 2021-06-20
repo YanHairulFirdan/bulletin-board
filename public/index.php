@@ -34,8 +34,9 @@ try {
 
     require_once "assets/views/index.view.php";
 } catch (\Throwable $e) {
-    ErrorLogger::logMessage($e->getMessage());
-
-    dump($e->getMessage());
+    // ErrorLogger::logMessage($e->getMessage());
+    throw $e;
+    
+    // dump($e->getMessage());
     // redirect('error.php');
 }
