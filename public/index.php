@@ -7,13 +7,12 @@ use App\Validations\BulletinValidation;
 use Lib\Pagination\Pagination;
 
 try {
-    $bulletin   = new Bulletin();
-    $pagination = new Pagination(15, 10, 2);
-
+    $bulletin = new Bulletin();
+    
     $page  = (isset($_GET['page']) && !empty($_GET['page'])) ? $_GET['page'] : 1;
-    $limit = $pagination->getDataPerPage();
-
-    $pagination->setCurrentPage($page);
+    
+    $pagination = new Pagination(15, 10, 2, $page);
+    $limit      = $pagination->getDataPerPage();
     $pagination->paginator();
 
     $offset = $pagination->getCurrentPage();

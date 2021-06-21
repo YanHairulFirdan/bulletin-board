@@ -13,11 +13,12 @@ class Pagination
     private $startIndex;
     private $lastIndex;
 
-    public function __construct($numberOfRecords, $dataPerPage, $numberOfButtons)
-    {
+    public function __construct($numberOfRecords, $dataPerPage, $numberOfButtons, $currentPage = 0)
+    { 
         $this->numberOfRecords = $numberOfRecords;
         $this->dataPerPage     = $dataPerPage;
         $this->numberOfButtons = $numberOfButtons;
+        $this->currentPage     = $currentPage;
     }
 
     private function setNumberOfPager()
@@ -35,11 +36,9 @@ class Pagination
         $this->numberOfButtons  = ($this->numberOfPager >= $this->numberOfButtons) ? $this->numberOfButtons : $this->numberOfPager;
     }
 
-    public function setCurrentPage($currentPage)
+    private function setCurrentPage()
     {
-        $this->setNumberOfPager();
-        
-        $this->currentPage = (is_array($currentPage)) ? $this->sanitizeParam($currentPage) : $currentPage;
+        $this->currentPage = (is_array($this->currentPage)) ? $this->sanitizeParam($this->currentPage) : $this->currentPage;
     }
     
     public function getCurrentPage()
@@ -107,8 +106,11 @@ class Pagination
     {
         return $this->dataPerPage;
     }
+    
     public function paginator()
     {
+        $this->setNumberOfPager();
+        $this->setCurrentPage();
         $this->setNumberOfButtons();
         $this->setStartIndex();
         $this->setPreviousPage();
