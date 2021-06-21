@@ -8,7 +8,6 @@ use Lib\Exceptions\InternalErrorException;
 use Lib\Pagination\Pagination;
 
 try {
-    dump(base_url());
     $bulletin = new Bulletin();
 
     $page  = (isset($_GET['page']) && !empty($_GET['page'])) ? $_GET['page'] : 1;
