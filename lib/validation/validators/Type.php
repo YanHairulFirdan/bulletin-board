@@ -4,13 +4,13 @@ namespace Lib\Validation\Validators;
 
 class Type extends AbstractRule
 {
-    public function check($validationParams)
+    public function check(array $validationParams)
     {
-        $allowedTypes = explode(',', $validationParams['requisite']);
+        $field        = $validationParams['field'];        
         $currentType  = explode('/', $_FILES[$field]['type']);
-
-        if (!in_array($currentType[1], $allowedTypes)) {
-            $this->message = "File extension is not allowed. File extension must be {$requisite}";
+        
+        if (strpos($currentType[1], $validationParams['requisite']) === false) {
+            $this->message = "File extension for field {$field} is not allowed. File extension must be {$validationParams['requisite']}";
         }
     }
 }

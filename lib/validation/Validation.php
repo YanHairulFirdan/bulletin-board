@@ -15,6 +15,8 @@ class Validation
     {
         foreach ($formData as $field => $fieldValue) {
             if (!key_exists($field, $this->rules)) {
+                dump($field);
+                dump($this->rules);
                 continue;
             }
 
