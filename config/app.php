@@ -1,5 +1,5 @@
 <?php
-define("MODE", "staging");
+define("MODE", "development");
 define("TIME_ZONE", "Asia/Makassar");
 define("ROOT", dirname(__DIR__));
 

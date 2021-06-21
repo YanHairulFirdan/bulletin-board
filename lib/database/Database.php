@@ -170,7 +170,7 @@ class Database
     public function delete(string $column, $value)
     {
         $this->query = "DELETE FROM {$this->tableName} WHERE {$column} = :{$column}";
-
+        $this->setColumnBind($column, $value);
         return $this;
     }
 
@@ -210,7 +210,7 @@ class Database
     public function execute()
     {
         $this->setConnection();
-        
+
         $prepare = $this->pdo->prepare($this->query);
 
         if ($this->columnBind) {
