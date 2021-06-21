@@ -25,5 +25,14 @@ function sanitize_string(string $value)
 
 function is_empty($value)
 {
-    return isset($value) && $value !== '' ? true: false;   
+    return isset($value) && $value !== '' ? true : false;
+}
+
+function base_url()
+{
+    $explodedROOT = (explode('\\', ROOT));
+    $baseRoot     = array_splice($explodedROOT, 3);
+    $baseURL      = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . '/' . $baseRoot[0] . '/' . 'public/';
+
+    return $baseURL;
 }

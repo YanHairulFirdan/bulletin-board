@@ -16,7 +16,7 @@ class ExceptionHandler
         } else {
             ErrorLogger::logMessage($message);
 
-            redirect(BASE_URL . 'errors/' . $th->getCode() . 'error.php');
+            redirect(base_url() . 'errors/' . $th->getCode() . 'error.php');
         }
     }
 }
