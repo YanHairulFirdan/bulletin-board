@@ -32,6 +32,6 @@ try {
     }
 
     require_once "assets/views/index.view.php";
-} catch (\Throwable $e) {
-    throw $e;
+} catch (\Throwable $th) {
+    throw $th;
 }
