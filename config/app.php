@@ -11,6 +11,7 @@ switch (MODE) {
         ini_set('display_startup_errors', 1);
         error_reporting(E_ALL);
         break;
+        
     case 'production':
         ini_set('date.timezone', TIME_ZONE);
         ini_set('display_errors', 0);
