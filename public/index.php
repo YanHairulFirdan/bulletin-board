@@ -4,7 +4,6 @@ require_once('../vendor/autoload.php');
 
 use App\Models\Bulletin;
 use App\Validations\BulletinValidation;
-use Lib\Logger\ErrorLogger;
 use Lib\Pagination\Pagination;
 
 try {
