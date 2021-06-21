@@ -16,11 +16,13 @@ class Required extends AbstractRule
 
             return;
         }
-
         $fieldValue = sanitize_string($fieldValue);
-        dump(strlen($fieldValue));
+        var_dump(strlen($fieldValue));
+        var_dump($fieldValue);
+        // dump(strlen($fieldValue));
+        // var_dump(0==="0");
         
-        $this->message = is_empty($fieldValue) ? "{$field} Must be fill in!" : null;
+        $this->message = empty($fieldValue) ? "{$field} Must be fill in!" : null;
         // $this->message = strlen($fieldValue) === 0 ? "{$field} Must be fill in!" : null;
     }
 }
