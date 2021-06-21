@@ -1,1 +1,3 @@
-<h3>Oops, there something wrong with the webiste</h3>
+<center>
+    <h3>Oops, your request not found | 404</h3>
+</center>
