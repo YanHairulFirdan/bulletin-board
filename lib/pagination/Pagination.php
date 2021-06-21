@@ -71,7 +71,6 @@ class Pagination
         $this->startIndex = 1;
 
         $leftButtons = floor($this->numberOfButtons / 2);
-        dump($leftButtons);
 
         if ($this->numberOfPager >= $this->numberOfButtons) {
             if (($this->currentPage - $leftButtons) > 1) {
