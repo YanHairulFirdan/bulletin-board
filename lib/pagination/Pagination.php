@@ -14,7 +14,7 @@ class Pagination
     private $lastIndex;
 
     public function __construct($numberOfRecords, $dataPerPage, $numberOfButtons, $currentPage = 0)
-    { 
+    {
         $this->numberOfRecords = $numberOfRecords;
         $this->dataPerPage     = $dataPerPage;
         $this->numberOfButtons = $numberOfButtons;
@@ -25,7 +25,7 @@ class Pagination
     {
         $this->numberOfPager = ceil($this->numberOfRecords / $this->dataPerPage);
     }
-    
+
     public function getNumberOfPager()
     {
         return $this->numberOfPager;
@@ -40,7 +40,7 @@ class Pagination
     {
         $this->currentPage = (is_array($this->currentPage)) ? $this->sanitizeParam($this->currentPage) : $this->currentPage;
     }
-    
+
     public function getCurrentPage()
     {
         return $this->currentPage;
@@ -50,7 +50,7 @@ class Pagination
     {
         $this->nextPage = ($this->currentPage != $this->numberOfPager) ? $this->currentPage + 1 : 0;
     }
-    
+
     public function getNextPage()
     {
         return $this->nextPage;
@@ -60,7 +60,7 @@ class Pagination
     {
         $this->previousPage = ($this->currentPage > 1) ? $this->currentPage - 1 : 0;
     }
-    
+
     public function getPreviousPage()
     {
         return $this->previousPage;
@@ -71,16 +71,25 @@ class Pagination
         $this->startIndex = 1;
 
         $leftButtons = floor($this->numberOfButtons / 2);
+        dump($leftButtons);
 
         if ($this->numberOfPager >= $this->numberOfButtons) {
             if (($this->currentPage - $leftButtons) > 1) {
                 $this->startIndex = $this->currentPage - $leftButtons;
 
+                if ($this->numberOfButtons == 2) {
+                    $this->startIndex = $this->currentPage;
+                }
+
                 if ($this->numberOfPager - $this->currentPage <= $leftButtons - 1) {
                     $this->startIndex = $this->numberOfPager - ($this->numberOfButtons - 1);
                 }
             } else {
-                if ($this->currentPage == $this->numberOfButtons && $this->currentPage < $this->numberOfPager) {
+                if (
+                    $this->currentPage == $this->numberOfButtons
+                    &&
+                    $this->currentPage < $this->numberOfPager
+                ) {
                     $this->startIndex = $this->currentPage;
                 }
             }
@@ -96,17 +105,17 @@ class Pagination
     {
         $this->lastIndex = $this->startIndex + ($this->numberOfButtons - 1);
     }
-    
+
     public function getLastIndex()
     {
         return $this->lastIndex;
     }
-    
+
     public function getDataPerPage()
     {
         return $this->dataPerPage;
     }
-    
+
     public function paginator()
     {
         $this->setNumberOfPager();

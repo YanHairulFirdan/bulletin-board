@@ -8,15 +8,15 @@ use Lib\Pagination\Pagination;
 
 try {
     $bulletin = new Bulletin();
-    
+
     $page  = (isset($_GET['page']) && !empty($_GET['page'])) ? $_GET['page'] : 1;
-    
-    $pagination = new Pagination(15, 10, 2, $page);
+
+    $pagination = new Pagination(70, 10, 2, $page);
     $limit      = $pagination->getDataPerPage();
     $pagination->paginator();
 
     $offset = $pagination->getCurrentPage();
-    
+
     $bulletins = $bulletin->orderBy('created_at', 'DESC')->limit($limit)->offset($offset)->get();
 
     if ($formData = $_POST) {

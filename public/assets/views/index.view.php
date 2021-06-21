@@ -102,7 +102,7 @@
         <div class="pagination" style="margin: 3em auto; width: 80%; display: flex; justify-content: space-between;">
             <?php if ($pagination->getPreviousPage()) : ?>
                 <span class="btn-page">
-                    <a href="?page=<?= $pagination->previousPageURL() ?>">&lt;</a>
+                    <a href="?page=<?= $pagination->getPreviousPage() ?>">&lt;</a>
                 </span>
             <?php endif ?>
 
