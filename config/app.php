@@ -2,6 +2,7 @@
 define("MODE", "production");
 define("TIME_ZONE", "Asia/Makassar");
 define("ROOT", dirname(__DIR__));
+define("BASE_URL", "http://localhost/bulletinboard/public/");
 
 set_exception_handler(['Lib\Handler\ExceptionHandler', 'handle']);
 ini_set('date.timezone', TIME_ZONE);
