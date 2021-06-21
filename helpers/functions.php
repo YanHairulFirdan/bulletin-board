@@ -20,11 +20,10 @@ function old_input(string $key)
 
 function sanitize_string(string $value)
 {
-    return filter_var(trim($value), FILTER_SANITIZE_STRING);
+    return trim($value);
 }
 
 function is_empty($value)
 {
-    // dump($value);
-    return ($value != ""|| empty($value))? true: false;   
+    return isset($value) && $value !== '' ? true: false;   
 }
