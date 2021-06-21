@@ -31,8 +31,8 @@ function is_empty($value)
 function base_url()
 {
     $explodedROOT = (explode('\\', ROOT));
-    $baseRoot     = array_splice($explodedROOT, 3);
-    $baseURL      = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . '/' . $baseRoot[0] . '/' . 'public/';
+    $baseRoot     = implode('/', array_slice($explodedROOT, 3));
+    $baseURL      = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . '/' . $baseRoot . '/' . 'public/';
 
     return $baseURL;
 }
