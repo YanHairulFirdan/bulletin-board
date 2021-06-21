@@ -1,6 +1,4 @@
 <?php
-use Lib\Logger\ErrorLogger;
-
 define("MODE", "production");
 define("TIME_ZONE", "Asia/Makassar");
 define("ROOT", dirname(__DIR__));
