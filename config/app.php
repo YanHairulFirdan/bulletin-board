@@ -1,5 +1,5 @@
 <?php
-define("MODE", "production");
+define("MODE", "development");
 define("TIME_ZONE", "Asia/Makassar");
 define("ROOT", dirname(__DIR__));
 
@@ -19,7 +19,5 @@ switch (MODE) {
         ini_set('display_errors', 0);
         ini_set('display_startup_errors', 0);
         ini_set('error_log', ROOT . '\logs\\error.log');
-        break;
-    default:
         break;
 }
