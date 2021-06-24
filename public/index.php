@@ -4,7 +4,7 @@ require_once('../vendor/autoload.php');
 
 use App\Models\Bulletin;
 use App\Validations\BulletinValidation;
-use Lib\Exceptions\InternalErrorException;
+use Lib\Exceptions\ErrorException;
 use Lib\Pagination\Pagination;
 
 try {
@@ -33,5 +33,6 @@ try {
 
     require_once "assets/views/index.view.php";
 } catch (\Throwable $th) {
-    throw new InternalErrorException($th->getMessage());
+    // dump($th->getMessage());
+    throw new ErrorException($th->getMessage(), 400);
 }

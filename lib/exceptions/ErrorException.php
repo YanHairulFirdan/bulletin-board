@@ -5,7 +5,7 @@ namespace Lib\Exceptions;
 use Exception;
 use Throwable;
 
-class InternalErrorException extends Exception
+class ErrorException extends Exception
 {
     public function __construct($message, $code = 500, Throwable $previous = null)
     {

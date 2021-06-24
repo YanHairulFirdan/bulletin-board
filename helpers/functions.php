@@ -25,7 +25,11 @@ function sanitize_string(string $value)
 
 function is_empty($value)
 {
-    return isset($value) && $value !== '' ? true : false;
+    return
+        $value === ''    ||
+        $value === []    ||
+        $value === false ||
+        $value === null;
 }
 
 function base_url()
