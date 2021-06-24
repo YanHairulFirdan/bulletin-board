@@ -33,5 +33,5 @@ try {
 
     require_once "assets/views/index.view.php";
 } catch (\Throwable $th) {
-    throw new ErrorException($th->getMessage(), 400);
+    throw new ErrorException($th->getMessage(), 500);
 }
