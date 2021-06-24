@@ -44,7 +44,7 @@ class Validation
     private function setValidatorType($fieldRule, $field, $fieldValue)
     {
         $this->validatorClass                 = $fieldRule;
-        $this->validationParams['field']      = $field;
+        $this->validationParams['fieldName']  = $field;
         $this->validationParams['fieldValue'] = $fieldValue;
 
         if (is_numeric(strpos($fieldRule, ':'))) {

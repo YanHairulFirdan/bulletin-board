@@ -6,10 +6,10 @@ class Required extends AbstractRule
 {
     public function check(array $validationParams)
     {
-        $field      = $validationParams['field'];
+        $fieldName  = $validationParams['fieldName'];
         $fieldValue = $validationParams['fieldValue'];
         $fieldValue = is_string($fieldValue) ? sanitize_string($fieldValue) : $fieldValue['tmp_name'];
 
-        $this->message = is_empty($fieldValue) ? "{$field} Must be fill in!" : null;
+        $this->message = is_empty($fieldValue) ? "{$fieldName} Must be fill in!" : null;
     }
 }
