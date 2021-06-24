@@ -33,6 +33,5 @@ try {
 
     require_once "assets/views/index.view.php";
 } catch (\Throwable $th) {
-    // dump($th->getMessage());
     throw new ErrorException($th->getMessage(), 400);
 }
