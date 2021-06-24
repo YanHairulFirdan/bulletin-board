@@ -2,8 +2,6 @@
 
 namespace Lib\Database;
 
-use Lib\Utils\Logger;
-
 /*
     |--------------------------------------------------------------------------
     | Database
@@ -51,6 +49,11 @@ class Database
      */
     private $columnBind;
     private $limit;
+    /** 
+     * the attribute for specifying type of query is being executed 
+     * for example $mode = 'update'    
+     */
+    private $mode = '';
 
     public function __construct(string $tableName)
     {
@@ -76,19 +79,17 @@ class Database
 
     public function setWhereClause(string $column, string $operator = '=', $value)
     {
-        if (!empty($column)) {
-            if (!empty($value)) {
-                $subQuery = " WHERE {$column} {$operator} :$column";
+        if (!empty($column) && !empty($value)) {
+            $subQuery = " WHERE {$column} {$operator} :$column";
 
-                $this->query .= $subQuery;
-                $this->setColumnBind($column, $value);
-            }
+            $this->query .= $subQuery;
+            $this->setColumnBind($column, $value);
         }
     }
 
     public function setOrderBy(string $column, string $orderType = 'ASC')
     {
-        if (!is_null($column)) {
+        if (!empty($column)) {
             $subQuery = " ORDER BY {$column} {$orderType}";
 
             $this->query .= $subQuery;
@@ -124,8 +125,6 @@ class Database
 
             $this->query .= $subQuery;
         }
-
-        return $this;
     }
 
     public function select()
@@ -137,6 +136,8 @@ class Database
         } else {
             $this->query = "SELECT * FROM {$this->tableName}";
         }
+
+        $this->mode = 'select';
 
         return $this;
     }
@@ -159,6 +160,7 @@ class Database
         $updateStatement = $this->updateQuery($dataUpdate);
 
         $this->query = "UPDATE $this->tableName SET {$updateStatement} {$this->query}";
+        $this->mode  = 'update';
 
         foreach ($dataUpdate as $column => $value) {
             $this->setColumnBind($column, $value);
@@ -170,13 +172,17 @@ class Database
     public function delete(string $column, $value)
     {
         $this->query = "DELETE FROM {$this->tableName} WHERE {$column} = :{$column}";
+        $this->mode  = 'delete';
+
         $this->setColumnBind($column, $value);
+
         return $this;
     }
 
     public function numrows()
     {
         $this->query = "SELECT COUNT(*) FROM {$this->tableName}";
+        $this->mode  = 'get num rows';
 
         return $this;
     }
@@ -221,11 +227,11 @@ class Database
             $this->columnBind = [];
         }
 
-        $prepare->execute();
+        $executionResult = $prepare->execute();
 
         $this->query = '';
 
-        return $prepare->fetchAll();
+        return $this->mode == 'update' || $this->mode == 'delete' ? $executionResult : $prepare->fetchAll();
     }
 
     private function setColumnBind($field, $value)

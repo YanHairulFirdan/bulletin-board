@@ -29,18 +29,19 @@ abstract class Model
         $this->database->select()->setWhereClause('id', '=', $id);
         $record = $this->database->execute();
 
-        return $record[0];
+        return empty($record) ? $record : $record[0];
     }
 
     public function update(array $dataEdit, string $column, $value)
     {
         $this->database->update($dataEdit)->setWhereClause($column, '=', $value);
-        $this->database->execute();
+
+        return $this->database->execute() ? 'success to update the data' : 'failed to update the data';
     }
 
     public function delete(string $column, $value)
     {
-        $this->database->delete($column, $value)->execute();
+        return $this->database->delete($column, $value)->execute() ? 'success to delete the data' : 'failed to delete the data';
     }
 
     public function numRows()
