@@ -12,10 +12,9 @@ class Size extends AbstractRule
         $fielValue   = $validationParams['fieldValue'];
         $maxSize     = $validationParams['requisite'];
         $size        = $fielValue['size'] / $this->unit;
-        $allowedSize = $maxSize / $this->unit;
 
         if ($size > $maxSize) {
-            $this->message = "File max size for {$fieldName} is {$allowedSize} MB";
+            $this->message = "File max size for {$fieldName} is {$maxSize} KB";
         }
     }
 }
