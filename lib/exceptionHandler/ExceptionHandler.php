@@ -8,7 +8,7 @@ class ExceptionHandler
 {
     public static function handle(\Throwable $th)
     {
-        $message = $th->getCode() . ' : ' . $th->getMessage() . ' in line ' . $th->getLine() . ' inside file ' . $th->getFile();
+        $message = $th->getCode() . ' : ' . $th->getMessage();
 
         if (MODE == 'development') {
             dump($message);
