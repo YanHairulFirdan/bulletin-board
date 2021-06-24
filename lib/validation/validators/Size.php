@@ -8,12 +8,14 @@ class Size extends AbstractRule
 
     public function check($validationParams)
     {
-        $fieldName = $validationParams['fieldName'];
-        $maxSize   = $validationParams['requisite'];
-        $size      = $_FILES[$fieldName]['size']  / $this->unit;
+        $fieldName   = $validationParams['fielddName'];
+        $fielValue   = $validationParams['fieldValue'];
+        $maxSize     = $validationParams['requisite'];
+        $size        = $fielValue['size'] / $this->unit;
+        $allowedSize = $maxSize / $this->unit;
 
         if ($size > $maxSize) {
-            $this->message = "File max size for {$fieldName} is {$maxSize} MB";
+            $this->message = "File max size for {$fieldName} is {$allowedSize} MB";
         }
     }
 }
