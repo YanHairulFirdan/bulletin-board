@@ -46,7 +46,7 @@ abstract class Model
 
     public function numRows()
     {
-        $numRows = $this->database->numrows()->execute();
+        $numRows = $this->database->getNumRows()->execute();
 
         return $numRows[0][0];
     }

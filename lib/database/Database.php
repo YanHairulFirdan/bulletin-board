@@ -53,7 +53,7 @@ class Database
      * the attribute for specifying type of query is being executed 
      * for example $mode = 'update'    
      */
-    private $mode = '';
+    private $mode;
 
     public function __construct(string $tableName)
     {
@@ -179,10 +179,10 @@ class Database
         return $this;
     }
 
-    public function numrows()
+    public function getNumRows()
     {
         $this->query = "SELECT COUNT(*) FROM {$this->tableName}";
-        $this->mode  = 'get num rows';
+        $this->mode  = 'numrows';
 
         return $this;
     }

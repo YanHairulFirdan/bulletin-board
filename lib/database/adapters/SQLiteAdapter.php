@@ -24,7 +24,6 @@ class SQLiteAdapter extends BaseAdapter implements DBAdapterInterface
     {
         $this->setDNS();
         $this->connection = new PDO($this->dsn);
-
         $this->setPDOAttributes();
 
         return $this->connection;

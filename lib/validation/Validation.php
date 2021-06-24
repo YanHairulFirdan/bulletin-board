@@ -45,7 +45,7 @@ class Validation
     {
         $this->validatorClass                 = $fieldRule;
         $this->validationParams['fieldName']  = $field;
-        $this->validationParams['fieldValue'] = $fieldValue;
+        $this->validationParams['fieldValue'] = is_string($fieldValue) ? trim($fieldValue) : $fieldValue;
 
         if (is_numeric(strpos($fieldRule, ':'))) {
             $ruleContainValue = explode(':', $fieldRule);

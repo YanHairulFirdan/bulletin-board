@@ -8,8 +8,8 @@ class Required extends AbstractRule
     {
         $fieldName  = $validationParams['fieldName'];
         $fieldValue = $validationParams['fieldValue'];
-        $fieldValue = is_string($fieldValue) ? sanitize_string($fieldValue) : $fieldValue['tmp_name'];
+        $fieldValue = is_string($fieldValue) ? $fieldValue : $fieldValue['tmp_name'];
 
-        $this->message = is_empty($fieldValue) ? "{$fieldName} Must be fill in!" : null;
+        $this->message = is_empty($fieldValue) ? "{$fieldName} Must be fill in or required!" : null;
     }
 }

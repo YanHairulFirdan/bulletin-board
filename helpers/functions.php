@@ -18,11 +18,6 @@ function old_input(string $key)
     return isset($_POST[$key]) ? htmlspecialchars($_POST[$key]) : '';
 }
 
-function sanitize_string(string $value)
-{
-    return trim($value);
-}
-
 function is_empty($value)
 {
     return

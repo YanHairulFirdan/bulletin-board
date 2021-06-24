@@ -10,7 +10,7 @@ class Length extends AbstractRule
         $requisite  = explode('-', $validationParams['requisite']);
         $min        = intval($requisite[0]);
         $max        = intval($requisite[1]);
-        $fieldValue = sanitize_string($validationParams['fieldValue']);
+        $fieldValue = $validationParams['fieldValue'];
 
         if (strlen($fieldValue) < $min || strlen($fieldValue) > $max) {
             $this->message = "Your {$fieldName} must be {$min} to {$max} characters long";
