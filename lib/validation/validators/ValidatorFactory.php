@@ -22,7 +22,7 @@ class ValidatorFactory
                 return new Size();
                 break;
             default:
-                throw new Exception("Validator type not found", 1);
+                throw new Exception("Validator type not found inside validation factory class", 1);
                 break;
         }
     }
