@@ -15,8 +15,8 @@ class ValidatorFactory
             case 'length':
                 return new Length();
                 break;
-            case 'type':
-                return new Type();
+            case 'mimes':
+                return new Mimes();
                 break;
             case 'size':
                 return new Size();
