@@ -12,7 +12,7 @@ try {
 
     $page  = (isset($_GET['page']) && !empty($_GET['page'])) ? $_GET['page'] : 1;
 
-    $pagination = new Pagination(70, 10, 2, $page);
+    $pagination = new Pagination(100, 10, 7, $page);
     $limit      = $pagination->getDataPerPage();
     $pagination->paginator();
 

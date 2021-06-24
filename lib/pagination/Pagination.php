@@ -33,12 +33,12 @@ class Pagination
 
     private function setNumberOfButtons()
     {
-        $this->numberOfButtons  = ($this->numberOfPager >= $this->numberOfButtons) ? $this->numberOfButtons : $this->numberOfPager;
+        $this->numberOfButtons = ($this->numberOfPager >= $this->numberOfButtons) ? $this->numberOfButtons : $this->numberOfPager;
     }
 
     private function setCurrentPage()
     {
-        $this->currentPage = (is_array($this->currentPage)) ? $this->sanitizeParam($this->currentPage) : $this->currentPage;
+        $this->currentPage = $this->sanitizeParam($this->currentPage);
     }
 
     public function getCurrentPage()
@@ -126,17 +126,8 @@ class Pagination
         $this->setLastIndex();
     }
 
-    private function sanitizeParam($param)
+    private function sanitizeParam($index)
     {
-        if (count($_GET) == 1) {
-            $key   = array_key_first($_GET);
-            $param = $_GET[$key];
-
-            if (!is_numeric($param)) {
-                return 1;
-            }
-        }
-
-        return $param;
+        return filter_var($index, FILTER_VALIDATE_INT) ?: 1;
     }
 }
